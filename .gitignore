@@ -1,18 +1,6 @@
-# build output
-dist/
-
-# generated types
 .astro/
-
-# dependencies
 .cache/
+dist/
 node_modules/
-
-# environment variables
 .env
-.env.production
-
-package-lock.json
-bun.lockb
-
 bun.lock

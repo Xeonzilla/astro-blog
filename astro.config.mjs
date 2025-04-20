@@ -1,3 +1,4 @@
+import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -23,6 +24,10 @@ export default defineConfig({
   site: "https://astro.xeonzilla.top/",
   base: "/",
   trailingSlash: "always",
+  redirects: {
+    '/post/[...slug]': '/posts/[...slug]',
+  },
+  adapter: cloudflare(),
   integrations: [
     tailwind(
         {
@@ -124,5 +129,25 @@ export default defineConfig({
         },
       },
     },
+  },
+  prefetch: {
+    prefetchAll: true
+  },
+  image: {
+    service: {
+      config: {
+        limitInputPixels: false,
+      },
+    },
+    domains: ['blog-static.xeonzilla.top'],
+    experimentalLayout: "responsive",
+  },
+  i18n: {
+    locales: ["zh-cn"],
+    defaultLocale: "zh-cn",
+  },
+  experimental: {
+    responsiveImages: true,
+    clientPrerender: true,
   },
 });

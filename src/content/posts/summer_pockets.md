@@ -5,7 +5,7 @@ image: "https://blog-static.xeonzilla.top/img/summer_pockets/cover.avif"
 tags: ["Galgame", "二次元"]
 category: TV动画 2025年4月
 ---
-为了防止[「ATRI -My Dear Moments-」](/post/atri_my_dear_moments/)那样时间紧迫的情况发生，在「Summer Pockets」的TV动画定于2025年播出后，我便开始推进游戏。
+为了防止[「ATRI -My Dear Moments-」](/posts/atri_my_dear_moments/)那样时间紧迫的情况发生，在「Summer Pockets」的TV动画定于2025年播出后，我便开始推进游戏。
 
 ## 留住过去的口袋
 ### 鸟白岛的夏天
@@ -115,8 +115,6 @@ category: TV动画 2025年4月
 
 当Pocket线，白羽与羽未揭晓故事的一切，羽未消失不见后，一首「ポケットをふくらませて」插入，配合剧情的走马灯，仿佛羽未就是一个真实的人，与我共度了一个夏日一般，我的眼眶就在这时不自主地湿润了。
 
-{{< music auto="https://music.163.com/#/song?id=1311345874" >}}
-
 一直以来，我都极喜欢麻枝准的音乐，即使是像「成神之日」这样评价极差的动画，麻枝准在其中创作的歌曲也没有可挑剔之处。他创作的音乐，往往感情充沛、拨动人心，和他创作的剧情相得益彰。
 
 除此之外，其他地方的音乐同样值得称赞。例如每次游戏开头与结尾，七海在迷途橘背景下的独白，花泽香菜的配音加上空灵的配乐，让我有种恍惚离神的感觉。
@@ -128,7 +126,9 @@ category: TV动画 2025年4月
 
 feel.的近况并不是太好，不仅近几年动画产量下降，更是在2024年没有任何一部制作的动画播出，让我非常担忧它的生存状况。希望feel.能够全力以赴对待这部动画，而不是当一位得过且过的无情打工人。
 
-![动画主视觉图](https://blog-static.xeonzilla.top/img/summer_pockets/07.avif "[动画主视觉图](https://summerpockets-anime.jp/news/11/)")
+![动画主视觉图](https://blog-static.xeonzilla.top/img/summer_pockets/07.avif "动画主视觉图")
+
+>原始图像链接 <https://summerpockets-anime.jp/news/11/>
 
 仅在公开的动画主视觉图，我们就能发现一些不太对劲的地方，从我一个外行人的角度看，䌷文德斯和鸣濑白羽的脸部就不太符合场景的明暗关系，在一片树荫下独自“闪耀”着，猜测是摄影处理时遗漏了这个区域。不知道是我水平不足有待学习，还是问题确实存在。总之，这小小的主视觉图已经为我期待的心蒙上了阴霾。
 

@@ -12,8 +12,6 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 > 
 >意外的布局偏移可能会在很多方面影响用户体验，例如，如果文本突然移动，导致用户在阅读时失去位置，或让用户点击错误的链接或按钮。在某些情况下，这可能会造成严重损害。
 >
->![累积布局偏移](https://blog-static.xeonzilla.top/img/hugo_avif_cls/01.avif "累积布局偏移")
->
 >当以异步方式加载资源，或将 DOM 元素动态添加到网页中的现有内容之前时，通常会发生网页内容意外移动。导致布局偏移的原因可能包括尺寸未知的图片或视频、呈现的字体大于或小于其初始后备尺寸，或者是会自行动态调整大小的第三方广告或微件。
 
 简单来说，CLS是网站设计时应该避免的问题。在Hugo中，一般需要利用利用响应式图片（Responsive images）[^1]、页面束（Page bundles）[^2]、图像渲染挂钩（Image render hooks）[^3]和图像处理（Image processing）[^4]等工具或处理方法。
@@ -214,7 +212,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 
 如果能够接受超宽图片带来的上下空间，那么这个函数就不是必要的。删除这段JavaScript后，在显示超宽图片时，会出现类似“以16:9的屏幕播放21:9的视频”造成的上下空余；然而，在显示超高图片时，由于`aspect-ratio`的非强制性，图片和容器均会正常显示，显示情况与下图一致。
 
-![超高图片示例](https://blog-static.xeonzilla.top/img/hugo_avif_cls/02.avif "超高图片示例")
+![超高图片示例](https://blog-static.xeonzilla.top/img/hugo_avif_cls/01.avif "超高图片示例")
 
 函数中通过比例间接计算`<div>`所需高度，这会在某些过于复杂的情况下引入细微不可见的误差。但是直接通过图片高度赋值容器高度，会出现较大程度的偏差，所得高度值远超图片实际高度，所以间接计算在这个情况下是优解。
 
@@ -225,7 +223,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 实际上，有关Hugo的CLS问题，前人提供了很多解决方案，例如：
 - [修复 Hugo 本地图片的累计布局偏移（CLS）问题 - Dvel's Blog](https://dvel.me/posts/fix-hugo-cls/)
 - [使用Hugo实现响应式和优化的图片 | 流动](https://liudon.com/posts/responsive-and-optimized-images-with-hugo/)
-- [Hugo 图片懒加载和自适应 CSS 图片占位 | DSRBLOG](https://blog.dsrkafuu.net/post/2022/hugo-image-lazyload-and-placeholder/)
+- [Hugo 图片懒加载和自适应 CSS 图片占位 | DSRBLOG](https://blog.dsrkafuu.net/posts/2022/hugo-image-lazyload-and-placeholder/)
 
 这些方案我都一一尝试，但是无一例外，都会遇到形如`execute of template failed at <$img.Width>: error calling Width: this method is only available for image resources`的错误。
 

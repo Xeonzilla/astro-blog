@@ -13,7 +13,9 @@ series: TV动画 2024年7月
 
 对于我这种鲜少接触Galgame的玩家，这样的游戏玩起来相当轻松，没有庞杂的选项，没有各种小游戏，只需欣赏剧情即可。相较之下，我最近正在推进的「Summer Pockets」就复杂得多，体验上大有不同。
 
-![生日纪念壁纸](https://blog-static.xeonzilla.top/img/atri_my_dear_moments/01.avif "[生日纪念壁纸](https://atri-mdm.com/special/present_birthday/)")
+![生日纪念壁纸](https://blog-static.xeonzilla.top/img/atri_my_dear_moments/01.avif "生日纪念壁纸")
+
+>原始图像链接 <https://atri-mdm.com/special/present_birthday/>
 
 友好还体现在本作的剧情上，线性而通畅，没有晦涩的语言或是苦大仇深的悲剧，是一个动人的、充满希望的好故事。主角亚托莉天真无邪、活泼可爱，应该能被大部分玩家喜爱。
 
