@@ -63,7 +63,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/img/avatar.avif",
+	avatar: "/img/avatar.avif",
 	name: "Xeonzilla",
 	bio: "Yuri is life.",
 	links: [
