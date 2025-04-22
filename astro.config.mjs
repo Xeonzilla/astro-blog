@@ -21,7 +21,7 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
 export default defineConfig({
-  site: "https://astro.xeonzilla.top/",
+  site: "https://xeonzilla.top/",
   base: "/",
   trailingSlash: "always",
   redirects: {

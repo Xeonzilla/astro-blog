@@ -3,10 +3,10 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 import { getEntry } from "astro:content";
 import { render } from "astro:content";
+import Comment from "@components/Comment.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
-import Comment from "@components/Comment.astro";
 
 const friendsPost = await getEntry("spec", "friends");
 
@@ -64,7 +64,4 @@ const items = [
             </Markdown>
         </div>
     </div>
-
-    <div class="card-base p-6 mb-4 mt-4"><Comment path="/friends/" /></div>
-
 </MainGridLayout>
