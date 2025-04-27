@@ -10,12 +10,10 @@ const config = {
 ---
 
 <div id="comment"></div>
-<script is:inline define:vars={{ config }}>
+<script is:inline defer define:vars={{ config }}>
 	function loadTwikoo() {
 		const script = document.createElement("script");
-		script.src =
-			"https://registry.npmmirror.com/twikoo/1.6.40/files/dist/twikoo.min.js";
-		script.defer = true;
+		script.src = "https://registry.npmmirror.com/twikoo/1.6.40/files/dist/twikoo.min.js"
 		script.onload = () => {
 			twikoo.init({
 				...config,
