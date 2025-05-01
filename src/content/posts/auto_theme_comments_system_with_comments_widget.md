@@ -2,6 +2,7 @@
 title: Comments Widget的自动主题和双评论系统
 published: 2024-08-20
 tags: ["技术", "Hugo", "PaperMod"]
+category: 博客建设
 ---
 ## 起因
 在初步完成个人Github Pages的搭建后，我就一直在考察除Giscus[^1]外的其他评论系统。虽说Giscus托管在Github上、而且免费开源、不包含广告，看上去全是优点，但是我忽略了一个重要的因素：用户来源。
