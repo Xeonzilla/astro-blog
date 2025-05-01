@@ -3,6 +3,7 @@ title: 更换博客评论系统：Waline
 published: 2024-10-07
 image: "https://blog-static.xeonzilla.top/img/waline/cover.avif"
 tags: ["技术", "Hugo", "Blowfish"]
+category: 博客建设
 ---
 ## 契机
 原本Giscus + Telegram Comments的双评论系统在缝缝补补后也算高度可用，但是最近的一些事件最终促成了我再次更换评论系统。

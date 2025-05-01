@@ -4,6 +4,7 @@ published: 2024-07-31
 updated: 2024-08-14
 image: "https://blog-static.xeonzilla.top/img/hugo_avif_cls/cover.avif"
 tags: ["技术", "Hugo", "PaperMod"]
+category: 博客建设
 ---
 ## CLS的伪解决方案
 ### 何谓CLS
