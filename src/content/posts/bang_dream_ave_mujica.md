@@ -3,7 +3,7 @@ title: BanG Dream! Ave Mujica
 published: 2025-02-02
 image: "https://blog-static.xeonzilla.top/img/bang_dream_ave_mujica/cover.avif"
 tags: ["动画", "二次元"]
-series: TV动画 2025年1月
+category: TV动画 2025年1月
 ---
 ## 此时此刻，恰如彼时彼刻
 神秘的前几话播出，激起了社区讨论的千层浪。原创动画尚有无限的创作空间，所以我并不想就此下定论，让我们期待后续的表现。
