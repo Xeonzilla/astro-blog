@@ -3,6 +3,7 @@ title: 更换博客主题：从PaperMod到Blowfish
 published: 2024-09-19
 image: "https://blog-static.xeonzilla.top/img/from_papermod_to_blowfish/cover.avif"
 tags: ["技术", "Hugo", "PaperMod", "Blowfish"]
+category: 博客建设
 ---
 花了几天的空闲时间，把我的博客主题从PaperMod[^1]更换成了Blowfish[^2]，顺便整理了一下博客目录下的各种文件。整个博客瞬间焕然一新，显得更加现代与美观了。
 
