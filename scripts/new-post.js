@@ -14,7 +14,7 @@ const args = process.argv.slice(2)
 
 if (args.length === 0) {
   console.error(`Error: No filename argument provided
-Usage: npm run new-post -- <filename>`)
+Usage: bun run new-post -- <filename>`)
   process.exit(1)
 }
 
@@ -39,11 +39,11 @@ if (!fs.existsSync(dirPath)) {
 }
 
 const content = `---
-title: ${args[0]}
+title: 
 published: ${getDate()}
-image: ''
-tags: []
-category: ''
+image: ""
+tags: [""]
+category: 
 ---
 `
 
