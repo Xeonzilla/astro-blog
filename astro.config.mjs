@@ -23,9 +23,6 @@ export default defineConfig({
 	site: "https://xeonzilla.top/",
 	base: "/",
 	trailingSlash: "always",
-	redirects: {
-		"/post/[...slug]": "/posts/[...slug]",
-	},
 	adapter: cloudflare(),
 	integrations: [
 		tailwind({
@@ -126,21 +123,11 @@ export default defineConfig({
 	prefetch: {
 		prefetchAll: true,
 	},
-	image: {
-		service: {
-			config: {
-				limitInputPixels: false,
-			},
-		},
-		domains: ["blog-static.xeonzilla.top"],
-		experimentalLayout: "constrained",
-	},
 	i18n: {
 		locales: ["zh-cn"],
 		defaultLocale: "zh-cn",
 	},
 	experimental: {
-		responsiveImages: true,
 		clientPrerender: true,
 		contentIntellisense: true,
 		preserveScriptOrder: true,
