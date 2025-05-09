@@ -1,4 +1,5 @@
 import cloudflare from "@astrojs/cloudflare";
+import mdx from '@astrojs/mdx';
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -50,6 +51,7 @@ export default defineConfig({
 		}),
 		svelte(),
 		sitemap(),
+		mdx(),
 	],
 	markdown: {
 		remarkPlugins: [
