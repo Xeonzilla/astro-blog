@@ -125,11 +125,16 @@ export default defineConfig({
 	prefetch: {
 		prefetchAll: true,
 	},
+	image: {
+		domains: ["blog-static.xeonzilla.top"],
+		experimentalLayout: "constrained",
+	},
 	i18n: {
 		locales: ["zh-cn"],
 		defaultLocale: "zh-cn",
 	},
 	experimental: {
+		responsiveImages: true,
 		clientPrerender: true,
 		contentIntellisense: true,
 		preserveScriptOrder: true,
