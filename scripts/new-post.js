@@ -22,7 +22,7 @@ let fileName = args[0]
 
 const fileExtensionRegex = /\.(md|mdx)$/i
 if (!fileExtensionRegex.test(fileName)) {
-  fileName += ".md"
+  fileName += ".mdx"
 }
 
 const targetDir = "./src/content/posts/"
@@ -39,12 +39,14 @@ if (!fs.existsSync(dirPath)) {
 }
 
 const content = `---
-title: 
+title: ""
 published: ${getDate()}
 image: ""
-tags: [""]
-category: 
+tags: 
+  - ""
+category: ""
 ---
+import { Image } from 'astro:assets';
 `
 
 fs.writeFileSync(path.join(targetDir, fileName), content)
