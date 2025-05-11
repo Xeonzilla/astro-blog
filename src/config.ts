@@ -16,7 +16,7 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "/img/banner.avif",
+		src: "assets/img/banner.avif",
 		position: "center",
 		credit: {
 			enable: true,
@@ -63,7 +63,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "/img/avatar.avif",
+	avatar: "assets/img/avatar.avif",
 	name: "Xeonzilla",
 	bio: "Yuri is life.",
 	links: [
