@@ -50,6 +50,6 @@ const imageStyle = `object-position: ${position}`;
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
     {isLocal && img && <Image src={img} alt={alt || ""} format="avif" quality="high" class={imageClass} style={imageStyle}/>}
-	{isRemote && <Image src={src} alt={alt || ""} format="avif" quality="high" inferSize={true} class={imageClass} style={imageStyle}/>}
+    {isRemote && <Image src={src} alt={alt || ""} format="avif" quality="high" inferSize={true} class={imageClass} style={imageStyle}/>}
     {isPublic && <img src={url(src)} alt={alt || ""} class={imageClass} style={imageStyle}/>}
 </div>
