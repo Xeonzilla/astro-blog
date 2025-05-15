@@ -1,0 +1,135 @@
+---
+title: "为Fuwari启用响应式图像"
+published: 2025-05-14
+tags: 
+  - "技术"
+  - "Astro"
+  - "Fuwari"
+category: "博客建设"
+---
+## 前言
+自从我接触博客的性能优化，就非常向往响应式图像，可惜直到我迁移站点，Hugo仍旧没有支持Avif。Astro支持响应式图像，但是没有默认开启，需要在`astro.config.mjs`设置，还需要在博客的其他部分自行适配。
+
+Fuwari没有进行响应式图像的适配，这意味着我们需要自行修改代码。
+
+## 文章中的图像
+对文章中图像的调整较为简单，因为不涉及代码，只需要批量的替换。
+
+首先，也是最重要的一步，就是为Fuwari引入MDX。详细的引入教程可以参考Astro文档[^1]。为什么要引入MDX代替Markdown呢？因为我们需要使用使用Astro的`<Image />`组件创建响应式图片，而Markdown不支持这些组件，只能使用标准语法。更详细的对比和有关`<Image />`组件的特性，可以参考Astro文档对此的说明[^2]。
+
+我必须要在此离个题，Astro的文档真是太完善了！不仅文档的内容详细，还有覆盖率极高的中文翻译。相比之下，Hugo的文档就显得很简陋，而且没有翻译，对我而言不太友好。
+
+在正确引入MDX后，将站点的所有`.md`重命名为`.mdx`，这样就算完成了第一步。
+
+接下来我们需要为MDX引入`<Image />`组件，因为这些组件来自Astro，并非原生功能或语法。在Front Matter的下方，添加一行代码，因为我只用到了`<Image />`组件，所以只需引入`Image`，如果后续用到了`<Picture />`组件，则需要相应地引入`Picture`。
+```js
+import { Image } from 'astro:assets';
+```
+
+最后就是替换图片的语法了。将原生的Markdown语法`![示例](example.png "示例")`批量替换为`<Image />`组件的写法。
+```html
+<Image src="example.png" alt="示例" format="avif" quality="high" inferSize />
+```
+
+其中，`src`和`alt`属性是必须的，对于`public/`中的图像，`width`和`height`也是必须的。更详细的属性设置，参见Astro文档中的图片与资源 API 参考[^3]。此处我使用`format="avif" quality="high"`，使转换后的图像与我的原始图像格式、质量保持一致，还添加了`inferSize`属性自动获取远程图像的宽度和高度。
+
+最后一步，转到`astro.config.mjs`，配置实验性标志并开启实验性响应式图像，这样就大功告成了。
+```js
+export default defineConfig({
+    experimental: {
+        // 启用实验性标志
+        // 以尝试新功能
+        responsiveImages: true,
+    },
+});
+```
+
+如果像我一样使用远程图像，还需要配置`image.domains`或者`image.remotePatterns`。有关图像的所有配置，参见Astro文档配置参考中的Image 选项部分[^4]。我使用的配置如下：
+```js
+export default defineConfig({
+    image: {
+        domains: ["example.com"],
+        // 我的Cloudflare R2域名 
+        experimentalLayout: "constrained",
+    },
+});
+```
+
+## Avatar、Banner和文章封面
+与文章中的图像不同，在Fuwari中，Avatar、Banner和文章封面由`src/components/misc/ImageWrapper.astro`控制。如果使用本地的图像，经过`astro.config.mjs`的设置后，原先的代码就能够实现响应式图像，为了对远程图像应用响应式图像，我们需要修改其中的代码。
+
+第一处修改，我们要添加一个常量定义来区分出本地图像、公共图像和远程图像。
+```js
+const isLocal = !(
+  src.startsWith("/") ||
+  src.startsWith("http") ||
+  src.startsWith("https") ||
+  src.startsWith("data:")
+);
+const isRemote =
+  src.startsWith("http") || src.startsWith("https") || src.startsWith("data:");
+const isPublic = src.startsWith("/");
+```
+
+`isLocal`与`isPublic`是原有的，这里我新增`isRemote`筛选出远程图像。
+
+第二处修改在最下方，我们为远程图像应用`<Image />`组件的写法。
+```html
+<div id={id} class:list={[className, 'overflow-hidden relative']}>
+    <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
+    {isLocal && img && <Image src={img} alt={alt || ""} format="avif" quality="high" class={imageClass} style={imageStyle}/>}
+    {isRemote && <Image src={src} alt={alt || ""} format="avif" quality="high" inferSize={true} class={imageClass} style={imageStyle}/>}
+    {isPublic && <img src={url(src)} alt={alt || ""} class={imageClass} style={imageStyle}/>}
+</div>
+```
+
+有关具体的属性设置不再赘述，唯一需要注意的是`isRemote`行的`inferSize={true}`，对于远程图像，这是必须的属性，因为我们不能在这个需要复用的组件指定的宽度和高度。
+
+至此，Fuwari中的所有图像都应该是响应式的，且能有效避免累积布局偏移（CLS）。
+
+## 结语
+文章数量太多时，替换某个语句或者调整某个选项非常耗时，此时就可以借助大模型，让它为你编写一个批量替换的脚本。我在插入`quality="high"`时，就用到了ChatGPT提供的代码：
+```python
+import os
+import re
+
+# 替换为你的目标路径
+target_dir = "path\\to\\your\\files"
+# 正则匹配 format="avif"，并在其后插入 quality="high"
+pattern = re.compile(r'(format="avif")(\s+)')
+
+def process_file(filepath):
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    new_content = pattern.sub(r'\1 quality="high"\2', content)
+
+    if new_content != content:
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(new_content)
+        print(f"已处理: {filepath}")
+
+# 遍历所有 .mdx 文件
+for root, _, files in os.walk(target_dir):
+    for name in files:
+        if name.endswith(".mdx"):
+            process_file(os.path.join(root, name))
+```
+
+如果不是像我一样对先进格式有着强烈的执念，建议使用`format="webp"`，因为Avif的高压缩率与高图像质量是极长的编码时间换来的，以我的博客为例，目前在编译站点时，需要转换出1500张图像，在Cloudflare Pages上编译耗时30分钟。WebP用略大的体积和略低的图像质量，换取更短的编码时间，从开发站点效率的角度，是划算的买卖。
+
+而且，Astro的文档中提供了`quality`属性的说明，其中提到：
+>`quality` 是一个可选属性，可以是：
+>  - 一个预设值（`low`、`mid`、`high`、`max`），可以在不同格式之间自动标准化。
+>  - 一个从 `0` 到 `100` 的数字（不同格式之间的表现不同）。
+
+如果使用预设值，Avif和WebP之间的质量差距应该是很小的。
+
+Cloudflare Pages提供了构建缓存，但是我的项目从来没有复用缓存，也是怪事一件，有待我进一步调查。
+
+目前博客已经能够正确显示占位符，避免了CLS，但是占位符只是一个简单的色块，配上`alt`的描述文本，看上去有些简朴。后续如果能自定义占位符，或是显示加载动画，就更好了。
+
+[^1]:[@astrojs/mdx | Docs](https://docs.astro.build/zh-cn/guides/integrations-guide/mdx/)
+[^2]:[图像 | Docs](https://docs.astro.build/zh-cn/guides/images/)
+[^3]:[图片与资源 API 参考 | Docs](https://docs.astro.build/zh-cn/reference/modules/astro-assets/)
+[^4]:[配置参考 | Docs](https://docs.astro.build/zh-cn/reference/configuration-reference/#image-%E9%80%89%E9%A1%B9)
