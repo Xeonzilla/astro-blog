@@ -47,6 +47,8 @@ tags:
 category: ""
 ---
 import { Image } from 'astro:assets';
+
+{/* <Image src="" alt="" format="avif" quality="high" inferSize /> */}
 `
 
 fs.writeFileSync(path.join(targetDir, fileName), content)
