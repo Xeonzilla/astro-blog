@@ -1,0 +1,10 @@
+name = "astro-blog"
+pages_build_output_dir = "./dist"
+compatibility_date = "2025-05-23"
+
+[vars]
+BUN_VERSION = "1.2.14"
+NODE_VERSION = "22.16.0"
+
+[placement]
+mode = "smart"
