@@ -28,7 +28,7 @@ import { Image } from 'astro:assets';
 
 最后就是替换图片的语法了。将原生的Markdown语法`![示例](example.png "示例")`批量替换为`<Image />`组件的写法。
 ```html
-<Image src="example.png" alt="示例" format="avif" quality="high" inferSize />
+<Image src="example.png" alt="示例" quality="max" inferSize />
 ```
 
 其中，`src`和`alt`属性是必须的，对于`public/`中的图像，`width`和`height`也是必须的。更详细的属性设置，参见Astro文档中的图片与资源 API 参考[^3]。此处我使用`format="avif" quality="high"`，使转换后的图像与我的原始图像格式、质量保持一致，还添加了`inferSize`属性自动获取远程图像的宽度和高度。
@@ -77,8 +77,8 @@ const isPublic = src.startsWith("/");
 ```html
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
-    {isLocal && img && <Image src={img} alt={alt || ""} format="avif" quality="high" class={imageClass} style={imageStyle}/>}
-    {isRemote && <Image src={src} alt={alt || ""} format="avif" quality="high" inferSize={true} class={imageClass} style={imageStyle}/>}
+    {isLocal && img && <Image src={img} alt={alt || ""} quality="max" class={imageClass} style={imageStyle}/>}
+    {isRemote && <Image src={src} alt={alt || ""} quality="max" inferSize={true} class={imageClass} style={imageStyle}/>}
     {isPublic && <img src={url(src)} alt={alt || ""} class={imageClass} style={imageStyle}/>}
 </div>
 ```
