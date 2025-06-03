@@ -13,7 +13,7 @@ category: "博客建设"
 
 ## 更新依赖
 twikoo-cloudflare的`package.json`中，大部分的依赖都是可以直接更新到最新版的，经过试验并能稳定使用的`package.json`如下：
-```json
+```json title="package.json" collapse={4-11} {3, 15, 18-21}
 {
   "name": "twikoo-cloudflare",
   "version": "1.6.43",
@@ -50,7 +50,7 @@ twikoo-cloudflare的`package.json`中，大部分的依赖都是可以直接更�
 可能有细心的读者注意到，我还在使用Wrangler3。为什么不进行升级呢？很简单，因为报错了。
 
 在我进行试验的Wrangler中，`4.13.2`会出现一个警告：
-```log
+```log title="bulid.log"
 ▲ [WARNING] Import "default" will always be undefined because there is no matching export in "node_modules/unenv/dist/runtime/npm/whatwg-url.mjs" [import-is-undefined]
 
     required-unenv-alias:whatwg-url:6:27:
@@ -59,7 +59,7 @@ twikoo-cloudflare的`package.json`中，大部分的依赖都是可以直接更�
 ```
 
 而更高的`4.15.2`更是会直接报错：
-```log
+```log title="bulid.log"
 ✘ [ERROR] Build failed with 1 error:
 
   ✘ [ERROR] Could not resolve "./node/"
