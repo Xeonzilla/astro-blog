@@ -21,9 +21,9 @@ category: "博客建设"
 ## 快速实战
 bilibili-bangumi-component给出的后端部署教程极其详细，按步骤操作即可。
 
-前端的设置上，我们需要到`layouts\shortcodes`路径下创建一个供Hugo使用的shortcodes。使用CDN引入，并在html中使用组件，就能完成最基础的使用。
+前端的设置上，我们需要到`layouts/shortcodes`路径下创建一个供Hugo使用的shortcodes。使用CDN引入，并在html中使用组件，就能完成最基础的使用。
 
-```html
+```html title="layouts/shortcodes/bangumi.html"
 <bilibili-bangumi api="https://xeonzilla.top/api/bangumi" bilibili-enabled="false"></bilibili-bangumi>
 
 <style>

@@ -28,7 +28,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 首先需要在Hugo站点目录`layouts/_default/_markup`路径下，创建名为`render-image.html`的文件，它负责Hugo对图像的渲染。
 
 我所使用的`render-image.html`代码如下：
-```html
+```html title="layouts/_default/_markup/render-image.html"
 <style>
     .container {
         display: flex;
@@ -46,9 +46,11 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
         display: block;
     }
 </style>
+
 <div class="container">
     <img onload="resizeContainer(this)" loading="lazy" src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{with.Title}} title="{{ . }}" {{end}} />
 </div>
+
 <script>
     function resizeContainer(img) {
         const container = img.parentElement;
@@ -61,7 +63,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 
 #### cover.html
 接下来以PaperMod为例，因为Hugo各个主题之间的结构可能略有不同，修改前应当自行调整。在`themes/PaperMod/layouts/partials`下复制一份`cover.html`，粘贴到`layouts/partials`下。PaperMod提供的有关封面显示的代码为：
-```html
+```html title="themes/partials/cover.html" startLineNumber=20
     {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
     <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
                     {{- if (ge $cover.Width $size) -}}
@@ -81,7 +83,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 ```
 
 仿照上面的`render-image.html`，将其修改为：
-```html
+```html title="themes/partials/cover.html" startLineNumber=20
     {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
     <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
                     {{- if (ge $cover.Width $size) -}}
@@ -108,9 +110,11 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
             display: block;
         }
     </style>
+
     <div class="container">
         <img onload="resizeContainer(this)" loading="{{$loading}}" src="{{ (path.Join .RelPermalink .Params.cover.image) | absURL }}" alt="{{ $alt }}">
     </div>
+
     <script>
         function resizeContainer(img) {
             const container = img.parentElement;
@@ -139,9 +143,11 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
                 display: block;
             }
         </style>
+
         <div class="container">
             <img onload="resizeContainer(this)" loading="{{$loading}}" src="{{ (.Params.cover.image) | absURL }}" alt="{{ $alt }}">
         </div>
+
         <script>
             function resizeContainer(img) {
                 const container = img.parentElement;
@@ -173,7 +179,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 ### 细节说明
 #### CSS
 方案中的CSS部分除常规的样式调整外，还有占位作用，是本方案的核心。
-```html
+```html title="layouts/_default/_markup/render-image.html"
 <style>
     .container {
         display: flex;
@@ -205,7 +211,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 
 #### JavaScript
 方案中使用的JavaScript功能为计算容器的高度，使其与图片高度一致。
-```html
+```html title="layouts/_default/_markup/render-image.html" startLineNumber=23
 <script>
     function resizeContainer(img) {
         const container = img.parentElement;
