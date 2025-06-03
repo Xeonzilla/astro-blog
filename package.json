@@ -3,11 +3,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "bun x --bun astro dev",
-    "start": "bun x --bun astro dev",
-    "build": "bun x --bun astro build && bun x --bun pagefind --site dist",
-    "preview": "bun x --bun astro preview",
-    "astro": "bun x --bun astro",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "check": "astro check",
+    "build": "astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "astro": "astro",
+    "type-check": "tsc --noEmit --isolatedDeclarations",
     "new-post": "bun run --bun scripts/new-post.js",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src"
