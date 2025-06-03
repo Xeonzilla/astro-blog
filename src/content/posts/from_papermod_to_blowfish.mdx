@@ -38,7 +38,7 @@ PaperModX开发者的这段话很大程度上促成了这次主题更换。虽�
 先前在[Comments Widget的自动主题和双评论系统](/posts/auto_theme_comments_system_with_comments_widget/)展示的代码逻辑无需改变，只需在监听方式上适应Blowfish即可。经过我在web开发者工具中的一番探索，发现Blowfish在变更主题时，`html`的`class`会添加和删除`dark`这个类，于是我们便以此判断博客主题的变化。
 
 关键的监听函数如下：
-```javascript
+```js title="layouts/partials/comments.html"
 const observer = new MutationObserver((mutationsList) => {
     mutationsList.forEach(mutation => {
         if (mutation.attributeName === 'class') {
