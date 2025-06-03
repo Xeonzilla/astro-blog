@@ -22,19 +22,19 @@ Fuwari没有进行响应式图像的适配，这意味着我们需要自行修�
 在正确引入MDX后，将站点的所有`.md`重命名为`.mdx`，这样就算完成了第一步。
 
 接下来我们需要为MDX引入`<Image />`组件，因为这些组件来自Astro，并非原生功能或语法。在Front Matter的下方，添加一行代码，因为我只用到了`<Image />`组件，所以只需引入`Image`，如果后续用到了`<Picture />`组件，则需要相应地引入`Picture`。
-```js
+```mdx title="src/content/posts/example.mdx"
 import { Image } from 'astro:assets';
 ```
 
 最后就是替换图片的语法了。将原生的Markdown语法`![示例](example.png "示例")`批量替换为`<Image />`组件的写法。
-```html
+```mdx title="src/content/posts/example.mdx"
 <Image src="example.png" alt="示例" quality="max" inferSize />
 ```
 
 其中，`src`和`alt`属性是必须的，对于`public/`中的图像，`width`和`height`也是必须的。更详细的属性设置，参见Astro文档中的图片与资源 API 参考[^3]。此处我使用`format="avif" quality="high"`，使转换后的图像与我的原始图像格式、质量保持一致，还添加了`inferSize`属性自动获取远程图像的宽度和高度。
 
 最后一步，转到`astro.config.mjs`，配置实验性标志并开启实验性响应式图像，这样就大功告成了。
-```js
+```js title="astro.config.mjs"
 export default defineConfig({
     experimental: {
         // 启用实验性标志
@@ -45,7 +45,7 @@ export default defineConfig({
 ```
 
 如果像我一样使用远程图像，还需要配置`image.domains`或者`image.remotePatterns`。有关图像的所有配置，参见Astro文档配置参考中的Image 选项部分[^4]。我使用的配置如下：
-```js
+```js title="astro.config.mjs"
 export default defineConfig({
     image: {
         domains: ["example.com"],
@@ -59,7 +59,7 @@ export default defineConfig({
 与文章中的图像不同，在Fuwari中，Avatar、Banner和文章封面由`src/components/misc/ImageWrapper.astro`控制。如果使用本地的图像，经过`astro.config.mjs`的设置后，原先的代码就能够实现响应式图像，为了对远程图像应用响应式图像，我们需要修改其中的代码。
 
 第一处修改，我们要添加一个常量定义来区分出本地图像、公共图像和远程图像。
-```js
+```js title="src/components/misc/ImageWrapper.astro" startLineNumber=17 {7-8}
 const isLocal = !(
   src.startsWith("/") ||
   src.startsWith("http") ||
@@ -74,7 +74,7 @@ const isPublic = src.startsWith("/");
 `isLocal`与`isPublic`是原有的，这里我新增`isRemote`筛选出远程图像。
 
 第二处修改在最下方，我们为远程图像应用`<Image />`组件的写法。
-```html
+```html title="src/components/misc/ImageWrapper.astro" startLineNumber=50 "inferSize={true}"
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
     {isLocal && img && <Image src={img} alt={alt || ""} quality="max" class={imageClass} style={imageStyle}/>}
@@ -89,7 +89,7 @@ const isPublic = src.startsWith("/");
 
 ## 结语
 文章数量太多时，替换某个语句或者调整某个选项非常耗时，此时就可以借助大模型，让它为你编写一个批量替换的脚本。我在插入`quality="high"`时，就用到了ChatGPT提供的代码：
-```python
+```python title="process.py"
 import os
 import re
 
