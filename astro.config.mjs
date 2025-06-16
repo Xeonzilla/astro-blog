@@ -1,4 +1,3 @@
-import cloudflare from "@astrojs/cloudflare";
 import mdx from '@astrojs/mdx';
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -30,7 +29,6 @@ export default defineConfig({
 	site: "https://xeonzilla.top/",
 	base: "/",
 	trailingSlash: "always",
-	adapter: cloudflare(),
 	integrations: [
 		tailwind({
 			nesting: true,
