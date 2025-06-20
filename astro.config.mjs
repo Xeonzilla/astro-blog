@@ -97,7 +97,7 @@ export default defineConfig({
 				showCopyToClipboardButton: false,
 			}
 		}),
-        svelte(),
+		svelte(),
 		sitemap(),
 		mdx(),
 	],
@@ -175,14 +175,14 @@ export default defineConfig({
 	},
 	image: {
 		domains: ["blog-static.xeonzilla.top"],
-		experimentalLayout: "constrained",
+		responsiveStyles: true,
+		layout: "constrained",
 	},
 	i18n: {
 		locales: ["zh-cn"],
 		defaultLocale: "zh-cn",
 	},
 	experimental: {
-		responsiveImages: true,
 		clientPrerender: true,
 		contentIntellisense: true,
 		preserveScriptOrder: true,
