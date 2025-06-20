@@ -8,12 +8,20 @@ interface Props {
 	alt?: string;
 	position?: string;
 	basePath?: string;
+	priority?: boolean;
 }
 
 import { Image } from "astro:assets";
 import { url } from "../../utils/url-utils";
 
-const { id, src, alt, position = "center", basePath = "/" } = Astro.props;
+const {
+	id,
+	src,
+	alt,
+	position = "center",
+	basePath = "/",
+	priority,
+} = Astro.props;
 const className = Astro.props.class;
 
 const isLocal = !(
@@ -51,7 +59,7 @@ const imageStyle = `object-position: ${position}`;
 ---
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
-    {isLocal && img && <Image src={img} alt={alt || ""} quality="max" class={imageClass} style={imageStyle}/>}
-    {isRemote && <Image src={src} alt={alt || ""} quality="max" inferSize={true} class={imageClass} style={imageStyle}/>}
+    {isLocal && img && <Image src={img} alt={alt || ""} quality="max" priority={priority} class={imageClass} style={imageStyle}/>}
+    {isRemote && <Image src={src} alt={alt || ""} quality="max" inferSize={true} priority={priority} class={imageClass} style={imageStyle}/>}
     {isPublic && <img src={url(src)} alt={alt || ""} class={imageClass} style={imageStyle}/>}
 </div>
