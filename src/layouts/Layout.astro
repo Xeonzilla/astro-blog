@@ -267,6 +267,71 @@ function disableAnimation() {
 }
 */
 
+// Anti-malicious site mirroring
+document.addEventListener('DOMContentLoaded', () => {
+    function toHex(str: string): string {
+        return [...str].map((c: string) =>
+            c.charCodeAt(0).toString(16).padStart(2, '0')
+        ).join('');
+    }
+
+    function fromHex(hex: string): string {
+        const matches = hex.match(/.{1,2}/g);
+        if (!matches) return '';
+        return matches.map((byte: string) =>
+            String.fromCharCode(parseInt(byte, 16))
+        ).join('');
+    }
+
+    function redirectToOfficialSite(): void {
+        const official = fromHex('68747470733a2f2f78656f6e7a696c6c612e746f70');
+        window.location.href = official;
+    }
+
+    const encodedDomains = [
+        '78656f6e7a696c6c612e746f70',
+        '7777772e78656f6e7a696c6c612e746f70',
+        '6c6f63616c686f7374',
+        '3139382e31382e302e31'
+    ];
+
+    const rawHost: string = window.location.host;
+    const host: string = rawHost.split(':')[0];
+    const encodedHost: string = toHex(host);
+
+    const isValid: boolean = encodedDomains.some(hex => encodedHost.startsWith(hex));
+
+    if (!isValid) {
+        document.body.innerHTML = `
+    		<div>
+        		<h1>⚠ 当前页面并非作者的官方网站</h1>
+        		<p>您正在访问的页面并非本站作者授权发布的内容。</p>
+        		<p>为了保护原创内容，您将在 <strong>5 秒后</strong> 自动跳转至作者的官方网站。</p>
+        		<hr style="width: 60%; margin: 1em auto;">
+        		<h2>⚠ This is NOT the original author's official website</h2>
+        		<p>The page you are visiting is not officially published by the author.</p>
+        		<p>You will be redirected to the official site in <strong>5 seconds</strong> to protect original content.</p>
+   			</div>
+	    `;
+
+        document.body.style.cssText = `
+            background-color: white;
+            color: black;
+            text-align: center;
+            font-size: 2em;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        `;
+
+        setTimeout(() => redirectToOfficialSite(), 5000);
+    }
+});
+
 const bannerEnabled = !!document.getElementById('banner-wrapper')
 
 function setClickOutsideToClose(panel: string, ignores: string[]) {
