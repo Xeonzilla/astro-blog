@@ -8,8 +8,6 @@ tags:
   - "Blowfish"
 category: "博客建设"
 ---
-import { Image } from 'astro:assets';
-
 ## 契机
 原本Giscus + Telegram Comments的双评论系统在缝缝补补后也算高度可用，但是最近的一些事件最终促成了我再次更换评论系统。
 
@@ -116,7 +114,7 @@ Waline的部署非常方便，而且官方文档[^1]也非常详尽，只需跟�
 ```
 在单独启动Waline测试的时候，Waline占据页面的全部宽度，此时文本框的位置正常。可能是Waline或Blowfish对宽度的设置和判断出现了问题。
 
-<Image src="https://blog-static.xeonzilla.top/img/waline/01.avif" alt="文本框溢出" quality="max" inferSize />
+![文本框溢出](https://blog-static.xeonzilla.top/img/waline/01.avif "文本框溢出")
 
 Waline提供了浏览数统计功能，于是我们也可以跟随官方文档在代码中启用，为了让它能够和评论区融为一体，我们直接使用Waline预设的样式：
 ```css title="layouts/partials/comments.html" startLineNumber=20
