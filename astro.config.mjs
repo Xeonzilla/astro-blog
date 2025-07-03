@@ -179,6 +179,7 @@ export default defineConfig({
 		}],
 		responsiveStyles: true,
 		layout: "constrained",
+		breakpoints: [480, 750, 920, 1200, 1600, 1920, 2400],
 	},
 	i18n: {
 		locales: ["zh-cn"],
