@@ -1,3 +1,4 @@
+import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -22,8 +23,8 @@ import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { remarkImagesComponent } from "./src/plugins/remark-image-component.mjs";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
-import mdx from "@astrojs/mdx";
 
 export default defineConfig({
 	site: "https://xeonzilla.top/",
@@ -103,6 +104,7 @@ export default defineConfig({
 	],
 	markdown: {
 		remarkPlugins: [
+			remarkImagesComponent,
 			remarkMath,
 			remarkReadingTime,
 			remarkExcerpt,
