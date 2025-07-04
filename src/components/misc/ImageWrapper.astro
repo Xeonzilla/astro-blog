@@ -9,6 +9,8 @@ interface Props {
 	position?: string;
 	basePath?: string;
 	widths?: number[];
+	quality?: string | number;
+	sizes?: string;
 	priority?: boolean;
 }
 
@@ -22,6 +24,8 @@ const {
 	position = "center",
 	basePath = "/",
 	widths,
+	quality,
+	sizes,
 	priority,
 } = Astro.props;
 const className = Astro.props.class;
@@ -61,7 +65,7 @@ const imageStyle = `object-position: ${position}`;
 ---
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
-    {isLocal && img && <Image src={img} alt={alt || ""} quality="max" widths={widths} priority={priority} class={imageClass} style={imageStyle}/>}
-    {isRemote && <Image src={src} alt={alt || ""} quality="max" inferSize={true} priority={priority} class={imageClass} style={imageStyle}/>}
-    {isPublic && <img src={url(src)} alt={alt || ""} class={imageClass} style={imageStyle}/>}
+    {isLocal && img && <Image src={img} alt={alt || ""} widths={widths} quality={quality} sizes={sizes} priority={priority} class={imageClass} style={imageStyle}/>}
+    {isRemote && <Image src={src} alt={alt || ""} inferSize={true} widths={widths} quality={quality} sizes={sizes} priority={priority} class={imageClass} style={imageStyle}/>}
+    {isPublic && <img src={url(src)} alt={alt || ""} sizes={sizes} class={imageClass} style={imageStyle}/>}
 </div>
