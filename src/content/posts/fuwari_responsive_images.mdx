@@ -1,18 +1,25 @@
 ---
 title: "为Fuwari启用响应式图像"
 published: 2025-05-14
+updated: 2025-07-13
 tags: 
   - "技术"
   - "Astro"
   - "Fuwari"
 category: "博客建设"
 ---
-## 前言
+## 补序
+本文创作的主要方向是记录而非教程，可能存在不严谨与缺漏。
+
+第一次阅读这篇文章，且将本文作为教程的读者，请先耐心地通读一遍全文，因为本文分多次写成，前后操作与代码修改恐有矛盾之处，还需读者多加思考，自行解决可能遇到的问题。
+
+## 初次修改
+### 前言
 自从我接触博客的性能优化，就非常向往响应式图像，可惜直到我迁移站点，Hugo仍旧没有支持Avif。Astro支持响应式图像，但是没有默认开启，需要在`astro.config.mjs`设置，还需要在博客的其他部分自行适配。
 
 Fuwari没有进行响应式图像的适配，这意味着我们需要自行修改代码。
 
-## 文章中的图像
+### 文章中的图像
 对文章中图像的调整较为简单，因为不涉及代码，只需要批量的替换。
 
 首先，也是最重要的一步，就是为Fuwari引入MDX。详细的引入教程可以参考Astro文档[^1]。为什么要引入MDX代替Markdown呢？因为我们需要使用使用Astro的`<Image />`组件创建响应式图片，而Markdown不支持这些组件，只能使用标准语法。更详细的对比和有关`<Image />`组件的特性，可以参考Astro文档对此的说明[^2]。
@@ -22,11 +29,13 @@ Fuwari没有进行响应式图像的适配，这意味着我们需要自行修�
 在正确引入MDX后，将站点的所有`.md`重命名为`.mdx`，这样就算完成了第一步。
 
 接下来我们需要为MDX引入`<Image />`组件，因为这些组件来自Astro，并非原生功能或语法。在Front Matter的下方，添加一行代码，因为我只用到了`<Image />`组件，所以只需引入`Image`，如果后续用到了`<Picture />`组件，则需要相应地引入`Picture`。
-```mdx title="src/content/posts/example.mdx"```
+```mdx title="src/content/posts/example.mdx"
+import { Image } from 'astro:assets';
+```
 
 最后就是替换图片的语法了。将原生的Markdown语法`![示例](example.png "示例")`批量替换为`<Image />`组件的写法。
 ```mdx title="src/content/posts/example.mdx"
-![示例](example.png "示例")
+<Image src="example.png" alt="示例" format="avif" quality="high" inferSize />
 ```
 
 其中，`src`和`alt`属性是必须的，对于`public/`中的图像，`width`和`height`也是必须的。更详细的属性设置，参见Astro文档中的图片与资源 API 参考[^3]。此处我使用`format="avif" quality="high"`，使转换后的图像与我的原始图像格式、质量保持一致，还添加了`inferSize`属性自动获取远程图像的宽度和高度。
@@ -53,11 +62,11 @@ export default defineConfig({
 });
 ```
 
-## Avatar、Banner和文章封面
+### Avatar、Banner和文章封面
 与文章中的图像不同，在Fuwari中，Avatar、Banner和文章封面由`src/components/misc/ImageWrapper.astro`控制。如果使用本地的图像，经过`astro.config.mjs`的设置后，原先的代码就能够实现响应式图像，为了对远程图像应用响应式图像，我们需要修改其中的代码。
 
 第一处修改，我们要添加一个常量定义来区分出本地图像、公共图像和远程图像。
-```js title="src/components/misc/ImageWrapper.astro" startLineNumber=17 {7-8}
+```js title="src/components/misc/ImageWrapper.astro" startLineNumber=17 ins={7-8}
 const isLocal = !(
   src.startsWith("/") ||
   src.startsWith("http") ||
@@ -83,9 +92,9 @@ const isPublic = src.startsWith("/");
 
 有关具体的属性设置不再赘述，唯一需要注意的是`isRemote`行的`inferSize={true}`，对于远程图像，这是必须的属性，因为我们不能在这个需要复用的组件指定的宽度和高度。
 
-至此，Fuwari中的所有图像都应该是响应式的，且能有效避免累积布局偏移（CLS）。
+至此，Fuwari中的所有图像都应该能有效避免累积布局偏移（CLS）了。
 
-## 结语
+### 结语
 文章数量太多时，替换某个语句或者调整某个选项非常耗时，此时就可以借助大模型，让它为你编写一个批量替换的脚本。我在插入`quality="high"`时，就用到了ChatGPT提供的代码：
 ```python title="process.py"
 import os
@@ -127,7 +136,335 @@ Cloudflare Pages提供了构建缓存，但是我的项目从来没有复用缓�
 
 目前博客已经能够正确显示占位符，避免了CLS，但是占位符只是一个简单的色块，配上`alt`的描述文本，看上去有些简朴。后续如果能自定义占位符，或是显示加载动画，就更好了。
 
+## 二次修改
+### 前情提要
+第一次的修改看似改动了很多地方，实际上只是完成了“防止CLS”这一步，离我们响应式图像的目标尚有距离。响应式图像最重要的两个属性是`srcset`和`sizes`，前者定义了一个可供浏览器选择的图片合集，后者定义了一组媒体条件和对应条件下的最佳宽度，更专业的定义可在MDN Web Docs[^5]找到。
+
+在动工之前，首先需要同步Astro的更改。在Astro的5.10版本中，响应式图像从实验性功能变为正式选项，配置文件也需要同步更改。
+
+```js title="astro.config.mjs" del={3-4,12-14} ins={5-10}
+export default defineConfig({
+    image: {
+        domains: ["example.com"],
+        experimentalLayout: "constrained",
+        remotePatterns: [{
+            protocol: "https",
+        }],
+        responsiveStyles: true,
+        layout: "constrained",
+        breakpoints: [480, 750, 920, 1200, 1600, 1920, 2400],
+    },
+    experimental: {
+        responsiveImages: true,
+    },
+});
+```
+
+在上面的配置文件中，除了常规性的修改，我还将远程图像的来源放宽，接受一切https来源的图像，以优化来自友链的其他图片。
+
+不久前我听从Cloudflare的建议，将站点由Cloudflare Pages迁移到了Cloudflare Workers，而Workers有20分钟的编译时长限制，如果我使用Avif，站点是编译不出来的，在这一背景下，我决定回到WebP。
+
+### 基础配置
+在这么多次的探索与修改中，我意识到定位并修改某个特定位置的代码其实是件很花费精力的事情，为了避免这种情况，我们首先需要创建一个基础的配置文件来管理配置，这样即使后续要再次修改，也能很方便地在配置文件中完成。我将这个配置文件命名为`image-config.ts`。
+
+```ts title="src/image-config.ts"
+const baseImageConfig = {
+    quality: "max" as const,
+};
+
+export const markdownImageConfig = {
+    ...baseImageConfig,
+    sizes:
+        "(max-width: 767px) calc(100vw - 42px), (max-width: 1023px) calc(100vw - 104px), (max-width: 1199px) calc(100vw - 400px), 800px",
+};
+
+export const avatarImageConfig = {
+    ...baseImageConfig,
+    widths: [168, 192, 256, 384, 512],
+    sizes: "(max-width: 767px) 168px, (max-width: 1023px) 192px, 256px",
+};
+
+export const bannerImageConfig = {
+    ...baseImageConfig,
+    widths: [480, 828, 1280, 1668, 1920, 2388],
+    sizes: "100vw",
+};
+
+export const coverImageConfig = {
+    ...baseImageConfig,
+    widths: [244, 488, 732],
+    sizes:
+        "(max-width: 767px) calc(100vw - 28px), (max-width: 1023px) calc(28vw - 9px), (max-width: 1199px) calc(28vw - 92px), 244px",
+};
+```
+
+这份配置包含`markdownImageConfig`、`avatarImageConfig`、`bannerImageConfig`、`coverImageConfig`，分别对应着文章页的图像（包括文章页的封面图像）、博主头像、背景横幅图像和主页文章卡片的封面图像。
+
+`markdownImageConfig`中并没有`widths`属性，因为在Fuwari中，文章页的图像由`astro.config.mjs`控制，我们需要使用图像断点控制`widths`属性。其余图像由`ImageWrapper.astro`控制。
+
+```js title="astro.config.mjs"
+export default defineConfig({
+    image: {
+        breakpoints: [480, 750, 920, 1200, 1600, 1920, 2400],
+    },
+});
+```
+
+配置中包含了大量的`sizes`阈值，这些参数都是手工测量出来的，因为Fuwari整体的结构相当复杂，想要在代码中观察站点样式和图像尺寸的变化，对我来说难度太高，F12手工测量反而更加省时省力。如果有能从代码得出布局变化阈值与图像缩放规律的读者，欢迎留言或与我联系。
+
+`widths`与`breakpoints`是我根据Astro文档、`sizes`阈值、编译时间与编译产物大小综合判断的，可以根据需求自行调整，调整时应注意对应阈值所需的图像尺寸。
+
+### 文章中的图像
+我们先从文章中的图像开始修改，这一点与上面一致。这一次，为了节约调用的成本，我决定自行封装一个图像组件，这样在使用图像语法时，就不必再写重复的参数了。
+
+```js title="src/components/MarkdownImage.astro"
+---
+import { Image } from "astro:assets";
+import { markdownImageConfig } from "@/image-config.ts";
+
+interface Props {
+    src: string;
+    alt: string;
+    quality?: string | number;
+    sizes?: string;
+    class?: string;
+}
+
+const {
+    src,
+    alt,
+    quality = markdownImageConfig.quality,
+    sizes = markdownImageConfig.sizes,
+    class: className,
+} = Astro.props;
+---
+
+<Image
+  src={src}
+  alt={alt}
+  quality={quality}
+  sizes={sizes}
+  inferSize={true}
+  class:list={[className]}
+/>
+```
+
+这个组件没有判断图像来源，默认所有图像为远程图像并应用`inferSize`属性，因为本站点除Avatar、Banner外的所有图像都储存在Cloudflare R2中，没有在代码中做冗余判断的必要。如果图像来自本地且想要像我一样自行封装组件，可参考上文与`ImageWrapper.astro`添加图像来源的判断。
+
+在MDX引入这个组件后，就可以用类似的语法使用它，且无需声明参数。
+```mdx title="src/content/posts/example.mdx"
+<MarkdownImage src="example.png" alt="示例" />
+```
+
+### Avatar、Banner和文章封面
+这些图像仍由`ImageWrapper.astro`控制，因此在修改时，我们还是要先改造`ImageWrapper.astro`。
+```js title="src/components/misc/ImageWrapper.astro" collapse={1-3,15-18,30-60} ins={11-13,25-27} "widths={widths} quality={quality} sizes={sizes}"
+---
+import path from "node:path";
+
+interface Props {
+    id?: string;
+    src: string;
+    class?: string;
+    alt?: string;
+    position?: string;
+    basePath?: string;
+    widths?: number[];
+    quality?: string | number;
+    sizes?: string;
+}
+
+import { Image } from "astro:assets";
+import { url } from "../../utils/url-utils";
+
+const {
+    id,
+    src,
+    alt,
+    position = "center",
+    basePath = "/",
+    widths,
+    quality,
+    sizes,
+} = Astro.props;
+const className = Astro.props.class;
+
+const isLocal = !(
+    src.startsWith("/") ||
+    src.startsWith("http") ||
+    src.startsWith("https") ||
+    src.startsWith("data:")
+);
+const isRemote =
+    src.startsWith("http") || src.startsWith("https") || src.startsWith("data:");
+const isPublic = src.startsWith("/");
+
+let img;
+if (isLocal) {
+    const files = import.meta.glob<ImageMetadata>("../../**", {
+        import: "default",
+    });
+    let normalizedPath = path
+        .normalize(path.join("../../", basePath, src))
+        .replace(/\\/g, "/");
+    const file = files[normalizedPath];
+    if (!file) {
+        console.error(
+            `\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")}`,
+        );
+    }
+    img = await file();
+}
+
+const imageClass = "w-full h-full object-cover";
+const imageStyle = `object-position: ${position}`;
+---
+<div id={id} class:list={[className, 'overflow-hidden relative']}>
+    <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
+    {isLocal && img && <Image src={img} alt={alt || ""} widths={widths} quality={quality} sizes={sizes} class={imageClass} style={imageStyle}/>}
+    {isRemote && <Image src={src} alt={alt || ""} inferSize={true} widths={widths} quality={quality} sizes={sizes} class={imageClass} style={imageStyle}/>}
+    {isPublic && <img src={url(src)} alt={alt || ""} sizes={sizes} class={imageClass} style={imageStyle}/>}
+</div>
+```
+
+改造后，`ImageWrapper.astro`就可以接受我们在其他组件中传入的`width`、`quality`和`sizes`属性了。
+
+然后，我们就得进入对应的组件里，添加我们新增的参数。这里以Avatar所在的`Profile.astro`为例。
+```js title="src/components/widget/Profile.astro" collapse={22-39} ins={3} {20}
+---
+import { Icon } from "astro-icon/components";
+import { avatarImageConfig } from "@/image-config";
+import { profileConfig } from "../../config";
+import { url } from "../../utils/url-utils";
+import ImageWrapper from "../misc/ImageWrapper.astro";
+
+const config = profileConfig;
+---
+<div class="card-base p-3">
+    <a aria-label="Go to About Page" href={url('/about/')}
+       class="group block relative mx-auto mt-1 lg:mx-0 lg:mt-0 mb-3
+       max-w-[12rem] lg:max-w-none overflow-hidden rounded-xl active:scale-95">
+        <div class="absolute transition pointer-events-none group-hover:bg-black/30 group-active:bg-black/50
+        w-full h-full z-50 flex items-center justify-center">
+            <Icon name="fa6-regular:address-card"
+                  class="transition opacity-0 scale-90 group-hover:scale-100 group-hover:opacity-100 text-white text-5xl">
+            </Icon>
+        </div>
+        <ImageWrapper src={config.avatar || ""} alt="Profile Image of the Author" widths={avatarImageConfig.widths} quality={avatarImageConfig.quality} sizes={avatarImageConfig.sizes} class="mx-auto lg:w-full h-full lg:mt-0 "></ImageWrapper>
+    </a>
+    <div class="px-2">
+        <div class="font-bold text-xl text-center mb-1 dark:text-neutral-50 transition">{config.name}</div>
+        <div class="h-1 w-5 bg-[var(--primary)] mx-auto rounded-full mb-2 transition"></div>
+        <div class="text-center text-neutral-400 mb-2.5 transition">{config.bio}</div>
+        <div class="flex gap-2 justify-center mb-1">
+            {config.links.length > 1 && config.links.map(item =>
+                    <a rel="me" aria-label={item.name} href={item.url} target="_blank" class="btn-regular rounded-lg h-10 w-10 active:scale-90">
+                        <Icon name={item.icon} class="text-[1.5rem]"></Icon>
+                    </a>
+            )}
+            {config.links.length == 1 && <a rel="me" aria-label={config.links[0].name} href={config.links[0].url} target="_blank"
+                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                <Icon name={config.links[0].icon} class="text-[1.5rem]"></Icon>
+                {config.links[0].name}
+            </a>}
+        </div>
+    </div>
+</div>
+```
+
+我们需要在上方从`image-config.ts`引入所需的配置，然后在下方的`<ImageWrapper>`标签处，新增我们的属性。得益于独立配置文件，我们可以避免在这里进行硬编码，使得代码模块化，更易于维护。
+
+`PostCard.astro`、`MainGridLayout.astro`和`[...slug].astro`也是如法炮制，总体而言，要修改的代码其实并不多，测量得到`sizes`的一系列阈值才是麻烦的一步。
+
+这里需要格外注意`PostCard.astro`与`[...slug].astro`的区别。PostCard是主页文章列表的小卡片，对应着`coverImageConfig`；而[...slug]是代指每一篇文章的链接，它控制的是文章最上方的封面，虽然同为封面，但是它的布局、尺寸都与文章中的插图一致，此处应该应用`markdownImageConfig`。
+
+### 语法简化
+在MDX使用组件时，都需要在开头进行引入，例如`import { Image } from 'astro:assets';`，但是我们可以通过在文章模板中引入，省去每篇文章的重复操作。
+
+首先我们在开头引入我们的自定义组件：
+```js title="src/pages/posts/[...slug].astro" startLineNumber=10 ins={5}
+import { getDir, getPostUrlBySlug } from "@utils/url-utils";
+import { Icon } from "astro-icon/components";
+import { licenseConfig } from "src/config";
+import { markdownImageConfig } from "@/image-config";
+import MarkdownImage from "../../components/MarkdownImage.astro";
+import ImageWrapper from "../../components/misc/ImageWrapper.astro";
+import PostMetadata from "../../components/PostMeta.astro";
+import { profileConfig, siteConfig } from "../../config";
+import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+```
+
+然后在`<Content>`标签处传入我们的组件：
+```js title="src/pages/posts/[...slug].astro" startLineNumber=108 "components={{ MarkdownImage: MarkdownImage }}"
+<Markdown class="mb-6 markdown-content onload-animation">
+    <Content components={{ MarkdownImage: MarkdownImage }} />
+</Markdown>
+```
+
+这一操作实际上是在告诉Markdown，每当遇到`<MarkdownImage>`标签时，就使用我们引入的名为MarkdownImage的组件。这样一来，就不必再在每篇文章引入了。
+
+省去了一步引入后，写作仍不是很顺手，其实不是因为这一行引入有多费事，而是我早已习惯了Markdown的语法，于是我又新建了一个插件，用来转换图片语法。
+
+```js title="src/plugins/remark-image-component.mjs"
+import { visit } from "unist-util-visit";
+import { markdownImageConfig } from "../image-config.ts";
+
+export function remarkImagesComponent() {
+    return (tree) => {
+        visit(tree, "image", (node) => {
+            node.type = "mdxJsxFlowElement";
+            node.name = "MarkdownImage";
+
+            node.attributes = [
+                { type: "mdxJsxAttribute", name: "src", value: node.url },
+                { type: "mdxJsxAttribute", name: "alt", value: node.alt },
+                {
+                    type: "mdxJsxAttribute",
+                    name: "quality",
+                    value: markdownImageConfig.quality,
+                },
+                {
+                    type: "mdxJsxAttribute",
+                    name: "sizes",
+                    value: markdownImageConfig.sizes,
+                },
+            ];
+
+            delete node.url;
+            delete node.alt;
+            delete node.title;
+        });
+    };
+}
+```
+
+这个插件的作用，就是拦截MDX中的原生Markdown图片语法，将对应的属性传入到模板中，将原生语法翻译为图像组件。创建好了插件，在配置中引入即可。
+```js title="astro.config.mjs" ins={1,6}
+import { remarkImagesComponent } from "./src/plugins/remark-image-component.mjs";
+
+export default defineConfig({
+        markdown: {
+        remarkPlugins: [
+            remarkImagesComponent,
+            remarkMath,
+            remarkReadingTime,
+            remarkExcerpt,
+            remarkGithubAdmonitionsToDirectives,
+            remarkDirective,
+            remarkSectionize,
+            parseDirectiveNode,
+        ],
+    },
+});
+```
+
+### 最终总结
+经过了漫长的探索与改造，我们终于是完成了响应式图像的设置。更改后的Fuwari能够在图像加载前显示占位符，还能根据设备的尺寸，选择最佳的图像显示大小。在一次彻底的施工后，文章写作方式不需要任何改动，我觉得，这个方案已经是我能做到的极致了。
+
+响应式图像是一个复杂的机制，除了我们设置的`widths`、`sizes`属性外，还有其他因素在影响着显示效果，例如`devicePixelRatio`，所以这套代码并不是任何时候都会做出最佳响应。至少对我而言，这是一次非常有趣的探索过程，最终成效反而不是重点。
+
 [^1]:[@astrojs/mdx | Docs](https://docs.astro.build/zh-cn/guides/integrations-guide/mdx/)
 [^2]:[图像 | Docs](https://docs.astro.build/zh-cn/guides/images/)
 [^3]:[图片与资源 API 参考 | Docs](https://docs.astro.build/zh-cn/reference/modules/astro-assets/)
 [^4]:[配置参考 | Docs](https://docs.astro.build/zh-cn/reference/configuration-reference/#image-%E9%80%89%E9%A1%B9)
+[^5]:[响应式图片 - HTML（超文本标记语言） | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Guides/Responsive_images)
