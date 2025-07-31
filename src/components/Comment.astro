@@ -20,6 +20,18 @@ const config = {
 				envId: "https://twikoo.xeonzilla.top",
 				lang: "zh-CN",
 			});
+			// Prevent Twikoo's internal <a href="#"> tags from causing the page to scroll to the top.
+			const commentContainer = document.getElementById("twikoo");
+			if (commentContainer) {
+				commentContainer.addEventListener("click", function (e) {
+    				const selector = 'a[href="#"], svg, [class*="tk-action-"]';
+				    const targetElement = e.target.closest(selector);
+					if (targetElement) {
+					    e.preventDefault();
+					    e.stopPropagation();
+					}
+				});
+			}
 		};
 		document.body.appendChild(script);
 	}
