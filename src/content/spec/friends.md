@@ -1,11 +1,14 @@
->## 本站点信息
->- 名称：Xeonzilla's Note
->- 简介：Yuri is life.
->- 链接：https://xeonzilla.top/
->- 头像：https://xeonzilla.top/img/avatar.avif
+## 友链说明
 
 欢迎交换友链！有意者请在下方评论留言，或通过其他方式与我联系～
 
 为保持本站内容质量与风格一致性，所有友链申请将经过个人主观的筛选，审核标准可能出现变化，因而并非所有申请都会被采纳。未通过的请求将不再另行通知，相关留言也可能会被移除，敬请谅解。
 
 同时，我会不定期审查现有友链，若发现站点无法访问、内容变更较大或其他不再适合作为友链展示的情况，亦可能会在未提前通知的情况下移除相关链接。您也可以基于自身考量对本站进行审查，若认为本站不再适合作为友链展示，欢迎随时移除，无需特别告知。
+
+```plaintext title="本站点信息" frame="terminal" showLineNumbers=false
+名称：Xeonzilla's Note
+简介：Yuri is life.
+链接：https://xeonzilla.top/
+头像：https://xeonzilla.top/img/avatar.avif
+```
