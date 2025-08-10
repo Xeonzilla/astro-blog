@@ -10,7 +10,7 @@ category: "博客建设"
 ## 起因
 在初步完成个人Github Pages的搭建后，我就一直在考察除Giscus[^1]外的其他评论系统。虽说Giscus托管在Github上、而且免费开源、不包含广告，看上去全是优点，但是我忽略了一个重要的因素：用户来源。
 
-正如我在[关于](/about/)中所说，这个博客是我的动画Telegram频道[^2]的一种拓展，主要发布的内容也是动画相关的观后感。至于技术博文或是其他内容，只有在我认为有必要时才起身写作。
+正如我在[关于](/about/)中所说，这个博客是我的动画Telegram频道[^2]的一种扩展，主要发布的内容也是动画相关的观后感。至于技术博文或是其他内容，只有在我认为有必要时才起身写作。
 
 而Github Pages和Giscus，还是用在技术博客居多。在技术博客上要求用户使用Github登录，是一件非常自然、非常顺理成章的事；而在一篇动画观后感的评论区要求使用Github登录，显得有些离题万里、不合逻辑，这极有可能打击了用户的评论欲望。
 
@@ -163,7 +163,7 @@ category: "博客建设"
 下面的代码是从完整代码中分离出来的，它们极有可能**无法独立工作**，仅作解析思路用。
 
 ### Comments Widget
-官方页面会在你填入所需信息和所选项后自动生成代码，和Giscus类似，如无特殊需求，直接复制代码至`layouts/partical/comments.html`即可使用。
+官方页面会在你填入所需信息和所选项后自动生成代码，和Giscus类似，如无特殊需求，直接复制代码至`layouts/partials/comments.html`即可使用。
 
 但是为了实现功能，我们需要对代码进行改造。
 ```html title="layouts/partials/comments.html"
@@ -219,7 +219,7 @@ category: "博客建设"
 
 重载能完成主题切换，但是我们不需要让它在任何操作后都重载，所以需要设置一个标志`let telegramLoaded = false`，当Comments Widget完成首次加载后将标志设置为`true`，避免用户多次切换评论区导致重复加载。
 
-在样式上，`min-height: 378.2px`起占位作用，在Comments Widget加载前维持页面元素的相对位置。378.2px是Giscus没有评论时的高度，也是所有情况下的最小高度，保持默认高度一致，使用户在切换评论系统时，页面元素不会位移。
+在样式上，`min-height: 378.2px`起占位作用，在Comments Widget加载前维持页面元素的相对位置。378.2px是Giscus没有评论时的高度，也是所有情况下的最小高度，与默认高度保持一致，使用户在切换评论系统时，页面元素不会位移。
 
 ### 切换按钮
 相比之下，切换按钮的逻辑就较为简单，主要是样式上的调整。
@@ -308,7 +308,7 @@ Telegram除了提供Comments Widget外，还提供了Discussion Widget[^4]将频
 
 这样的特性不仅为Discussion Widget带来不便，还在广告投放者手中“被妙用”：他们往往会先在群组中发送一条正常的消息，随后将消息编辑为广告文案，以此躲过反广告机器人的识别与检测。
 
-总体而言，Discussion Widget并不是一套完善、高度可用的评论系统，它更适用于日常社交与个人Telegram频道相关性强的用户，否则，Discussion Widget并没有与Waline一较高下的实力。
+总体而言，Discussion Widget并不是一套完善、高度可用的评论系统，它更适用于那些日常社交活动与个人Telegram频道高度相关的用户，否则，Discussion Widget在功能性上并没有与Waline一较高下的能力。
 
 如果像我一样已经有一个公开频道，此时接入Discussion Widget将会非常不便，需要为旧博文手动关联评论区，影响频道的内容展示；而如果没有公开频道，创建并使用Discussion Widget也未尝不可。
 
@@ -319,7 +319,7 @@ Telegram除了提供Comments Widget外，还提供了Discussion Widget[^4]将频
 
 使用额外部署的评论系统、调用一套第三方服务，就像引入新的外部依赖，它不一定会让博客变得不稳定，但是会让我感到复杂、不安定。相比之下，使用Comments Widget，将评论系统接入日常使用的社交软件，给我的感觉更合理、更无缝。
 
-但是结论不能没有余地，当有需要再次添加评论系统，或是博客重构的时候，Waline（或是它的继任者）会是一个好选择。
+当然，结论也并非一成不变，当有需要再次添加评论系统，或是博客重构的时候，Waline（或是它的继任者）会是一个好选择。
 
 [^1]:[giscus](https://giscus.app/)
 [^2]:[Xeon的Anime观察日志](https://t.me/XeonAnimeLog)
@@ -327,4 +327,3 @@ Telegram除了提供Comments Widget外，还提供了Discussion Widget[^4]将频
 [^4]:[Discussion Widget](https://core.telegram.org/widgets/discussion)
 [^5]:[Waline | Waline](https://waline.js.org/)
 [^6]:[Vercel: Build and deploy the best web experiences with the Frontend Cloud](https://vercel.com/home)
-
