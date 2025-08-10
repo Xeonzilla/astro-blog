@@ -236,19 +236,19 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 
 这些方案我都一一尝试，但是无一例外，都会遇到形如`execute of template failed at <$img.Width>: error calling Width: this method is only available for image resources`的错误。
 
-一开始我以为是站点结构、函数参数之类的代码错误，一番碰壁心灰意冷后，在无意间搜索”Hugo AVIF“时，才得到答案：Hugo并不支持处理AVIF。
+一开始我以为是站点结构、函数参数之类的代码错误，一番碰壁心灰意冷后，在无意间搜索“Hugo AVIF”时，才得到答案：Hugo并不支持处理AVIF。
 
 Hugo的Github仓库中有一个2020年创建的Issue：[Add image processing support for AVIF · Issue #7837 · gohugoio/hugo](https://github.com/gohugoio/hugo/issues/7837)，其中就有对AVIF支持的请求，而开发者也做出了回复：
 >No. I'm the one who spend the most of my free time maintaining this project, so adding new C(++) dependencies is almost never going to happen unless we really, really need it. I have not calculated the cost of adding WebP to Hugo, but it wasn't cheap. I'll keep this issue open as things may change, but it's not very likely unless a top quality native Go decoder/encoder pops up.
 >
 >不。我是那个花费大量空闲时间维护这个项目的人，所以除非我们真的非常需要，否则几乎不会添加新的C(++)依赖。我没有计算过将WebP支持添加到Hugo的成本，但成本并不低。我会保持这个问题的开放状态，因为情况可能会发生变化，但除非出现高质量的（以Go编写的）AVIF解码器/编码器，否则这种可能性不大。
 
-直到这篇文章诞生之时，许多Hugo用户期待的”以Go编写的高质量的AVIF解码器/编码器“仍然没有出现，或是出现了但是没有合并到Hugo之中，于是Hugo对AVIF的支持也就没有了下文。
+直到这篇文章诞生之时，许多Hugo用户期待的“以Go编写的高质量的AVIF解码器/编码器”仍然没有出现，或是出现了但是没有合并到Hugo之中，于是Hugo对AVIF的支持也就没有了下文。
 
 ### 伪解决方案的优劣
-既然Hugo不支持处理AVIF格式的图片，出现”this method is only available for image resources“的报错也就不难理解了：在Hugo眼中，AVIF格式的图片不属于图片资源。
+既然Hugo不支持处理AVIF格式的图片，出现“this method is only available for image resources”的报错也就不难理解了：在Hugo眼中，AVIF格式的图片不属于图片资源。
 
-失去了Hugo的图片处理功能，不仅让我的”响应式图片“被禁用，更让CLS的解决变得很曲折，最终在有限的时间和知识储备下，我得到了上面的伪解决方案。虽说称其为”伪解决方案“，但是这种方法还是有其独特的优势：
+失去了Hugo的图片处理功能，不仅让我的“响应式图片”被禁用，更让CLS的解决变得很曲折，最终在有限的时间和知识储备下，我得到了上面的伪解决方案。虽说称其为“伪解决方案”，但是这种方法还是有其独特的优势：
 - 图片格式的向后兼容性
 - 跨生成器的兼容性
 
@@ -260,7 +260,7 @@ Hugo的Github仓库中有一个2020年创建的Issue：[Add image processing sup
 - 占位元素大小固定，不随图片尺寸变化
 - 没有二次计算的能力
 
-占位元素大小固定是非常致命的缺点，也是这个方案被称作”伪解决“的根本原因。在无法提前获知图片尺寸的情况下，我们无法对占位容器做出调整，只能够选择固定一个通用大小。通过HTML和JavaScript当然也能够实现提前获知图片尺寸，但是这样实现的图片加载前调整在网页加载周期的位置过于靠后，几乎是调整容器大小和图片加载同步进行，起不到”提前“的作用，同样会引入CLS，还会使代码更加复杂，因此作罢。
+占位元素大小固定是非常致命的缺点，也是这个方案被称作“伪解决”的根本原因。在无法提前获知图片尺寸的情况下，我们无法对占位容器做出调整，只能够选择固定一个通用大小。通过HTML和JavaScript当然也能够实现提前获知图片尺寸，但是这样实现的图片加载前调整在网页加载周期的位置过于靠后，几乎是调整容器大小和图片加载同步进行，起不到“提前”的作用，同样会引入CLS，还会使代码更加复杂，因此作罢。
 
 上面的伪解决方案在加载非16:9比例的图片时，会二次调整位置。鉴于我所使用的图片大多为动画截图，比例一致，二次调整位置所引入的CLS较少，于是这个伪解决方案在我个人的使用场景才下有了成立的可能。
 
@@ -271,9 +271,9 @@ Hugo的Github仓库中有一个2020年创建的Issue：[Add image processing sup
 ### 为什么是AVIF
 其实在遇到这个问题的一刻，我也有考虑过将站点的所有图片格式更换为WebP，但是经过个人不严谨且主观的尝试与对比后，我放弃了。AVIF在压缩质量和体积上都比WebP更有优势，尤其在某些纹理复杂的场景，WebP会涂抹细节，而AVIF能将纹理尽可能地保留。作为一个主要发布观后感和动画截图的博客，我个人认为图片质量还是相当重要的，于是AVIF就这样被坚持了下来。
 
-个人认为AVIF是一个典型的”半代产品“，前有WebP，作为出现相对早且被广泛应用的现代图片格式；后有JPEG XL和WebP2，提供了更高的压缩率、画面细节与其它参数。AVIF作为中间派，在浏览器普及率和性能间取得了平衡，是我比较喜欢的中庸做派。
+个人认为AVIF是一个典型的“半代产品”，前有WebP，作为出现相对早且被广泛应用的现代图片格式；后有JPEG XL和WebP2，提供了更高的压缩率、画面细节与其它参数。AVIF作为中间派，在浏览器普及率和性能间取得了平衡，是我比较喜欢的中庸做派。
 
-AVIF的压缩性能过于强大，以至于质量为20的WebP需要和同样大小、质量为50的AVIF做比较。在AVIF面前的WebP显得过于”不现代、不先进“。经过时间积累，现代浏览器对AVIF的支持情况已经相当完善了，我认为现在使用AVIF，百利而无一害。
+AVIF的压缩性能过于强大，以至于质量为20的WebP需要和同样大小、质量为50的AVIF做比较。在AVIF面前的WebP显得过于“不现代、不先进”。经过时间积累，现代浏览器对AVIF的支持情况已经相当完善了，我认为现在使用AVIF，百利而无一害。
 
 ## Zola初探
 作为静态站点生成器的新星，Zola[^5]是我预定的下一个所使用的框架。在遇到Hugo与AVIF的问题时，我也去了解了一番Zola对于AVIF的支持情况，毕竟如果AVIF的痛点在Hugo无法解决，可以通过迁移站点到新的框架根除。
