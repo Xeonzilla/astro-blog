@@ -29,6 +29,7 @@ export const siteConfig: SiteConfig = {
 		enable: true,
 		depth: 3,
 	},
+	generateOgImages: true,
 	favicon: [
 		{
 			src: "/favicon/favicon-32.png",
