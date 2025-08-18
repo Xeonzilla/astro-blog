@@ -11,6 +11,7 @@ category: "博客建设"
 ## CLS的伪解决方案
 ### 何谓CLS
 Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LCP`、`TBT`、`CLS`。其中，CLS是指Cumulative Layout Shift，即累积布局偏移。
+
 >Cumulative Layout Shift (CLS) 是一项稳定的 Core Web Vitals 指标。它是一项以用户为中心的重要指标，用于衡量视觉稳定性，因为它有助于量化用户遇到意外布局偏移的频率，而较低的 CLS 有助于确保网页带来愉悦的体验。
 > 
 >意外的布局偏移可能会在很多方面影响用户体验，例如，如果文本突然移动，导致用户在阅读时失去位置，或让用户点击错误的链接或按钮。在某些情况下，这可能会造成严重损害。
@@ -26,6 +27,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 首先需要在Hugo站点目录`layouts/_default/_markup`路径下，创建名为`render-image.html`的文件，它负责Hugo对图像的渲染。
 
 我所使用的`render-image.html`代码如下：
+
 ```html title="layouts/_default/_markup/render-image.html"
 <style>
     .container {
@@ -57,10 +59,12 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
     }
 </script>
 ```
+
 其中，`max-width: 720px; aspect-ratio: 16/9;`是根据所使用的主题文章内图片大小而设定的值，需要根据实际情况修改，我所使用的PaperMod主题在文章内图片尺寸为720px*405px。
 
 #### cover.html
 接下来以PaperMod为例，因为Hugo各个主题之间的结构可能略有不同，修改前应当自行调整。在`themes/PaperMod/layouts/partials`下复制一份`cover.html`，粘贴到`layouts/partials`下。PaperMod提供的有关封面显示的代码为：
+
 ```html title="themes/partials/cover.html" startLineNumber=20
     {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
     <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
@@ -81,6 +85,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 ```
 
 仿照上面的`render-image.html`，将其修改为：
+
 ```html title="themes/partials/cover.html" startLineNumber=20
     {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
     <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
@@ -177,6 +182,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 ### 细节说明
 #### CSS
 方案中的CSS部分除常规的样式调整外，还有占位作用，是本方案的核心。
+
 ```html title="layouts/_default/_markup/render-image.html"
 <style>
     .container {
@@ -201,7 +207,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 
 在前几版的代码中，有过设置固定`width`或`height`的尝试，但是固定大小会使不同客户端的图片尺寸显示一致，导致移动端的排版异常。使用“最大”和“最小”来规定大小，使得容器能够适应不同客户端的排版。
 
-设置`aspect-ratio`是以间接的方法通过容器宽度得到容器高度，不能通过固定数值设置的原因同上；同时，也不能使用`max-height`、`min-height`来设置高度，它们同样可能导致排版异常，而且作为最大值与最小值，它们只能规定高度的范围，不能起固定数值的占位作用。`aspect-ratio`能在暂时不设置高度的情况下固定容器高度，以得到一个有大小的`<div>`。
+设置`aspect-ratio`是以间接的方法通过容器宽度得到容器高度，不能通过固定数值设置的原因同上；同时，也不能使用`max-height`、`min-height`来设置高度，他们同样可能导致排版异常，而且作为最大值与最小值，他们只能规定高度的范围，不能起固定数值的占位作用。`aspect-ratio`能在暂时不设置高度的情况下固定容器高度，以得到一个有大小的`<div>`。
 
 `display: flex; justify-content: center; align-items: center;`起居中作用，居中不仅可以避免许多意外的排版错误，还能使图像的替代文字（alt属性）居中，更加美观。
 
@@ -209,6 +215,7 @@ Google的PageSpeed Insights报告中展示了四大维度的指标：`FCP`、`LC
 
 #### JavaScript
 方案中使用的JavaScript功能为计算容器的高度，使其与图片高度一致。
+
 ```html title="layouts/_default/_markup/render-image.html" startLineNumber=23
 <script>
     function resizeContainer(img) {

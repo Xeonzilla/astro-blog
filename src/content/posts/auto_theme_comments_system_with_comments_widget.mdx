@@ -17,7 +17,8 @@ category: "博客建设"
 于是，我选择接入Comments Widget[^3]，与Giscus组成博客的双评论系统，以缓解用户来源差异的问题。
 
 ## 代码展示
-代码大致能分为切换按钮、Giscus和Comments Widget三部分:
+代码大致能分为切换按钮、Giscus和Comments Widget三部分：
+
 ```html title="layouts/partials/comments.html"
 <div class="comment-toggle-buttons">
     <button id="show-giscus" class="active" onclick="showGiscus()">Github Discussions</button>
@@ -155,17 +156,19 @@ category: "博客建设"
 ```
 
 其中，Giscus的自动主题切换有现成的方案，具体可以参考
+
 - [How to Enable Giscus Comments System in Hugo | Jason Lyu](https://12x.me/posts/2023-04-18-hugo-giscus/)
 - [PaperMod 集成 Giscus 评论 | Tofuwine's Blog](https://www.tofuwine.cn/posts/610b75f5/)
 
 我的代码在他们的基础上小修小改，就不在此拾人牙慧了。
 
-下面的代码是从完整代码中分离出来的，它们极有可能**无法独立工作**，仅作解析思路用。
+下面的代码是从完整代码中分离出来的，他们极有可能**无法独立工作**，仅作解析思路用。
 
 ### Comments Widget
 官方页面会在你填入所需信息和所选项后自动生成代码，和Giscus类似，如无特殊需求，直接复制代码至`layouts/partials/comments.html`即可使用。
 
 但是为了实现功能，我们需要对代码进行改造。
+
 ```html title="layouts/partials/comments.html"
 <div id="telegram-comments" class="comment-box"></div>
 
@@ -223,6 +226,7 @@ category: "博客建设"
 
 ### 切换按钮
 相比之下，切换按钮的逻辑就较为简单，主要是样式上的调整。
+
 ```html title="layouts/partials/comments.html"
 <div class="comment-toggle-buttons">
     <button id="show-giscus" class="active" onclick="showGiscus()">Github Discussions</button>
@@ -299,6 +303,7 @@ category: "博客建设"
 
 ## 为什么不是Discussion Widget
 Telegram除了提供Comments Widget外，还提供了Discussion Widget[^4]将频道的评论区接入网页，同样可以作为评论系统，但是它存在着挺多问题：
+
 - 博客评论区与频道评论区完全关联
 - Telegram无法识别经编辑的链接
   
