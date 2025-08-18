@@ -21,6 +21,7 @@ PaperMod是一款简约高效的主题，这种说法是对的；PaperMod功能�
 代码陈旧，或是说框架混乱，这一点并不明显，因为我并不是主题制作者。唯一能够感受到的，就是在编写新功能时，总会遇到各种需要调试的意料外情况，这些bug往往错综复杂地连接着主题里的其它代码。
 
 在PaperMod遇挫后，我想要寻找一个类似的替代品，偶然间我看到了PaperModX[^3]，正当我以为寻得了一个合格的继任者，一个醒目的Issue，[Has this fork been abandoned? · Issue #61 · reorx/hugo-PaperModX](https://github.com/reorx/hugo-PaperModX/issues/61)告诉我事情没有那么简单。
+
 >I find it difficult to maintain this project because the original project "PaperMod" has an unclear code base. Every time I make changes or additions, I have to review the entire code again to remember what I understood previously. Despite this, I am still using it for my personal website, but I don't feel like adding anything new to it.
 >
 >我发现维护这个项目非常困难，因为原项目“PaperMod”的代码基础不够清晰。每次我做出更改或添加新内容时，都必须重新审视整个代码，以回忆我之前的理解。尽管如此，我仍然在我的个人网站上使用它，但我并不打算再添加任何新功能。
@@ -38,6 +39,7 @@ PaperModX开发者的这段话很大程度上促成了这次主题更换。虽�
 先前在[Comments Widget的自动主题和双评论系统](/posts/auto_theme_comments_system_with_comments_widget/)展示的代码逻辑无需改变，只需在监听方式上适应Blowfish即可。经过我在web开发者工具中的一番探索，发现Blowfish在变更主题时，`html`的`class`会添加和删除`dark`这个类，于是我们便以此判断博客主题的变化。
 
 关键的监听函数如下：
+
 ```js title="layouts/partials/comments.html"
 const observer = new MutationObserver((mutationsList) => {
     mutationsList.forEach(mutation => {
@@ -50,6 +52,7 @@ const observer = new MutationObserver((mutationsList) => {
 
 observer.observe(document.documentElement, { attributes: true });
 ```
+
 简单修改一番，评论区就能够正常工作了。
 
 ### 小误会
@@ -59,12 +62,12 @@ observer.observe(document.documentElement, { attributes: true });
 
 Blowfish主题添加了大量的模糊效果，而我使用的天玑8100（MT6895Z/TCZA）存在着绘制模糊效果GPU异常升频的bug，二者碰撞出了这个性能低下的假象。
 
-完成设置后的博客，能够在PageSpeed Insights中取得颇高的分数，与PaperMod的水平相差无几，难以想象它们间的功能差距如此巨大。
+完成设置后的博客，能够在PageSpeed Insights中取得颇高的分数，与PaperMod的水平相差无几，难以想象他们间的功能差距如此巨大。
 
 ### 感受Tailwind CSS
 Blowfish使用Tailwind CSS[^5]构建，所以在编写自定义界面时也免不得要接触这个CSS框架。
 
-Tailwind CSS给我的第一感受，就是繁琐。不同于原生CSS的直接编写，在使用预编译的`class`时，需要反复在主题的`main.css`中搜寻对应的代码，许多类也不像它们的名字一样“所见即所得”。
+Tailwind CSS给我的第一感受，就是繁琐。不同于原生CSS的直接编写，在使用预编译的`class`时，需要反复在主题的`main.css`中搜寻对应的代码，许多类也不像他们的名字一样“所见即所得”。
 
 一个简单的例子就是`.ratio-16-9 { padding-top: 56.25%; }`，我确实很难将二者联系起来，因为这和我想要的`aspect-ratio: 16/9;`相差甚远。
 
