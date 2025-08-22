@@ -1,7 +1,7 @@
 {
-  "name": "fuwari",
+  "name": "astro-blog",
   "type": "module",
-  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
-    "new-post": "bun run --bun scripts/new-post.js",
+    "new-post": "bun run scripts/new-post.js",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src"
   },
