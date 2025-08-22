@@ -1,5 +1,7 @@
 name = "astro-blog"
-compatibility_date = "2025-06-01"
+compatibility_date = "2025-08-14"
+preview_urls = true
+workers_dev = true
 
 [assets]
 directory = "./dist"
