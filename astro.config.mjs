@@ -23,8 +23,18 @@ import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.m
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
-import { remarkImagesComponent } from "./src/plugins/remark-image-component.mjs";
+import { remarkImageComponent } from "./src/plugins/remark-image-component.mjs";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+
+const commonRemarkPlugins = [
+	remarkMath,
+	remarkReadingTime,
+	remarkExcerpt,
+	remarkGithubAdmonitionsToDirectives,
+	remarkDirective,
+	remarkSectionize,
+	parseDirectiveNode,
+];
 
 export default defineConfig({
 	site: "https://xeonzilla.top/",
@@ -101,19 +111,12 @@ export default defineConfig({
 		}),
 		svelte(),
 		sitemap(),
-		mdx(),
+		mdx({
+			remarkPlugins: [remarkImageComponent, ...commonRemarkPlugins],
+		}),
 	],
 	markdown: {
-		remarkPlugins: [
-			remarkImagesComponent,
-			remarkMath,
-			remarkReadingTime,
-			remarkExcerpt,
-			remarkGithubAdmonitionsToDirectives,
-			remarkDirective,
-			remarkSectionize,
-			parseDirectiveNode,
-		],
+		remarkPlugins: [...commonRemarkPlugins],
 		rehypePlugins: [
 			rehypeKatex,
 			rehypeSlug,
