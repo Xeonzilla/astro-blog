@@ -1,25 +1,26 @@
+import path from "node:path";
 import { visit } from "unist-util-visit";
-import { markdownImageConfig } from "../image-config.ts";
 
-export function remarkImagesComponent() {
-	return (tree) => {
+const isRelativePath = (url) => !/^\/|^(?:[a-z]+:)?\/\//i.test(url);
+
+export function remarkImageComponent() {
+	return (tree, file) => {
 		visit(tree, "image", (node) => {
-			node.type = "mdxJsxFlowElement";
-			node.name = "MarkdownImage";
+			const imageUrl = node.url;
+			let finalSrc = imageUrl;
 
+			if (isRelativePath(imageUrl)) {
+				const fileDir = file.dirname;
+				const srcDir = path.join(file.cwd, "src");
+				const contentDir = path.relative(srcDir, fileDir);
+				finalSrc = path.join(contentDir, imageUrl).replace(/\\/g, "/");
+			}
+
+			node.type = "mdxJsxFlowElement";
+			node.name = "ImageWrapper";
 			node.attributes = [
-				{ type: "mdxJsxAttribute", name: "src", value: node.url },
+				{ type: "mdxJsxAttribute", name: "src", value: finalSrc },
 				{ type: "mdxJsxAttribute", name: "alt", value: node.alt },
-				{
-					type: "mdxJsxAttribute",
-					name: "quality",
-					value: markdownImageConfig.quality,
-				},
-				{
-					type: "mdxJsxAttribute",
-					name: "sizes",
-					value: markdownImageConfig.sizes,
-				},
 			];
 
 			delete node.url;
