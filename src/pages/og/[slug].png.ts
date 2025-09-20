@@ -92,7 +92,9 @@ export async function GET({
 
 	// Avatar + icon: still read from disk (small assets)
 	const avatarBuffer = fs.readFileSync(`./src/${profileConfig.avatar}`);
-	const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
+	const avatarBase64 = `data:image/png;base64,${(
+		await sharp(avatarBuffer).png().toBuffer()
+	).toString("base64")}`;
 
 	let iconPath = "./public/favicon/favicon-dark-192.png";
 	if (siteConfig.favicon.length > 0) {
@@ -318,7 +320,12 @@ export async function GET({
 		fonts,
 	});
 
-	const png = await sharp(Buffer.from(svg)).png().toBuffer();
+	const png = await sharp(Buffer.from(svg))
+		.png({
+			quality: 85,
+			palette: true,
+		})
+		.toBuffer();
 
 	return new Response(new Uint8Array(png), {
 		headers: {
