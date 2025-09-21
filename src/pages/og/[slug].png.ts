@@ -116,7 +116,8 @@ export async function GET({
 		day: "numeric",
 	});
 
-	const description = post.data.description;
+	const { remarkPluginFrontmatter } = await post.render();
+	const description = post.data.description || remarkPluginFrontmatter.excerpt;
 
 	const template = {
 		type: "div",
