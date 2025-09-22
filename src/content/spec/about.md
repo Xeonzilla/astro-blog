@@ -13,9 +13,8 @@
 
 >**本站点所用字体**
 >
->- [Roboto](https://fonts.google.com/specimen/Roboto)
->- [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 >- [MiSans](https://hyperos.mi.com/font/zh/)
+>- [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 
 ## 博客 2.0
 
