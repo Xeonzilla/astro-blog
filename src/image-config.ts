@@ -6,7 +6,7 @@ const baseImageConfig = {
 };
 
 /**
- * 配置: 适用于 Markdown 中的图片
+ * 配置：适用于 Markdown 中的图片
  * @description 容器布局复杂，在不同断点下有多次流体变化
  */
 export const markdownImageConfig = {
@@ -16,7 +16,7 @@ export const markdownImageConfig = {
 };
 
 /**
- * 配置: 适用于侧边栏中的头像图片
+ * 配置：适用于侧边栏中的头像图片
  * @description 最大显示尺寸为 256px，针对 1x, 2x 屏幕优化
  */
 export const avatarImageConfig = {
@@ -26,7 +26,7 @@ export const avatarImageConfig = {
 };
 
 /**
- * 配置: 适用于横跨页面的 Banner 横幅图片
+ * 配置：适用于横跨页面的 Banner 横幅图片
  * @description 总是占据 100% 的视口宽度
  */
 export const bannerImageConfig = {
@@ -36,7 +36,7 @@ export const bannerImageConfig = {
 };
 
 /**
- * 配置: 适用于 PostCard 的封面图片
+ * 配置：适用于 PostCard 的封面图片
  * @description 根据开发者工具测量得出，反映所有 CSS 规则、变量和潜在 JS 动态调整后的最终结果
  */
 export const coverImageConfig = {
