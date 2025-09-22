@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-name: "@astrojs/mdx"
+      - dependency-name: "misans"
+      - dependency-name: "satori"
+      - dependency-name: "rehype-external-links"
+      - dependency-name: "wrangler"
