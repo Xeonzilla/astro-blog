@@ -8,12 +8,15 @@ tags:
   - "云服务"
 category: "站点建设"
 ---
+
 ## 前言
+
 前面提到我的站点已经“All in Cloudflare”了，所以评论系统自然也要重新部署。好在主流的评论系统中，Twikoo 提供了在 Cloudflare Workers 部署的选项，于是我的评论系统也就从 Waline 过渡到了 Twikoo。
 
 目前在 twikoo-cloudflare 的仓库[^1]中，代码还停留在 4 个月前（2025 年 1 月）的状态，twikoo 后端的版本也停在了 1.6.40，如果像我一样追求最新版，那么就需要自行更新。
 
 ## 更新依赖
+
 twikoo-cloudflare 的 `package.json` 中，大部分的依赖都是可以直接更新到最新版的，经过试验并能稳定使用的 `package.json` 如下：
 
 ```json title="package.json" collapse={4-11} {3, 15, 18-21}
@@ -50,6 +53,7 @@ twikoo-cloudflare 的 `package.json` 中，大部分的依赖都是可以直接�
 如果像我一样更新了其中的 `version` 字段，则需要到 `src/index.js` 的 115 行左右同步更新。
 
 ## 小心 Wrangler
+
 可能有细心的读者注意到，我还在使用 Wrangler3。为什么不进行升级呢？很简单，因为报错了。
 
 在我进行试验的 Wrangler 中，`4.13.2` 会出现一个警告：
@@ -79,6 +83,7 @@ twikoo-cloudflare 的 `package.json` 中，大部分的依赖都是可以直接�
 最后，为了保证系统的稳定，我还是选择了 Wrangler3。Cloudflare 官方并没有停止对 Wrangler3 的维护，所以对 Wrangler 大版本的升级也没有那么急切。
 
 ## 结语
+
 升级了后端，前端的升级就非常简单了，只需在 CDN 引入的版本号稍作修改即可。
 
 虽然我并不是开发者，但是从 twikoo-cloudflare 整体的结构来看，axios 是其中最复杂，最难以维护的一环。如果想要更新 axios-cf-worker，不仅要合并来自上游的更新、解决冲突，还要注意 Cloudflare Workers 是否有环境变化。或许放弃 axios，转向替代品，对维护会更友好？

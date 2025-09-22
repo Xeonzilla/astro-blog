@@ -1,20 +1,24 @@
 # 关于
+
 **欢迎👋 这里是 Xeonzilla 的笔记**
 
 “用一个可以永远存活在互联网上的档案，记录我的琐碎灵感与思考”
 
 >**本站点所用图片的来源**
+>
 >- [Genbara_AIart](https://www.pixiv.net/users/93339628) / [『燃え上がる日々』](https://www.pixiv.net/artworks/113526551)
 >- [KINEMA CITRUS ｜ キネマシトラス](https://kinemacitrus.biz/)
 >
 >文章中所使用的动画截图及插图版权归原作者所有。
 
 >**本站点所用字体**
+>
 >- [Roboto](https://fonts.google.com/specimen/Roboto)
 >- [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 >- [MiSans](https://hyperos.mi.com/font/zh/)
 
 ## 博客 2.0
+
 这里是 Xeonzilla 的笔记，由 Cloudflare 强力驱动的博客。
 
 正值站点 1 周年，我又对站点进行了翻新，以提高可玩性、增强个性化。Hugo 是一个极好的静态站点生成器，但是在玩具属性上，Astro 初出茅庐，又背靠 Node.js，显然更有趣。
@@ -26,6 +30,7 @@ Fuwari 是一个性能优秀、视觉效果良好的 Astro 主题，唯一的不
 目前 Deno 与 Fresh 的组合大有“下一代框架”之势，可惜没有类似主题的功能设计，对于非前端工程师，从零开始搭建一个站点难度还是太高了，希望 Fresh 官方能尽快推出降低开发难度的功能。
 
 ## 博客 1.5
+
 这里是 Xeonzilla 的笔记，由 Cloudflare 和 Vercel 强力驱动的博客。
 
 为了让中国大陆的读者更无障碍地访问我的博客，我对博客的架构进行了一次更新。囿于网络环境的复杂性和免费服务的局限性，即使我购入了一个域名，还是不能让访问完全畅通无阻，略显遗憾。
@@ -35,6 +40,7 @@ Fuwari 是一个性能优秀、视觉效果良好的 Astro 主题，唯一的不
 在尽可能少支出的前提下，我还会不断尝试优化博客的连通性，让我的想法跨越万里长城，传达给更多的人。我也在此期待，能有更多的人发现我的想法，如果能引发别人的思考、成为别人的动力，那就再好不过了。
 
 ## 博客 1.0
+
 这里是 Xeonzilla 的笔记，由 GitHub Pages 强力驱动的博客。
 
 一开始，我在 Telegram 上建立了一个公开频道，名为[Xeon的Anime观察日志](https://t.me/XeonAnimeLog)，用来发布动画的观后感。这里引用当初的想法：

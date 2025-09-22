@@ -8,18 +8,23 @@ tags:
   - "Fuwari"
 category: "站点建设"
 ---
+
 ## 补序
+
 本文创作的主要方向是记录而非教程，可能存在不严谨与缺漏。
 
 第一次阅读这篇文章，且将本文作为教程的读者，请先耐心地通读一遍全文，因为本文分多次写成，前后操作与代码修改恐有矛盾之处，还需读者多加思考，自行解决可能遇到的问题。
 
 ## 初次修改
+
 ### 前言
+
 自从我接触博客的性能优化，就非常向往响应式图像，可惜直到我迁移站点，Hugo 仍旧没有支持 AVIF。Astro 支持响应式图像，但是没有默认开启，需要在 `astro.config.mjs` 设置，还需要在博客的其他部分自行适配。
 
 Fuwari 没有进行响应式图像的适配，这意味着我们需要自行修改代码。
 
 ### 文章中的图像
+
 对文章中图像的调整较为简单，因为不涉及代码，只需要批量替换。
 
 首先，也是最重要的一步，就是为 Fuwari 引入 MDX。详细的引入教程可以参考 Astro 文档[^1]。为什么要引入 MDX 代替 Markdown 呢？因为我们需要使用 Astro 的 `<Image />` 组件创建响应式图片，而 Markdown 不支持这些组件，只能使用标准语法。更详细的对比和有关 `<Image />` 组件的特性，可以参考 Astro 文档对此的说明[^2]。
@@ -67,6 +72,7 @@ export default defineConfig({
 ```
 
 ### Avatar、Banner 和文章封面
+
 与文章中的图像不同，在 Fuwari 中，Avatar、Banner 和文章封面由 `src/components/misc/ImageWrapper.astro` 控制。如果使用本地的图像，经过 `astro.config.mjs` 的设置后，原先的代码就能够实现响应式图像，为了对远程图像应用响应式图像，我们需要修改其中的代码。
 
 第一处修改，我们要添加一个常量定义来区分出本地图像、公共图像和远程图像。
@@ -101,6 +107,7 @@ const isPublic = src.startsWith("/");
 至此，Fuwari 中的所有图像都应该能有效避免累积布局偏移（CLS）了。
 
 ### 结语
+
 文章数量太多时，替换某个语句或者调整某个选项非常耗时，此时就可以借助大模型，让它为你编写一个批量替换的脚本。我在插入 `quality="high"` 时，就用到了 ChatGPT 提供的代码：
 
 ```python title="process.py"
@@ -145,7 +152,9 @@ Cloudflare Pages 提供了构建缓存，但是我的项目从来没有复用缓
 目前博客已经能够正确显示占位符，避免了 CLS，但是占位符只是一个简单的色块，配上 `alt` 的描述文本，看上去有些简朴。后续如果能自定义占位符，或是显示加载动画，就更好了。
 
 ## 二次修改
+
 ### 前情提要
+
 第一次的修改看似改动了很多地方，实际上只是完成了“防止 CLS”这一步，离我们响应式图像的目标尚有距离。响应式图像最重要的两个属性是 `srcset` 和 `sizes`，前者定义了一个可供浏览器选择的图片合集，后者定义了一组媒体条件和对应条件下的最佳宽度，更专业的定义可在 MDN Web Docs[^5] 找到。
 
 在动工之前，首先需要同步 Astro 的更改。在 Astro 的 5.10 版本中，响应式图像从实验性功能变为正式选项，配置文件也需要同步更改。
@@ -173,6 +182,7 @@ export default defineConfig({
 不久前我听从 Cloudflare 的建议，将站点由 Cloudflare Pages 迁移到了 Cloudflare Workers，而 Workers 有 20 分钟的编译时长限制，如果我使用 AVIF，站点是编译不出来的，在这一背景下，我决定回到 WebP。
 
 ### 基础配置
+
 在这么多次的探索与修改中，我意识到定位并修改某个特定位置的代码其实是件很花费精力的事情，为了避免这种情况，我们首先需要创建一个基础的配置文件来管理配置，这样即使后续要再次修改，也能很方便地在配置文件中完成。我将这个配置文件命名为 `image-config.ts`。
 
 ```ts title="src/image-config.ts"
@@ -223,6 +233,7 @@ export default defineConfig({
 `widths` 与 `breakpoints` 是我根据 Astro 文档、`sizes` 阈值、编译时间与编译产物大小综合判断的，可以根据需求自行调整，调整时应注意对应阈值所需的图像尺寸。
 
 ### 文章中的图像
+
 我们先从文章中的图像开始修改，这一点与上面一致。这一次，为了节约调用的成本，我决定自行封装一个图像组件，这样在使用图像语法时，就不必再写重复的参数了。
 
 ```js title="src/components/MarkdownImage.astro"
@@ -266,6 +277,7 @@ const {
 ```
 
 ### Avatar、Banner 和文章封面
+
 这些图像仍由 `ImageWrapper.astro` 控制，因此在修改时，我们还是要先改造 `ImageWrapper.astro`。
 
 ```js title="src/components/misc/ImageWrapper.astro" collapse={1-3,15-18,30-60} ins={11-13,25-27} "widths={widths} quality={quality} sizes={sizes}"
@@ -390,6 +402,7 @@ const config = profileConfig;
 这里需要格外注意 `PostCard.astro` 与 `[...slug].astro` 的区别。PostCard 是主页文章列表的小卡片，对应着 `coverImageConfig`；而 [...slug] 是代指每一篇文章的链接，它控制的是文章最上方的封面，虽然同为封面，但是它的布局、尺寸都与文章中的插图一致，此处应该应用 `markdownImageConfig`。
 
 ### 语法简化
+
 在 MDX 使用组件时，都需要在开头进行引入，例如 `import { Image } from 'astro:assets';`，但是我们可以通过在文章模板中引入，省去每篇文章的重复操作。
 
 首先我们在开头引入我们的自定义组件：
@@ -473,6 +486,7 @@ export default defineConfig({
 ```
 
 ### 最终总结
+
 经过了漫长的探索与改造，我们终于是完成了响应式图像的设置。更改后的 Fuwari 能够在图像加载前显示占位符，还能根据设备的尺寸，选择最佳的图像显示大小。在一次彻底的施工后，文章写作方式不需要任何改动，我觉得，这个方案已经是我能做到的极致了。
 
 响应式图像是一个复杂的机制，除了我们设置的 `widths`、`sizes` 属性外，还有其他因素在影响着显示效果，例如 `devicePixelRatio`，所以这套代码并不是任何时候都会做出最佳响应。至少对我而言，这是一次非常有趣的探索过程，最终成效反而不是重点。
