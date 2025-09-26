@@ -76,11 +76,6 @@ export const profileConfig: ProfileConfig = {
 			url: "mailto:admin@xeonzilla.top",
 		},
 		{
-			name: "GitHub",
-			icon: "fa6-brands:github",
-			url: "https://github.com/Xeonzilla",
-		},
-		{
 			name: "Telegram",
 			icon: "fa6-brands:telegram",
 			url: "https://t.me/xeonzilla_bot",
@@ -91,9 +86,9 @@ export const profileConfig: ProfileConfig = {
 			url: "https://bgm.tv/user/xeonzilla",
 		},
 		{
-			name: "RSS",
-			icon: "fa6-solid:rss",
-			url: "https://xeonzilla.top/rss.xml",
+			name: "GitHub",
+			icon: "fa6-brands:github",
+			url: "https://github.com/Xeonzilla",
 		},
 	],
 };
