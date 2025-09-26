@@ -28,11 +28,15 @@ const len = page.data.length;
 ---
 
 <MainGridLayout title={i18n(I18nKey.anime)}>
-    <AnimeOverview stats={stats} />
     
     <div class="transition flex flex-col rounded-[var(--radius-large)] bg-[var(--card-bg)] py-1 md:py-0 md:bg-transparent mb-4">
+        <AnimeOverview stats={stats} />
+        
+        {page.data.filter(i => i !== null).length > 0 && 
+            <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] md:hidden"></div>
+        }
+
         <AnimeList page={page} />
-        {len > 0 && <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] md:hidden"></div>}
     </div>
     
     {page.lastPage > 1 && (
