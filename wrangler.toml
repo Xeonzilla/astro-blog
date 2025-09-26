@@ -1,5 +1,5 @@
 name = "astro-blog"
-compatibility_date = "2025-08-21"
+compatibility_date = "2025-09-18"
 preview_urls = true
 workers_dev = true
 
