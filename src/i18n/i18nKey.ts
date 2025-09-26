@@ -33,6 +33,12 @@ enum I18nKey {
 	publishedAt = "publishedAt",
 	license = "license",
 	friends = "friends",
+
+	anime = "anime",
+	animeTitle = "animeTitle",
+	animeCountTotal = "animeCountTotal",
+	animeCountWatching = "animeCountWatching",
+	animeCountCompleted = "animeCountCompleted",
 }
 
 export default I18nKey;

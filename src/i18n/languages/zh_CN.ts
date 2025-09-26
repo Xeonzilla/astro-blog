@@ -36,4 +36,10 @@ export const zh_CN: Translation = {
 	[Key.publishedAt]: "发布于",
 	[Key.license]: "许可协议",
 	[Key.friends]: "友链",
+
+	[Key.anime]: "追番",
+	[Key.animeTitle]: "番组计划",
+	[Key.animeCountTotal]: "总计",
+	[Key.animeCountWatching]: "在看",
+	[Key.animeCountCompleted]: "看过",
 };
