@@ -1,6 +1,7 @@
 ---
 import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
+import { animeImageConfig } from "@/image-config";
 import type { ProcessedAnime } from "../../utils/bangumi-utils";
 import ImageWrapper from "../misc/ImageWrapper.astro";
 
@@ -71,7 +72,7 @@ const interval = 50;
                             </div>
 
                             <div class="mx-4 mt-4 aspect-[2/3] rounded-lg overflow-hidden md:mx-0 md:mt-0 md:aspect-auto md:w-[var(--coverWidth)] md:absolute md:top-3 md:bottom-3 md:right-3">
-                                <ImageWrapper src={anime.cover} alt={anime.title} class="w-full h-full object-cover"/>
+                                <ImageWrapper src={anime.cover} alt={anime.title} widths={animeImageConfig.widths} quality={animeImageConfig.quality} sizes={animeImageConfig.sizes} class="w-full h-full object-cover"/>
                             </div>
                         </div>
 

@@ -16,7 +16,7 @@ interface BangumiSubject {
 	eps: number;
 	name_cn: string;
 	name: string;
-	images: { medium: string };
+	images: { large: string };
 	tags: { name: string }[];
 }
 
@@ -99,7 +99,7 @@ function processBangumiData(data: BangumiCollectionItem[]): ProcessedAnime[] {
 
 		return {
 			title: item.subject.name_cn,
-			cover: item.subject.images.medium,
+			cover: item.subject.images.large,
 			originalTitle: item.subject.name,
 			year: item.subject.date,
 			genre: genre,
