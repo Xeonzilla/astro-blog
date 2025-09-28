@@ -16,7 +16,26 @@ interface FontOptions {
 	style?: FontStyle;
 	lang?: string;
 }
+
 export const prerender = true;
+
+const { regular: fontRegular, bold: fontBold } = await fetchNotoSansSCFonts();
+
+const avatarBase64 = `data:image/png;base64,${(
+	await sharp(fs.readFileSync(`./src/${profileConfig.avatar}`))
+		.png()
+		.toBuffer()
+).toString("base64")}`;
+
+const iconBase64 = `data:image/png;base64,${fs
+	.readFileSync(`./public${siteConfig.favicon.at(-1)?.src}`)
+	.toString("base64")}`;
+
+const hue = siteConfig.themeColor.hue;
+const textColor = "hsl(0, 0%, 95%)";
+const primaryColor = `hsl(${hue}, 90%, 65%)`;
+const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
+const backgroundColor = `hsl(${hue}, 15%, 12%)`;
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	if (!siteConfig.generateOgImages) {
@@ -87,37 +106,16 @@ export async function GET({
 }: APIContext<{ post: CollectionEntry<"posts"> }>) {
 	const { post } = props;
 
-	// Try to fetch fonts from Google Fonts (woff2) at runtime.
-	const { regular: fontRegular, bold: fontBold } = await fetchNotoSansSCFonts();
-
-	// Avatar + icon: still read from disk (small assets)
-	const avatarBuffer = fs.readFileSync(`./src/${profileConfig.avatar}`);
-	const avatarBase64 = `data:image/png;base64,${(
-		await sharp(avatarBuffer).png().toBuffer()
-	).toString("base64")}`;
-
-	let iconPath = "./public/favicon/favicon-dark-192.png";
-	if (siteConfig.favicon.length > 0) {
-		iconPath = `./public${siteConfig.favicon[0].src}`;
-	}
-	const iconBuffer = fs.readFileSync(iconPath);
-	const iconBase64 = `data:image/png;base64,${iconBuffer.toString("base64")}`;
-
-	const hue = siteConfig.themeColor.hue;
-	const primaryColor = `hsl(${hue}, 90%, 65%)`;
-	const textColor = "hsl(0, 0%, 95%)";
-
-	const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
-	const backgroundColor = `hsl(${hue}, 15%, 12%)`;
-
 	const pubDate = post.data.published.toLocaleDateString("en-US", {
 		year: "numeric",
 		month: "short",
 		day: "numeric",
 	});
 
-	const { remarkPluginFrontmatter } = await post.render();
-	const description = post.data.description || remarkPluginFrontmatter.excerpt;
+	const {
+		remarkPluginFrontmatter: { excerpt },
+	} = await post.render();
+	const description = post.data.description || excerpt;
 
 	const template = {
 		type: "div",
