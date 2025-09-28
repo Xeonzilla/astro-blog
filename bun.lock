@@ -17,10 +17,10 @@
         "@iconify-json/fa6-brands": "^1.2.6",
         "@iconify-json/fa6-regular": "^1.2.4",
         "@iconify-json/fa6-solid": "^1.2.4",
-        "@iconify-json/material-symbols": "^1.2.37",
+        "@iconify-json/material-symbols": "^1.2.39",
         "@iconify/svelte": "^4.2.0",
         "@swup/astro": "^1.7.0",
-        "@tailwindcss/typography": "^0.5.18",
+        "@tailwindcss/typography": "^0.5.19",
         "astro": "5.13.10",
         "astro-expressive-code": "^0.41.3",
         "astro-icon": "^1.1.5",
@@ -46,7 +46,7 @@
         "satori": "^0.18.3",
         "sharp": "^0.34.4",
         "stylus": "^0.64.0",
-        "svelte": "^5.39.5",
+        "svelte": "^5.39.6",
         "tailwindcss": "^3.4.17",
         "typescript": "^5.9.2",
         "unist-util-visit": "^5.0.0",
@@ -435,7 +435,7 @@
 
     "@iconify-json/fa6-solid": ["@iconify-json/fa6-solid@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-LmDNNdJVyvF5mPm1yxWvL8KjCc/E8LzoqnF1LNTVpyY2ZJRUlGOWuPIThdbuFBF2IovgttkIyumhyqfmlHdwKg=="],
 
-    "@iconify-json/material-symbols": ["@iconify-json/material-symbols@1.2.38", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-I13hrSxRJG3ZwIhBTMXMXxxGAlooqZzivF/TQasvRMBeBFDjGK5+IcCzhEApKZlqiWOK3Sqx2Rf7ihiFS/zNvw=="],
+    "@iconify-json/material-symbols": ["@iconify-json/material-symbols@1.2.39", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-spjiB1I5jPi6hV5b/QyC4zO8GRYGCbb6/DaHm754NJFqNli6bsYDpN4HYVl67XhU49rYljvJyNc/6lYEf+jokA=="],
 
     "@iconify/svelte": ["@iconify/svelte@4.2.0", "", { "dependencies": { "@iconify/types": "^2.0.0" }, "peerDependencies": { "svelte": ">4.0.0" } }, "sha512-fEl0T7SAPonK7xk6xUlRPDmFDZVDe2Z7ZstlqeDS/sS8ve2uyU+Qa8rTWbIqzZJlRvONkK5kVXiUf9nIc+6OOQ=="],
 
