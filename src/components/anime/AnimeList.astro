@@ -29,6 +29,8 @@ const interval = 50;
                                 "md:card-base md:rounded-[var(--radius-large)]",
                             ]}
                             style={`animation-delay: calc(var(--content-delay) + ${individualDelay}ms);`}
+                            role="article"
+                            aria-label={`Anime Info: ${anime.title}`}
                         >
                             <div
                                 class:list={[
@@ -48,17 +50,17 @@ const interval = 50;
                                     {anime.originalTitle}
                                 </p>
                                 
-                                <div class="flex flex-row flex-wrap items-center gap-x-4 gap-y-2 text-neutral-500 dark:text-neutral-400 md:flex-col md:items-start md:gap-2">
-                                    <div class="flex items-center">
-                                        <div class="meta-icon"><Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl"/></div>
+                                <div class="flex flex-row flex-wrap items-center gap-x-4 gap-y-2 text-neutral-500 dark:text-neutral-400 md:flex-col md:items-start md:gap-2" role="list" aria-label="Anime Metadata">
+                                    <div class="flex items-center" role="listitem">
+                                        <div class="meta-icon"><Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl" aria-hidden="true"/></div>
                                         <span class="text-50 text-sm font-medium">{anime.year}</span>
                                     </div>
-                                    <div class="flex items-center">
-                                        <div class="meta-icon"><Icon name="material-symbols:bookmark-added-outline-rounded" class="text-xl"/></div>
+                                    <div class="flex items-center" role="listitem">
+                                        <div class="meta-icon"><Icon name="material-symbols:bookmark-added-outline-rounded" class="text-xl" aria-hidden="true"/></div>
                                         <span class="text-50 text-sm font-medium">{anime.progress} / {anime.totalEpisodes}</span>
                                     </div>
-                                    <div class="flex items-center">
-                                        <div class="meta-icon"><Icon name="material-symbols:tag-rounded" class="text-xl"/></div>
+                                    <div class="flex items-center" role="listitem">
+                                        <div class="meta-icon"><Icon name="material-symbols:tag-rounded" class="text-xl" aria-hidden="true"/></div>
                                         <div class="flex flex-row flex-wrap items-center shrink min-w-0">
                                             {anime.genre.map((g: string, i: number) => (
                                                 <>
