@@ -28,5 +28,5 @@ export const animeImageConfig = {
 	quality: "max",
 	widths: [150, 300, 450, 750, 1100, 1500],
 	sizes:
-		"(max-width: 767px) calc(100vw - 32px), (max-width: 1023px) calc(17.5vw - 3px), (max-width: 1199px) calc(12.15vw - 5px), 150px",
+		"(max-width: 767px) 84px, (max-width: 1023px) calc(17.5vw - 3px), (max-width: 1199px) calc(12.15vw - 5px), 150px",
 };
