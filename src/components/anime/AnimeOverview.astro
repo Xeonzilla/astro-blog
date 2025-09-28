@@ -19,29 +19,29 @@ const { stats } = Astro.props;
             </h1>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-12">
-            <div class="bg-[var(--btn-regular-bg)] rounded-lg h-10 px-3 flex items-center justify-between font-bold">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-12" role="group" aria-label="Anime statistics overview">
+            <div class="bg-[var(--btn-regular-bg)] rounded-lg h-10 px-3 flex items-center justify-between font-bold" role="group" aria-label={`Total anime count: ${stats.total}`}>
                 <div class="flex items-center gap-2">
-                    <Icon name="material-symbols:bar-chart-4-bars-rounded" class="text-[1.5rem] text-[var(--primary)]" />
+                    <Icon name="material-symbols:bar-chart-4-bars-rounded" class="text-[1.5rem] text-[var(--primary)]" aria-hidden="true" />
                     <span class="text-[var(--btn-content)] dark:text-white/75">{i18n(I18nKey.animeCountTotal)}</span>
                 </div>
-                <span class="font-bold text-[var(--btn-content)] dark:text-white/75">{stats.total}</span>
+                <span class="font-bold text-[var(--btn-content)] dark:text-white/75" aria-label={`${stats.total} total anime`}>{stats.total}</span>
             </div>
 
-            <div class="bg-[var(--btn-regular-bg)] rounded-lg h-10 px-3 flex items-center justify-between font-bold">
+            <div class="bg-[var(--btn-regular-bg)] rounded-lg h-10 px-3 flex items-center justify-between font-bold" role="group" aria-label={`Currently watching anime count: ${stats.watching}`}>
                 <div class="flex items-center gap-2">
-                    <Icon name="material-symbols:play-arrow-rounded" class="text-[1.5rem] text-[var(--primary)]" />
+                    <Icon name="material-symbols:play-arrow-rounded" class="text-[1.5rem] text-[var(--primary)]" aria-hidden="true" />
                     <span class="text-[var(--btn-content)] dark:text-white/75">{i18n(I18nKey.animeCountWatching)}</span>
                 </div>
-                <span class="font-bold text-[var(--btn-content)] dark:text-white/75">{stats.watching}</span>
+                <span class="font-bold text-[var(--btn-content)] dark:text-white/75" aria-label={`${stats.watching} currently watching anime`}>{stats.watching}</span>
             </div>
 
-            <div class="bg-[var(--btn-regular-bg)] rounded-lg h-10 px-3 flex items-center justify-between font-bold">
+            <div class="bg-[var(--btn-regular-bg)] rounded-lg h-10 px-3 flex items-center justify-between font-bold" role="group" aria-label={`Completed anime count: ${stats.completed}`}>
                 <div class="flex items-center gap-2">
-                    <Icon name="material-symbols:check-circle-outline-rounded" class="text-[1.5rem] text-[var(--primary)]" />
+                    <Icon name="material-symbols:check-circle-outline-rounded" class="text-[1.5rem] text-[var(--primary)]" aria-hidden="true" />
                     <span class="text-[var(--btn-content)] dark:text-white/75">{i18n(I18nKey.animeCountCompleted)}</span>
                 </div>
-                <span class="font-bold text-[var(--btn-content)] dark:text-white/75">{stats.completed}</span>
+                <span class="font-bold text-[var(--btn-content)] dark:text-white/75" aria-label={`${stats.completed} completed anime`}>{stats.completed}</span>
             </div>
         </div>
     </div>
