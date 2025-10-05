@@ -34,7 +34,7 @@ const commentDelay = markdownDelay + animationInterval;
                         "onload-animation",
                         "flex h-full flex-col items-center p-3 text-center",
                         "md:card-base",
-                        index >= 2 && "border-t border-dashed border-black/10 dark:border-white/15 pt-6 -mt-2 md:border-t-0 md:pt-3 md:mt-0"
+                        index >= 2 && "border-t border-dashed border-black/10 dark:border-white/15 pt-6 mt-2 md:border-t-0 md:pt-3 md:mt-0"
                     ]}
                     style={`animation-delay: calc(var(--content-delay) + ${index * animationInterval}ms);`}
                     aria-labelledby={titleId}
