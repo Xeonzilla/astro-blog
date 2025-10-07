@@ -1,10 +1,11 @@
 ---
-import { Image } from "astro:assets";
 import { getEntry, render } from "astro:content";
 import Comment from "@components/Comment.astro";
+import ImageWrapper from "@components/misc/ImageWrapper.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import { Icon } from "astro-icon/components";
 import { friendsLink } from "@/friends-config";
+import { friendsImageConfig } from "@/image-config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
@@ -51,7 +52,7 @@ const commentDelay = markdownDelay + animationInterval;
                         <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/0 transition group-hover:bg-black/30 group-active:bg-black/50">
                             <Icon name="fa6-solid:arrow-up-right-from-square" class="text-4xl text-white scale-90 opacity-0 transition group-hover:scale-100 group-hover:opacity-100" />
                         </div>
-                        <Image src={friend.imgurl} alt={`Avatar of ${friend.title}`} quality="mid" inferSize class="h-full w-full object-cover transition" />
+                        <ImageWrapper src={friend.imgurl} alt={`Avatar of ${friend.title}`} quality={friendsImageConfig.quality} widths={friendsImageConfig.widths} sizes={friendsImageConfig.sizes} class="h-full w-full object-cover transition" />
                     </a>
                     <div class="flex w-full flex-1 flex-col items-center px-2">
                         <a
