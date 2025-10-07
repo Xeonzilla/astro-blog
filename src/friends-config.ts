@@ -67,4 +67,10 @@ export const friendsLink: Friend[] = [
 		imgurl: "https://www.lapis.cafe/images/avatar.webp",
 		desc: "理解以真实为本，但真实本身并不会自动呈现",
 	},
+	{
+		title: "VnYzm 的博客",
+		siteurl: "https://vnyzm.top/",
+		imgurl: "https://vnyzm.top/img/profile.jpg",
+		desc: "分享技术心得和摸鱼感想",
+	},
 ];
