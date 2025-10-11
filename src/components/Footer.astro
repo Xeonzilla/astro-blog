@@ -1,8 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import badgeCloudflare from "../assets/img/Cloudflare.svg";
-import badgeMoeICP from "../assets/img/MoeICP.svg";
-import badgeTravellings from "../assets/img/Travellings.svg";
 import { profileConfig } from "../config";
 import { url } from "../utils/url-utils";
 
@@ -12,7 +8,7 @@ const currentYear = new Date().getFullYear();
 <!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">-->
 <div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
 <!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
-<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-2 flex flex-col items-center justify-center px-6">
+<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
     <div class="transition text-50 text-sm text-center">
         &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
@@ -21,16 +17,4 @@ const currentYear = new Date().getFullYear();
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
     </div>
-</div>
-
-<div class="mb-12 flex flex-wrap flex-row gap-4 items-center justify-center">
-    <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer" title="Cloudflare">
-        <Image src={badgeCloudflare} alt="Cloudflare" format="svg" />
-    </a>
-    <a href="https://icp.gov.moe/?keyword=20259983" target="_blank" rel="noopener noreferrer" title="萌ICP备">
-        <Image src={badgeMoeICP} alt="萌ICP备" format="svg" />
-    </a>
-    <a href="https://www.travellings.cn/go.html" target="_blank" rel="noopener noreferrer" title="开往-友链接力">
-        <Image src={badgeTravellings} alt="开往-友链接力" format="svg" />
-    </a>
 </div>
