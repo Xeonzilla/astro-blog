@@ -70,7 +70,6 @@ const imageStyle = `object-position: ${position}`;
             <div class="bar-inner"></div>
         </div>
     </div>
-	<div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
     {isPublic && <img src={url(src)} alt={alt} sizes={sizes} class={imageClass} style={imageStyle} data-image-element/>}
     {isRemote && <Image src={src} alt={alt} priority={priority} widths={widths} sizes={sizes} quality={quality} inferSize={true} class={imageClass} style={imageStyle} data-image-element/>}
     {isLocal && img && <Image src={img} alt={alt} priority={priority} widths={widths} sizes={sizes} quality={quality} class={imageClass} style={imageStyle} data-image-element/>}
