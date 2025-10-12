@@ -101,7 +101,6 @@ const bannerOffset =
 		<script is:inline async src="https://cwa.xeonzilla.top/fuwari-debug.js"
 			data-cf-beacon='{"send":{"to": "https://cwa.xeonzilla.top/fuwari-debug"},"token": "b9c63268ef0347f2a3f9dd68ad60b8cc"}'
 		></script>
-		<!-- End Cloudflare Web Analytics -->
 
 		<title>{pageTitle}</title>
 
@@ -287,50 +286,6 @@ const bannerOffset =
 	} from "../constants/constants";
 	import { siteConfig } from "../config";
 
-	/* Preload fonts */
-	// (async function() {
-	// 	try {
-	// 		await Promise.all([
-	// 			document.fonts.load("400 1em Roboto"),
-	// 			document.fonts.load("700 1em Roboto"),
-	// 		]);
-	// 		document.body.classList.remove("hidden");
-	// 	} catch (error) {
-	// 		console.log("Failed to load fonts:", error);
-	// 	}
-	// })();
-
-	/* TODO This is a temporary solution for style flicker issue when the transition is activated */
-	/* issue link: https://github.com/withastro/astro/issues/8711, the solution get from here too */
-	/* update: fixed in Astro 3.2.4 */
-	/*
-function disableAnimation() {
-	const css = document.createElement('style')
-	css.appendChild(
-		document.createTextNode(
-			`*{
-              -webkit-transition:none!important;
-              -moz-transition:none!important;
-              -o-transition:none!important;
-              -ms-transition:none!important;
-              transition:none!important
-              }`
-		)
-	)
-	document.head.appendChild(css)
-
-	return () => {
-		// Force restyle
-		;(() => window.getComputedStyle(document.body))()
-
-		// Wait for next tick before removing
-		setTimeout(() => {
-			document.head.removeChild(css)
-		}, 1)
-	}
-}
-*/
-
 	const bannerEnabled = !!document.getElementById("banner-wrapper");
 
 	function setClickOutsideToClose(panel: string, ignores: string[]) {
@@ -508,7 +463,6 @@ function initImageLoader() {
 }
 
 function init() {
-	// disableAnimation()()		// TODO
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
@@ -521,18 +475,6 @@ function init() {
 	init();
 
 	const setup = () => {
-		// TODO: temp solution to change the height of the banner
-		/*
-	window.swup.hooks.on('animation:out:start', () => {
-		const path = window.location.pathname
-		const body = document.querySelector('body')
-		if (path[path.length - 1] === '/' && !body.classList.contains('is-home')) {
-			body.classList.add('is-home')
-		} else if (path[path.length - 1] !== '/' && body.classList.contains('is-home')) {
-			body.classList.remove('is-home')
-		}
-	})
-*/
 		window.swup.hooks.on("link:click", () => {
 			// Remove the delay for the first time page load
 			document.documentElement.style.setProperty(
