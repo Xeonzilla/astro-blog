@@ -458,44 +458,33 @@ function initCommentComponent() {
     document.dispatchEvent(new Event("loadComment"))
 }
 
-function initImageObserver() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
+function initImageLoader() {
+    const markWrapperLoaded = (wrapper: Element) => {
+        const img = wrapper.querySelector<HTMLImageElement>('[data-image-element]');
+        const loadingBar = wrapper.querySelector<HTMLElement>('.loading-bar');
 
-            const wrapper = entry.target as HTMLElement;
-            const img = wrapper.querySelector<HTMLImageElement>('[data-image-element]');
-            const loadingBar = wrapper.querySelector<HTMLElement>('.loading-bar');
+        if (!img || !loadingBar || img.dataset.loaded === "true") {
+            return;
+        }
 
-            if (!img || !loadingBar || img.dataset.loaded === "true") {
-                observer.unobserve(wrapper);
-                return;
-            }
+        const markLoaded = () => {
+            img.classList.add('loaded');
+            img.dataset.loaded = "true";
 
-            const markLoaded = () => {
-                img.classList.add('loaded');
-                img.dataset.loaded = "true";
+            requestAnimationFrame(() => {
+                loadingBar.classList.add('hide');
+            });
+        };
 
-                requestAnimationFrame(() => {
-                    loadingBar.classList.add('hide');
-                });
+        if (img.complete && img.naturalHeight !== 0) {
+            markLoaded();
+        } else {
+            img.addEventListener('load', markLoaded, { once: true });
+            img.addEventListener('error', markLoaded, { once: true });
+        }
+    };
 
-                observer.unobserve(wrapper);
-            };
-
-            if (img.complete && img.naturalHeight !== 0) {
-                markLoaded();
-            } else {
-                img.addEventListener('load', markLoaded, { once: true });
-                img.addEventListener('error', markLoaded, { once: true });
-            }
-        });
-    }, {
-        rootMargin: "200px 0px",
-        threshold: 0.1
-    });
-
-    document.querySelectorAll('[data-image-wrapper]').forEach(el => observer.observe(el));
+    document.querySelectorAll('[data-image-wrapper]').forEach(el => markWrapperLoaded(el));
 
     const mutationObserver = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
@@ -503,9 +492,9 @@ function initImageObserver() {
                 if (node.nodeType === 1) {
                     const el = node as Element;
                     if (el.hasAttribute('data-image-wrapper')) {
-                        observer.observe(el);
+                        markWrapperLoaded(el);
                     } else {
-                        el.querySelectorAll?.('[data-image-wrapper]').forEach(child => observer.observe(child));
+                        el.querySelectorAll?.('[data-image-wrapper]').forEach(child => markWrapperLoaded(child));
                     }
                 }
             });
@@ -525,7 +514,7 @@ function init() {
 	initCustomScrollbar();
 	showBanner();
 	initCommentComponent();
-	initImageObserver();
+	initImageLoader();
 }
 
 	/* Load settings when entering the site */
