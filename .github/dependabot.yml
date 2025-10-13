@@ -3,10 +3,9 @@ updates:
   - package-ecosystem: "bun"
     directory: "/"
     schedule:
-      interval: "daily"
-    allow:
-      - dependency-name: "@astrojs/mdx"
-      - dependency-name: "misans"
-      - dependency-name: "satori"
-      - dependency-name: "rehype-external-links"
-      - dependency-name: "wrangler"
+      interval: "cron"
+      cronjob: 0 5 * * *
+      timezone: Asia/Hong_Kong
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
