@@ -1,0 +1,20 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+---
+
+<MainGridLayout title=404 description=抱歉，您访问的页面不存在或已被移动。>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4">
+        <div class="card-base z-10 px-6 md:px-9 pt-[4.5rem] pb-4 relative w-full">
+            <h1 class="font-bold text-8xl md:text-9xl text-center mb-2 dark:text-neutral-50 transition">404</h1>
+            <div class="h-1 w-5 bg-[var(--primary)] mx-auto rounded-full mb-4 transition"></div>
+            <div class="text-center text-neutral-400 mb-9 transition">看起来你误入了一条不存在的世界线。</div>
+            <div class="flex flex-wrap gap-2 justify-center mb-9">
+                <a href="/" class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                    <Icon name="material-symbols:home-outline-rounded" class="text-[1.5rem]"></Icon>
+                    返回主页
+                </a>
+            </div>
+        </div>
+    </div>
+</MainGridLayout>
