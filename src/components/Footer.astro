@@ -1,19 +1,53 @@
 ---
-import { profileConfig } from "../config";
+import { getCollection, render } from "astro:content";
+import { Icon } from "astro-icon/components";
+import { profileConfig, siteConfig } from "../config";
 import { url } from "../utils/url-utils";
+
+const siteLocale = siteConfig.lang?.replace(/_/g, "-") || "en";
+
+const formattedWordCount = (
+	await Promise.all(
+		(
+			await getCollection("posts", (post) => !post.data.draft)
+		).map(async (post) => {
+			const rendered = await render(post);
+			return rendered.remarkPluginFrontmatter?.words ?? 0;
+		}),
+	)
+)
+	.reduce((summary, words) => summary + words, 0)
+	.toLocaleString(siteLocale);
 
 const currentYear = new Date().getFullYear();
 ---
 
-<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
-<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
-    <div class="transition text-50 text-sm text-center whitespace-nowrap">
-        &copy; <span id="copyright-year">2023 - {currentYear}</span> {profileConfig.name} 版权所有 /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>站点地图</a><br>
-        由
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" rel="noopener noreferrer" href="https://astro.build">Astro</a> &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" rel="noopener noreferrer" href="https://github.com/saicaca/fuwari">Fuwari</a> &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" rel="noopener noreferrer" href="https://www.cloudflare.com">Cloudflare</a> 强力驱动
+<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32" role="presentation"></div>
+<footer class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6" aria-label="网站底部信息">
+    <div class="transition text-50 text-sm text-center">
+        <span aria-hidden="true">&copy; </span>
+        <span id="copyright-year">2023 - {currentYear}</span>
+        <span id="copyright"> {profileConfig.name} 版权所有</span>
+        <br>
+        <span>由</span>
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" rel="noopener noreferrer" href="https://astro.build" aria-label="访问 Astro 官网">Astro</a>
+        <span aria-hidden="true"> &</span>
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" rel="noopener noreferrer" href="https://github.com/saicaca/fuwari" aria-label="访问 Fuwari 主题仓库">Fuwari</a>
+        <span aria-hidden="true"> &</span>
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" rel="noopener noreferrer" href="https://www.cloudflare.com" aria-label="访问 Cloudflare 官网">Cloudflare</a>
+        <span> 强力驱动</span>
+        <nav class="flex flex-wrap gap-2 justify-center" aria-label="站点字数和常用入口">
+            <span>全站共计 {formattedWordCount} 字</span>
+            <span aria-hidden="true">|</span>
+            <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')} aria-label="订阅 RSS">
+                <Icon name="material-symbols:rss-feed-rounded" class="text-lg" aria-hidden="true"></Icon>
+                <span class="sr-only">RSS 订阅</span>
+            </a>
+            <span aria-hidden="true">|</span>
+            <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')} aria-label="查看网站地图">
+                <Icon name="material-symbols:map-rounded" class="text-lg" aria-hidden="true"></Icon>
+                <span class="sr-only">网站地图</span>
+            </a>
+        </nav>
     </div>
-</div>
+</footer>
