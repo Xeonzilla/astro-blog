@@ -9,9 +9,11 @@ export interface ProcessedAnime {
 	genre: string[];
 	progress: number;
 	totalEpisodes: number;
+	detailUrl: string;
 }
 
 interface BangumiSubject {
+	id: number;
 	date: string;
 	eps: number;
 	name_cn: string;
@@ -105,6 +107,7 @@ function processBangumiData(data: BangumiCollectionItem[]): ProcessedAnime[] {
 			genre: genre,
 			progress: progress,
 			totalEpisodes: totalEpisodes,
+			detailUrl: `${BANGUMI_API_BASE.replace("api.", "")}/subject/${item.subject.id}`,
 		};
 	});
 }

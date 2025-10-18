@@ -38,14 +38,21 @@ const interval = 50;
                                     "md:pl-9 md:pr-2 md:pt-7 md:w-[calc(100%_-_var(--coverWidth)_-_0.75rem)]",
                                 ]}
                             >
-                                <h3
-                                    class="font-bold mb-1 text-3xl text-90 break-words
+                                <a
+                                    href={anime.detailUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="transition group w-full block font-bold mb-1 text-3xl text-90 break-words
+                                       hover:text-[var(--primary)] dark:hover:text-[var(--primary)]
+                                       active:text-[var(--title-active)] dark:active:text-[var(--title-active)]
                                        before:hidden md:before:block before:absolute
                                        before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]
                                        before:top-[35px] before:left-[18px]"
                                 >
                                     {anime.title}
-                                </h3>
+                                    <Icon class="inline text-[2rem] text-[var(--primary)] md:hidden translate-y-0.5 absolute" name="material-symbols:chevron-right-rounded" ></Icon>
+                                    <Icon class="text-[var(--primary)] text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0" name="material-symbols:chevron-right-rounded"></Icon>
+                                </a>
                                 <p class="text-neutral-500 dark:text-neutral-400 text-base mb-3 truncate">
                                     {anime.originalTitle}
                                 </p>
@@ -73,9 +80,21 @@ const interval = 50;
                                 </div>
                             </div>
 
-                            <div class="mr-6 my-6 w-24 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 md:mx-0 md:my-0 md:aspect-auto md:w-[var(--coverWidth)] md:absolute md:top-3 md:bottom-3 md:right-3">
+                            <a
+                                href={anime.detailUrl}
+                                aria-label={anime.title}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="group transition mr-6 my-6 w-24 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 md:mx-0 md:my-0 md:aspect-auto md:w-[var(--coverWidth)] md:absolute md:top-3 md:bottom-3 md:right-3 active:scale-95"
+                            >
+                                <div class="absolute pointer-events-none z-10 w-full h-full group-hover:bg-black/30 group-active:bg-black/50 transition"></div>
+                                <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center ">
+                                    <Icon name="fa6-solid:arrow-up-right-from-square"
+                                          class="transition opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 text-white text-5xl">
+                                    </Icon>
+                                </div>
                                 <ImageWrapper src={anime.cover} alt={anime.title} widths={animeImageConfig.widths} sizes={animeImageConfig.sizes} quality={animeImageConfig.quality} class="w-full h-full object-cover"/>
-                            </div>
+                            </a>
                         </div>
 
                         {index < animeList.length - 1 && (
