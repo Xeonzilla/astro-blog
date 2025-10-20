@@ -4,8 +4,7 @@ import Comment from "@components/Comment.astro";
 import ImageWrapper from "@components/misc/ImageWrapper.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import { Icon } from "astro-icon/components";
-import { friendsLink } from "@/friends-config";
-import { friendsImageConfig } from "@/image-config";
+import { friendsConfig, friendsImageConfig } from "@/config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
@@ -19,13 +18,13 @@ if (!friendsPost) {
 const { Content } = await render(friendsPost);
 
 const animationInterval = 50;
-const markdownDelay = friendsLink.length * animationInterval;
+const markdownDelay = friendsConfig.length * animationInterval;
 const commentDelay = markdownDelay + animationInterval;
 ---
 
 <MainGridLayout title={i18n(I18nKey.friends)} description={i18n(I18nKey.friends)}>
     <section class="mb-4 grid grid-cols-2 rounded-[var(--radius-large)] bg-[var(--card-bg)] p-4 sm:grid-cols-3 md:gap-4 md:bg-transparent md:p-0 xl:grid-cols-4">
-        {friendsLink.map((friend, index) => {
+        {friendsConfig.map((friend, index) => {
             const titleId = `friend-${index}-title`;
             const descriptionId = friend.desc ? `friend-${index}-description` : undefined;
 

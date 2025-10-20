@@ -1,11 +1,6 @@
-export interface Friend {
-	title: string;
-	siteurl: string;
-	imgurl: string;
-	desc?: string;
-}
+import type { FriendsConfig } from "../types/config";
 
-export const friendsLink: Friend[] = [
+export const friendsConfig: FriendsConfig[] = [
 	{
 		title: "Astro",
 		siteurl: "https://astro.build/",

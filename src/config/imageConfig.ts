@@ -1,8 +1,4 @@
-export interface ImageConfig {
-	widths: number[];
-	sizes: string;
-	quality: number | "low" | "mid" | "high" | "max";
-}
+import type { ImageConfig } from "../types/config";
 
 export const markdownImageConfig: ImageConfig = {
 	widths: [400, 800, 1600],

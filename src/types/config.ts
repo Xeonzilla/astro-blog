@@ -92,3 +92,16 @@ export type BlogPostData = {
 export type ExpressiveCodeConfig = {
 	theme: string;
 };
+
+export type FriendsConfig = {
+	title: string;
+	siteurl: string;
+	imgurl: string;
+	desc?: string;
+};
+
+export type ImageConfig = {
+	widths: number[];
+	sizes: string;
+	quality: number | "low" | "mid" | "high" | "max";
+};
