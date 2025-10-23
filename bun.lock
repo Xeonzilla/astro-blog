@@ -18,7 +18,7 @@
       "devDependencies": {
         "@astrojs/check": "^0.9.5",
         "@astrojs/mdx": "^4.3.7",
-        "@astrojs/rss": "^4.0.12",
+        "@astrojs/rss": "^4.0.13",
         "@astrojs/sitemap": "^3.6.0",
         "@astrojs/svelte": "7.2.0",
         "@astrojs/tailwind": "^6.0.2",
@@ -86,7 +86,7 @@
 
     "@astrojs/prism": ["@astrojs/prism@3.3.0", "", { "dependencies": { "prismjs": "^1.30.0" } }, "sha512-q8VwfU/fDZNoDOf+r7jUnMC2//H2l0TuQ6FkGJL8vD8nw/q5KiL3DS1KKBI3QhI9UQhpJ5dc7AtqfbXWuOgLCQ=="],
 
-    "@astrojs/rss": ["@astrojs/rss@4.0.12", "", { "dependencies": { "fast-xml-parser": "^5.2.0", "kleur": "^4.1.5" } }, "sha512-O5yyxHuDVb6DQ6VLOrbUVFSm+NpObulPxjs6XT9q3tC+RoKbN4HXMZLpv0LvXd1qdAjzVgJ1NFD+zKHJNDXikw=="],
+    "@astrojs/rss": ["@astrojs/rss@4.0.13", "", { "dependencies": { "fast-xml-parser": "^5.3.0", "picocolors": "^1.1.1" } }, "sha512-ugW4DmGn8kgfl8/qecU3EcKCAuEBrZqY7eYfa6at0sY7HGEwRdzsOafLE437RwDMP2ZuxfKnCNABs99YVhX0kg=="],
 
     "@astrojs/sitemap": ["@astrojs/sitemap@3.6.0", "", { "dependencies": { "sitemap": "^8.0.0", "stream-replace-string": "^2.0.0", "zod": "^3.25.76" } }, "sha512-4aHkvcOZBWJigRmMIAJwRQXBS+ayoP5z40OklTXYXhUDhwusz+DyDl+nSshY6y9DvkVEavwNcFO8FD81iGhXjg=="],
 
