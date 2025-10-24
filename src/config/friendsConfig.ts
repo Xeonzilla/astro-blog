@@ -68,4 +68,10 @@ export const friendsConfig: FriendsConfig[] = [
 		imgurl: "https://vnyzm.top/img/profile.jpg",
 		desc: "分享技术心得和摸鱼感想",
 	},
+	{
+		title: "SamHou's blog",
+		siteurl: "https://blog.samhou.top/",
+		imgurl: "https://blog.samhou.top/img/SamHou.png",
+		desc: "SamHou 的技术小站",
+	},
 ];
