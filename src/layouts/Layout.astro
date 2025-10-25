@@ -650,10 +650,8 @@ function init() {
 			if (element instanceof HTMLImageElement) {
 				itemData.src = element.src;
 
-				itemData.w = Number(element.naturalWidth || window.innerWidth);
-				itemData.h = Number(
-					element.naturalHeight || window.innerHeight,
-				);
+				itemData.w = Number(element.getAttribute('width') || element.naturalWidth);
+				itemData.h = Number(element.getAttribute('height') || element.naturalHeight);
 
 				itemData.msrc = element.src;
 			}
