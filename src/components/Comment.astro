@@ -13,7 +13,8 @@ const config = {
 <script is:inline defer define:vars={{ config }}>
 	function loadTwikoo() {
 		const script = document.createElement("script");
-		script.src = "https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.44/twikoo.min.js"
+		script.src =
+			"https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.44/twikoo.min.js";
 		script.onload = () => {
 			twikoo.init({
 				...config,
@@ -24,11 +25,11 @@ const config = {
 			const commentContainer = document.getElementById("twikoo");
 			if (commentContainer) {
 				commentContainer.addEventListener("click", function (e) {
-    				const selector = 'a[href="#"], svg, [class*="tk-action-"]';
-				    const targetElement = e.target.closest(selector);
+					const selector = 'a[href="#"], svg, [class*="tk-action-"]';
+					const targetElement = e.target.closest(selector);
 					if (targetElement) {
-					    e.preventDefault();
-					    e.stopPropagation();
+						e.preventDefault();
+						e.stopPropagation();
 					}
 				});
 			}

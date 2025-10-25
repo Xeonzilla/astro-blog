@@ -98,7 +98,10 @@ const bannerOffset =
 >
 	<head>
 		<!-- Cloudflare Web Analytics -->
-		<script is:inline async src="https://cwa.xeonzilla.top/fuwari-debug.js"
+		<script
+			is:inline
+			async
+			src="https://cwa.xeonzilla.top/fuwari-debug.js"
 			data-cf-beacon='{"send":{"to": "https://cwa.xeonzilla.top/fuwari-debug"},"token": "b9c63268ef0347f2a3f9dd68ad60b8cc"}'
 		></script>
 
@@ -406,70 +409,77 @@ const bannerOffset =
 			return;
 		}
 
-	banner.classList.remove('opacity-0', 'scale-105');
-}
+		banner.classList.remove("opacity-0", "scale-105");
+	}
 
-function initCommentComponent() {
-    document.dispatchEvent(new Event("loadComment"))
-}
+	function initCommentComponent() {
+		document.dispatchEvent(new Event("loadComment"));
+	}
 
-function initImageLoader() {
-    const markWrapperLoaded = (wrapper: Element) => {
-        const img = wrapper.querySelector<HTMLImageElement>('[data-image-element]');
-        const loadingBar = wrapper.querySelector<HTMLElement>('.loading-bar');
+	function initImageLoader() {
+		const markWrapperLoaded = (wrapper: Element) => {
+			const img = wrapper.querySelector<HTMLImageElement>(
+				"[data-image-element]",
+			);
+			const loadingBar =
+				wrapper.querySelector<HTMLElement>(".loading-bar");
 
-        if (!img || !loadingBar || img.dataset.loaded === "true") {
-            return;
-        }
+			if (!img || !loadingBar || img.dataset.loaded === "true") {
+				return;
+			}
 
-        const markLoaded = () => {
-            img.classList.add('loaded');
-            img.dataset.loaded = "true";
+			const markLoaded = () => {
+				img.classList.add("loaded");
+				img.dataset.loaded = "true";
 
-            requestAnimationFrame(() => {
-                loadingBar.classList.add('hide');
-            });
-        };
+				requestAnimationFrame(() => {
+					loadingBar.classList.add("hide");
+				});
+			};
 
-        if (img.complete && img.naturalHeight !== 0) {
-            markLoaded();
-        } else {
-            img.addEventListener('load', markLoaded, { once: true });
-            img.addEventListener('error', markLoaded, { once: true });
-        }
-    };
+			if (img.complete && img.naturalHeight !== 0) {
+				markLoaded();
+			} else {
+				img.addEventListener("load", markLoaded, { once: true });
+				img.addEventListener("error", markLoaded, { once: true });
+			}
+		};
 
-    document.querySelectorAll('[data-image-wrapper]').forEach(el => markWrapperLoaded(el));
+		document
+			.querySelectorAll("[data-image-wrapper]")
+			.forEach((el) => markWrapperLoaded(el));
 
-    const mutationObserver = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            mutation.addedNodes.forEach(node => {
-                if (node.nodeType === 1) {
-                    const el = node as Element;
-                    if (el.hasAttribute('data-image-wrapper')) {
-                        markWrapperLoaded(el);
-                    } else {
-                        el.querySelectorAll?.('[data-image-wrapper]').forEach(child => markWrapperLoaded(child));
-                    }
-                }
-            });
-        });
-    });
+		const mutationObserver = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				mutation.addedNodes.forEach((node) => {
+					if (node.nodeType === 1) {
+						const el = node as Element;
+						if (el.hasAttribute("data-image-wrapper")) {
+							markWrapperLoaded(el);
+						} else {
+							el.querySelectorAll?.(
+								"[data-image-wrapper]",
+							).forEach((child) => markWrapperLoaded(child));
+						}
+					}
+				});
+			});
+		});
 
-    mutationObserver.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-}
+		mutationObserver.observe(document.body, {
+			childList: true,
+			subtree: true,
+		});
+	}
 
-function init() {
-	loadTheme();
-	loadHue();
-	initCustomScrollbar();
-	showBanner();
-	initCommentComponent();
-	initImageLoader();
-}
+	function init() {
+		loadTheme();
+		loadHue();
+		initCustomScrollbar();
+		showBanner();
+		initCommentComponent();
+		initImageLoader();
+	}
 
 	/* Load settings when entering the site */
 	init();
@@ -482,31 +492,37 @@ function init() {
 				"0ms",
 			);
 
-		// prevent elements from overlapping the navbar
-		if (!bannerEnabled) {
-			return
-		}
-		let threshold = window.innerHeight * (BANNER_HEIGHT / 100) - 72 - 16
-		let navbar = document.getElementById('navbar-wrapper')
-		if (!navbar || !document.body.classList.contains('lg:is-home')) {
-			return
-		}
-		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
-			navbar.classList.add('navbar-hidden')
-		}
-	})
-	window.swup.hooks.on('content:replace',() => {
-		initCustomScrollbar()
-		initCommentComponent()
-	})
-	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
-		// change banner height immediately when a link is clicked
-		const bodyElement = document.querySelector('body')
-		if (pathsEqual(visit.to.url, url('/'))) {
-			bodyElement!.classList.add('lg:is-home');
-		} else {
-			bodyElement!.classList.remove('lg:is-home');
-		}
+			// prevent elements from overlapping the navbar
+			if (!bannerEnabled) {
+				return;
+			}
+			let threshold =
+				window.innerHeight * (BANNER_HEIGHT / 100) - 72 - 16;
+			let navbar = document.getElementById("navbar-wrapper");
+			if (!navbar || !document.body.classList.contains("lg:is-home")) {
+				return;
+			}
+			if (
+				document.body.scrollTop >= threshold ||
+				document.documentElement.scrollTop >= threshold
+			) {
+				navbar.classList.add("navbar-hidden");
+			}
+		});
+		window.swup.hooks.on("content:replace", () => {
+			initCustomScrollbar();
+			initCommentComponent();
+		});
+		window.swup.hooks.on(
+			"visit:start",
+			(visit: { to: { url: string } }) => {
+				// change banner height immediately when a link is clicked
+				const bodyElement = document.querySelector("body");
+				if (pathsEqual(visit.to.url, url("/"))) {
+					bodyElement!.classList.add("lg:is-home");
+				} else {
+					bodyElement!.classList.remove("lg:is-home");
+				}
 
 				// increase the page height during page transition to prevent the scrolling animation from jumping
 				const heightExtend =
@@ -650,8 +666,12 @@ function init() {
 			if (element instanceof HTMLImageElement) {
 				itemData.src = element.src;
 
-				itemData.w = Number(element.getAttribute('width') || element.naturalWidth);
-				itemData.h = Number(element.getAttribute('height') || element.naturalHeight);
+				itemData.w = Number(
+					element.getAttribute("width") || element.naturalWidth,
+				);
+				itemData.h = Number(
+					element.getAttribute("height") || element.naturalHeight,
+				);
 
 				itemData.msrc = element.src;
 			}

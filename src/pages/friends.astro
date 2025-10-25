@@ -22,58 +22,86 @@ const markdownDelay = friendsConfig.length * animationInterval;
 const commentDelay = markdownDelay + animationInterval;
 ---
 
-<MainGridLayout title={i18n(I18nKey.friends)} description={i18n(I18nKey.friends)}>
-    <section class="mb-4 grid grid-cols-2 rounded-[var(--radius-large)] bg-[var(--card-bg)] p-4 sm:grid-cols-3 md:gap-4 md:bg-transparent md:p-0 xl:grid-cols-4">
-        {friendsConfig.map((friend, index) => {
-            const titleId = `friend-${index}-title`;
-            const descriptionId = friend.desc ? `friend-${index}-description` : undefined;
+<MainGridLayout
+    title={i18n(I18nKey.friends)}
+    description={i18n(I18nKey.friends)}
+>
+    <section
+        class="mb-4 grid grid-cols-2 rounded-[var(--radius-large)] bg-[var(--card-bg)] p-4 sm:grid-cols-3 md:gap-4 md:bg-transparent md:p-0 xl:grid-cols-4"
+    >
+        {
+            friendsConfig.map((friend, index) => {
+                const titleId = `friend-${index}-title`;
+                const descriptionId = friend.desc
+                    ? `friend-${index}-description`
+                    : undefined;
 
-            return (
-                <article
-                    class:list={[
-                        "onload-animation",
-                        "flex h-full flex-col items-center p-3 text-center",
-                        "md:card-base",
-                        index >= 2 && "border-t border-dashed border-black/10 dark:border-white/15 pt-6 mt-2 md:border-t-0 md:pt-3 md:mt-0"
-                    ]}
-                    style={`animation-delay: calc(var(--content-delay) + ${index * animationInterval}ms);`}
-                    aria-labelledby={titleId}
-                    aria-describedby={descriptionId}
-                >
-                    <a
-                        href={friend.siteurl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        tabindex="-1"
-                        aria-hidden="true"
-                        class="group relative mx-auto mb-3 block aspect-square w-full shrink-0 overflow-hidden rounded-xl active:scale-95"
+                return (
+                    <article
+                        class:list={[
+                            "onload-animation",
+                            "flex h-full flex-col items-center p-3 text-center",
+                            "md:card-base",
+                            index >= 2 &&
+                                "border-t border-dashed border-black/10 dark:border-white/15 pt-6 mt-2 md:border-t-0 md:pt-3 md:mt-0",
+                        ]}
+                        style={`animation-delay: calc(var(--content-delay) + ${index * animationInterval}ms);`}
+                        aria-labelledby={titleId}
+                        aria-describedby={descriptionId}
                     >
-                        <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/0 transition group-hover:bg-black/30 group-active:bg-black/50">
-                            <Icon name="fa6-solid:arrow-up-right-from-square" class="text-4xl text-white scale-90 opacity-0 transition group-hover:scale-100 group-hover:opacity-100" />
-                        </div>
-                        <ImageWrapper src={friend.imgurl} alt={`Avatar of ${friend.title}`} widths={friendsImageConfig.widths} sizes={friendsImageConfig.sizes} quality={friendsImageConfig.quality} class="h-full w-full object-cover transition" />
-                    </a>
-                    <div class="flex w-full flex-1 flex-col items-center px-2">
                         <a
                             href={friend.siteurl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            id={titleId}
-                            class="group/title block text-lg font-bold text-neutral-900 transition hover:text-[var(--primary)] active:text-[var(--title-active)] dark:text-neutral-100 dark:hover:text-[var(--primary)] dark:active:text-[var(--title-active)]"
+                            tabindex="-1"
+                            aria-hidden="true"
+                            class="group relative mx-auto mb-3 block aspect-square w-full shrink-0 overflow-hidden rounded-xl active:scale-95"
                         >
-                            {friend.title}
+                            <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/0 transition group-hover:bg-black/30 group-active:bg-black/50">
+                                <Icon
+                                    name="fa6-solid:arrow-up-right-from-square"
+                                    class="text-4xl text-white scale-90 opacity-0 transition group-hover:scale-100 group-hover:opacity-100"
+                                />
+                            </div>
+                            <ImageWrapper
+                                src={friend.imgurl}
+                                alt={`Avatar of ${friend.title}`}
+                                widths={friendsImageConfig.widths}
+                                sizes={friendsImageConfig.sizes}
+                                quality={friendsImageConfig.quality}
+                                class="h-full w-full object-cover transition"
+                            />
                         </a>
-                        <div class="mt-1 h-1 w-5 rounded-full bg-[var(--primary)] transition"></div>
-                        {friend.desc && (
-                            <p id={descriptionId} class="mt-2 text-sm text-neutral-500 transition dark:text-neutral-400">{friend.desc}</p>
-                        )}
-                    </div>
-                </article>
-            );
-        })}
+                        <div class="flex w-full flex-1 flex-col items-center px-2">
+                            <a
+                                href={friend.siteurl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                id={titleId}
+                                class="group/title block text-lg font-bold text-neutral-900 transition hover:text-[var(--primary)] active:text-[var(--title-active)] dark:text-neutral-100 dark:hover:text-[var(--primary)] dark:active:text-[var(--title-active)]"
+                            >
+                                {friend.title}
+                            </a>
+                            <div class="mt-1 h-1 w-5 rounded-full bg-[var(--primary)] transition" />
+                            {friend.desc && (
+                                <p
+                                    id={descriptionId}
+                                    class="mt-2 text-sm text-neutral-500 transition dark:text-neutral-400"
+                                >
+                                    {friend.desc}
+                                </p>
+                            )}
+                        </div>
+                    </article>
+                );
+            })
+        }
     </section>
 
-    <div class="mt-4 flex w-full overflow-hidden rounded-[var(--radius-large)]" aria-label="Friends page markdown content">
+    <div
+        class="mt-4 flex w-full overflow-hidden rounded-[var(--radius-large)]"
+        aria-label="Friends page markdown content"
+    >
         <div
             class:list={["card-base w-full px-9 py-6", "onload-animation"]}
             style={`animation-delay: calc(var(--content-delay) + ${markdownDelay}ms);`}
@@ -91,5 +119,4 @@ const commentDelay = markdownDelay + animationInterval;
     >
         <Comment path="/friends" />
     </div>
-
 </MainGridLayout>

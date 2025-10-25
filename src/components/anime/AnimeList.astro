@@ -17,94 +17,161 @@ const interval = 50;
 ---
 
 <div class="w-full">
-    {animeList.length > 0 && (
-        <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4">
-            {animeList.map((anime: ProcessedAnime, index: number) => {
-                const individualDelay = delay++ * interval;
-                return (
-                    <>
-                        <div
-                            class:list={[
-                                "flex flex-row md:flex-col w-full overflow-hidden relative onload-animation",
-                                "md:card-base md:rounded-[var(--radius-large)]",
-                            ]}
-                            style={`animation-delay: calc(var(--content-delay) + ${individualDelay}ms);`}
-                            role="article"
-                            aria-label={`Anime Info: ${anime.title}`}
-                        >
+    {
+        animeList.length > 0 && (
+            <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4">
+                {animeList.map((anime: ProcessedAnime, index: number) => {
+                    const individualDelay = delay++ * interval;
+                    return (
+                        <>
                             <div
                                 class:list={[
-                                    "pl-6 pr-4 pt-6 pb-6 relative min-w-0 flex-1 md:flex-none",
-                                    "md:pl-9 md:pr-2 md:pt-7 md:w-[calc(100%_-_var(--coverWidth)_-_0.75rem)]",
+                                    "flex flex-row md:flex-col w-full overflow-hidden relative onload-animation",
+                                    "md:card-base md:rounded-[var(--radius-large)]",
                                 ]}
+                                style={`animation-delay: calc(var(--content-delay) + ${individualDelay}ms);`}
+                                role="article"
+                                aria-label={`Anime Info: ${anime.title}`}
                             >
-                                <a
-                                    href={anime.detailUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="transition group w-full block font-bold mb-1 text-3xl text-90 break-words
+                                <div
+                                    class:list={[
+                                        "pl-6 pr-4 pt-6 pb-6 relative min-w-0 flex-1 md:flex-none",
+                                        "md:pl-9 md:pr-2 md:pt-7 md:w-[calc(100%_-_var(--coverWidth)_-_0.75rem)]",
+                                    ]}
+                                >
+                                    <a
+                                        href={anime.detailUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="transition group w-full block font-bold mb-1 text-3xl text-90 break-words
                                        hover:text-[var(--primary)] dark:hover:text-[var(--primary)]
                                        active:text-[var(--title-active)] dark:active:text-[var(--title-active)]
                                        before:hidden md:before:block before:absolute
                                        before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]
                                        before:top-[35px] before:left-[18px]"
-                                >
-                                    {anime.title}
-                                    <Icon class="inline text-[2rem] text-[var(--primary)] md:hidden translate-y-0.5 absolute" name="material-symbols:chevron-right-rounded" ></Icon>
-                                    <Icon class="text-[var(--primary)] text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0" name="material-symbols:chevron-right-rounded"></Icon>
-                                </a>
-                                <p class="text-neutral-500 dark:text-neutral-400 text-base mb-3 line-clamp-1 md:line-clamp-2">
-                                    {anime.originalTitle}
-                                </p>
-                                
-                                <div class="flex flex-row flex-wrap items-center gap-x-4 gap-y-2 text-neutral-500 dark:text-neutral-400 md:flex-col md:items-start md:gap-2" role="list" aria-label="Anime Metadata">
-                                    <div class="flex items-center" role="listitem">
-                                        <div class="meta-icon"><Icon name="material-symbols:calendar-today-outline-rounded" class="text-xl" aria-hidden="true"/></div>
-                                        <span class="text-50 text-sm font-medium">{anime.year}</span>
-                                    </div>
-                                    <div class="flex items-center" role="listitem">
-                                        <div class="meta-icon"><Icon name="material-symbols:bookmark-added-outline-rounded" class="text-xl" aria-hidden="true"/></div>
-                                        <span class="text-50 text-sm font-medium">{anime.progress} / {anime.totalEpisodes}</span>
-                                    </div>
-                                    <div class="flex items-center" role="listitem">
-                                        <div class="meta-icon"><Icon name="material-symbols:tag-rounded" class="text-xl" aria-hidden="true"/></div>
-                                        <div class="flex flex-row flex-wrap items-center shrink min-w-0">
-                                            {anime.genre.map((g: string, i: number) => (
-                                                <>
-                                                    <div class:list={[{ hidden: i == 0 }, "mx-1.5 text-[var(--meta-divider)] text-sm"]}>/</div>
-                                                    <span class="text-50 text-sm font-medium whitespace-nowrap">{g}</span>
-                                                </>
-                                            ))}
+                                    >
+                                        {anime.title}
+                                        <Icon
+                                            class="inline text-[2rem] text-[var(--primary)] md:hidden translate-y-0.5 absolute"
+                                            name="material-symbols:chevron-right-rounded"
+                                        />
+                                        <Icon
+                                            class="text-[var(--primary)] text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0"
+                                            name="material-symbols:chevron-right-rounded"
+                                        />
+                                    </a>
+                                    <p class="text-neutral-500 dark:text-neutral-400 text-base mb-3 line-clamp-1 md:line-clamp-2">
+                                        {anime.originalTitle}
+                                    </p>
+
+                                    <div
+                                        class="flex flex-row flex-wrap items-center gap-x-4 gap-y-2 text-neutral-500 dark:text-neutral-400 md:flex-col md:items-start md:gap-2"
+                                        role="list"
+                                        aria-label="Anime Metadata"
+                                    >
+                                        <div
+                                            class="flex items-center"
+                                            role="listitem"
+                                        >
+                                            <div class="meta-icon">
+                                                <Icon
+                                                    name="material-symbols:calendar-today-outline-rounded"
+                                                    class="text-xl"
+                                                    aria-hidden="true"
+                                                />
+                                            </div>
+                                            <span class="text-50 text-sm font-medium">
+                                                {anime.year}
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="flex items-center"
+                                            role="listitem"
+                                        >
+                                            <div class="meta-icon">
+                                                <Icon
+                                                    name="material-symbols:bookmark-added-outline-rounded"
+                                                    class="text-xl"
+                                                    aria-hidden="true"
+                                                />
+                                            </div>
+                                            <span class="text-50 text-sm font-medium">
+                                                {anime.progress} /{" "}
+                                                {anime.totalEpisodes}
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="flex items-center"
+                                            role="listitem"
+                                        >
+                                            <div class="meta-icon">
+                                                <Icon
+                                                    name="material-symbols:tag-rounded"
+                                                    class="text-xl"
+                                                    aria-hidden="true"
+                                                />
+                                            </div>
+                                            <div class="flex flex-row flex-wrap items-center shrink min-w-0">
+                                                {anime.genre.map(
+                                                    (g: string, i: number) => (
+                                                        <>
+                                                            <div
+                                                                class:list={[
+                                                                    {
+                                                                        hidden:
+                                                                            i ==
+                                                                            0,
+                                                                    },
+                                                                    "mx-1.5 text-[var(--meta-divider)] text-sm",
+                                                                ]}
+                                                            >
+                                                                /
+                                                            </div>
+                                                            <span class="text-50 text-sm font-medium whitespace-nowrap">
+                                                                {g}
+                                                            </span>
+                                                        </>
+                                                    ),
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <a
+                                    href={anime.detailUrl}
+                                    aria-label={anime.title}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="group transition mr-6 my-6 w-24 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 md:mx-0 md:my-0 md:aspect-auto md:w-[var(--coverWidth)] md:absolute md:top-3 md:bottom-3 md:right-3 active:scale-95"
+                                >
+                                    <div class="absolute pointer-events-none z-10 w-full h-full group-hover:bg-black/30 group-active:bg-black/50 transition" />
+                                    <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center ">
+                                        <Icon
+                                            name="fa6-solid:arrow-up-right-from-square"
+                                            class="transition opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 text-white text-5xl"
+                                        ></Icon>
+                                    </div>
+                                    <ImageWrapper
+                                        src={anime.cover}
+                                        alt={anime.title}
+                                        widths={animeImageConfig.widths}
+                                        sizes={animeImageConfig.sizes}
+                                        quality={animeImageConfig.quality}
+                                        class="w-full h-full object-cover"
+                                    />
+                                </a>
                             </div>
 
-                            <a
-                                href={anime.detailUrl}
-                                aria-label={anime.title}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="group transition mr-6 my-6 w-24 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 md:mx-0 md:my-0 md:aspect-auto md:w-[var(--coverWidth)] md:absolute md:top-3 md:bottom-3 md:right-3 active:scale-95"
-                            >
-                                <div class="absolute pointer-events-none z-10 w-full h-full group-hover:bg-black/30 group-active:bg-black/50 transition"></div>
-                                <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center ">
-                                    <Icon name="fa6-solid:arrow-up-right-from-square"
-                                          class="transition opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 text-white text-5xl">
-                                    </Icon>
-                                </div>
-                                <ImageWrapper src={anime.cover} alt={anime.title} widths={animeImageConfig.widths} sizes={animeImageConfig.sizes} quality={animeImageConfig.quality} class="w-full h-full object-cover"/>
-                            </a>
-                        </div>
-
-                        {index < animeList.length - 1 && (
-                            <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] md:hidden"></div>
-                        )}
-                    </>
-                );
-            })}
-        </div>
-    )}
+                            {index < animeList.length - 1 && (
+                                <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] md:hidden" />
+                            )}
+                        </>
+                    );
+                })}
+            </div>
+        )
+    }
 </div>
 
 <style define:vars={{ coverWidth }}></style>
