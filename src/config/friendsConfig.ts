@@ -74,4 +74,10 @@ export const friendsConfig: FriendsConfig[] = [
 		imgurl: "https://blog.samhou.top/img/SamHou.png",
 		desc: "SamHou 的技术小站",
 	},
+	{
+		title: "LANSGANBS's Blog",
+		siteurl: "https://www.lansganbs.cn/",
+		imgurl: "https://www.lansganbs.cn/images/friends/lansganbs.png",
+		desc: "红叶最多情，一舞寄相思。",
+	},
 ];
