@@ -45,10 +45,14 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 	}
 
 	// Set the theme for Expressive Code
-	document.documentElement.setAttribute(
-		"data-theme",
-		expressiveCodeConfig.theme,
-	);
+	const expressiveCodeTheme = expressiveCodeConfig.theme;
+	const themeName =
+		typeof expressiveCodeTheme === "string"
+			? expressiveCodeTheme
+			: expressiveCodeTheme?.name;
+	if (themeName) {
+		document.documentElement.setAttribute("data-theme", themeName);
+	}
 }
 
 export function setTheme(theme: LIGHT_DARK_MODE): void {

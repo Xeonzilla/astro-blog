@@ -1,4 +1,5 @@
 import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants";
+import type { ThemeObjectOrShikiThemeName } from "astro-expressive-code";
 
 export type SiteConfig = {
 	title: string;
@@ -90,7 +91,7 @@ export type BlogPostData = {
 };
 
 export type ExpressiveCodeConfig = {
-	theme: string;
+	theme: ThemeObjectOrShikiThemeName;
 };
 
 export type FriendsConfig = {

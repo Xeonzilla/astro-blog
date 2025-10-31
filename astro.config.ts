@@ -8,6 +8,7 @@ import swup from "@swup/astro";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import type { ElementContent } from "hast";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components";
 import rehypeExternalLinks from "rehype-external-links";
@@ -17,10 +18,14 @@ import remarkDirective from "remark-directive";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
-import { expressiveCodeConfig } from "./src/config";
-import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
-import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
-import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition";
+import type { RollupLog } from "rollup";
+import { expressiveCodeConfig } from "./src/config/index";
+import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button";
+import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge";
+import {
+	AdmonitionComponent,
+	type AdmonitionProperties,
+} from "./src/plugins/rehype-component-admonition";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt";
@@ -101,9 +106,9 @@ export default defineConfig({
 					terminalTitlebarBorderBottomColor: "none",
 				},
 				textMarkers: {
-					delHue: 0,
-					insHue: 180,
-					markHue: 250,
+					delHue: "0",
+					insHue: "180",
+					markHue: "250",
 				},
 			},
 			frames: {
@@ -126,11 +131,34 @@ export default defineConfig({
 				{
 					components: {
 						github: GithubCardComponent,
-						note: (x, y) => AdmonitionComponent(x, y, "note"),
-						tip: (x, y) => AdmonitionComponent(x, y, "tip"),
-						important: (x, y) => AdmonitionComponent(x, y, "important"),
-						caution: (x, y) => AdmonitionComponent(x, y, "caution"),
-						warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+						note: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "note"),
+						tip: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "tip"),
+						important: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "important"),
+						info: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "important"),
+						caution: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "caution"),
+						danger: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "caution"),
+						warning: (
+							properties: AdmonitionProperties,
+							children: ElementContent[],
+						) => AdmonitionComponent(properties, children, "warning"),
 					},
 				},
 			],
@@ -161,7 +189,7 @@ export default defineConfig({
 				rehypeExternalLinks,
 				{
 					target: "_blank",
-					rel: ["noopener", "noreferrer"],
+					rel: ["noopener", "noreferrer", "nofollow"],
 					content: { type: "text", value: "↗" },
 				},
 			],
@@ -170,7 +198,7 @@ export default defineConfig({
 	vite: {
 		build: {
 			rollupOptions: {
-				onwarn(warning, warn) {
+				onwarn(warning: RollupLog, warn) {
 					if (
 						warning.message.includes("is dynamically imported by") &&
 						warning.message.includes("but also statically imported by")
