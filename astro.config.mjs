@@ -20,12 +20,12 @@ import remarkSectionize from "remark-sectionize";
 import { expressiveCodeConfig } from "./src/config";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
-import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
-import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
-import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
-import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
-import { remarkImageComponent } from "./src/plugins/remark-image-component.mjs";
-import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition";
+import { GithubCardComponent } from "./src/plugins/rehype-component-github-card";
+import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype";
+import { remarkExcerpt } from "./src/plugins/remark-excerpt";
+import { remarkImageComponent } from "./src/plugins/remark-image-component";
+import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 
 const commonRemarkPlugins = [
 	remarkMath,
