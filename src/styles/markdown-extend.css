@@ -119,6 +119,19 @@ a.card-github {
   text-decoration-thickness: 0px;
   text-decoration-line: none;
 
+  > span {
+    position: absolute;
+    bottom: 1.1rem;
+    right: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1;
+    color: var(--tw-prose-body);
+    opacity: 0.9;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.15s;
+  }
+
   &:hover {
     background-color: var(--btn-regular-bg-hover);
 
@@ -135,6 +148,10 @@ a.card-github {
       &:before {
         background-color: var(--tw-prose-headings);
       }
+    }
+
+    > span {
+      color: var(--tw-prose-headings);
     }
   }
 
