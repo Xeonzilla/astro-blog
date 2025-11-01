@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
-    "new-post": "bun run scripts/new-post.js",
+    "new-post": "bun scripts/new-post.ts --",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src",
     "deploy": "bun wrangler deploy",
