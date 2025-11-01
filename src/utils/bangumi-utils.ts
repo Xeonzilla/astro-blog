@@ -99,10 +99,13 @@ function processBangumiData(data: BangumiCollectionItem[]): ProcessedAnime[] {
 					.map((tag) => tag.name)
 			: [];
 
+		const title = item.subject.name_cn || item.subject.name;
+		const originalTitle = item.subject.name_cn ? item.subject.name : "";
+
 		return {
-			title: item.subject.name_cn,
+			title,
 			cover: item.subject.images.large,
-			originalTitle: item.subject.name,
+			originalTitle,
 			year: item.subject.date,
 			genre: genre,
 			progress: progress,
