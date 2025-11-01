@@ -1,5 +1,4 @@
 export type {
-	ExpressiveCodeConfig,
 	FriendsConfig,
 	ImageConfig,
 	LicenseConfig,
@@ -8,7 +7,6 @@ export type {
 	SiteConfig,
 } from "../types/config";
 
-export { expressiveCodeConfig } from "./expressiveCodeConfig";
 export { friendsConfig } from "./friendsConfig";
 export {
 	animeImageConfig,

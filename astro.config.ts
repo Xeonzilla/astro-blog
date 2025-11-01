@@ -6,7 +6,7 @@ import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
 import { defineConfig } from "astro/config";
-import expressiveCode from "astro-expressive-code";
+import astroExpressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import type { ElementContent } from "hast";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -19,7 +19,6 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import type { RollupLog } from "rollup";
-import { expressiveCodeConfig } from "./src/config/index";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge";
 import {
@@ -70,14 +69,7 @@ export default defineConfig({
 				"fa6-solid": ["*"],
 			},
 		}),
-		expressiveCode({
-			themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
-			plugins: [
-				pluginCollapsibleSections(),
-				pluginLineNumbers(),
-				pluginLanguageBadge(),
-				pluginCustomCopyButton(),
-			],
+		astroExpressiveCode({
 			defaultProps: {
 				wrap: true,
 				overridesByLang: {
@@ -86,6 +78,12 @@ export default defineConfig({
 					},
 				},
 			},
+			plugins: [
+				pluginCollapsibleSections(),
+				pluginLineNumbers(),
+				pluginLanguageBadge(),
+				pluginCustomCopyButton(),
+			],
 			styleOverrides: {
 				codeBackground: "var(--codeblock-bg)",
 				borderRadius: "0.75rem",
@@ -111,6 +109,7 @@ export default defineConfig({
 					markHue: "250",
 				},
 			},
+			themes: ["github-dark"],
 			frames: {
 				showCopyToClipboardButton: false,
 			},
