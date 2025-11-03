@@ -4,9 +4,9 @@ import { generateFeed } from "@/utils/feeds-utils";
 export async function GET(context: APIContext) {
 	const feed = await generateFeed(context);
 
-	return new Response(feed.rss2(), {
+	return new Response(feed.atom1(), {
 		headers: {
-			"Content-Type": "application/xml; charset=utf-8",
+			"Content-Type": "application/atom+xml; charset=utf-8",
 		},
 	});
 }
