@@ -70,6 +70,20 @@ const currentYear = new Date().getFullYear();
             <a
                 class="transition link text-[var(--primary)] font-medium"
                 target="_blank"
+                href={url("atom.xml")}
+                aria-label="订阅 Atom"
+            >
+                <Icon
+                    name="fa6-solid:atom"
+                    class="text-lg"
+                    aria-hidden="true"
+                />
+                <span class="sr-only">Atom 订阅</span>
+            </a>
+            <span aria-hidden="true">|</span>
+            <a
+                class="transition link text-[var(--primary)] font-medium"
+                target="_blank"
                 href={url("rss.xml")}
                 aria-label="订阅 RSS"
             >
