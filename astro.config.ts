@@ -15,6 +15,7 @@ import rehypeExternalLinks from "rehype-external-links";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkDirective from "remark-directive";
+import remarkGfm from "remark-gfm";
 import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
@@ -32,6 +33,7 @@ import { remarkImageComponent } from "./src/plugins/remark-image-component";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 
 const commonRemarkPlugins = [
+	remarkGfm,
 	remarkMath,
 	remarkReadingTime,
 	remarkExcerpt,

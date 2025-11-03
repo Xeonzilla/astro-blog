@@ -7,6 +7,7 @@ import type { Root as HastRoot, RootContent } from "hast";
 import type { Code, Root as MdastRoot } from "mdast";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
@@ -104,6 +105,7 @@ async function mdxToHtml(mdxContent: string, site: UrlLike): Promise<string> {
 		const result = await unified()
 			.use(remarkParse)
 			.use(remarkMdx)
+			.use(remarkGfm)
 			.use(remarkMath)
 			.use(remarkRemoveAnsiBlocks)
 			.use(remarkRemoveImports)
