@@ -60,9 +60,6 @@
 
     --color-selection-bar: linear-gradient(to right, oklch(0.8 0.1 0), oklch(0.8 0.1 30), oklch(0.8 0.1 60), oklch(0.8 0.1 90), oklch(0.8 0.1 120), oklch(0.8 0.1 150), oklch(0.8 0.1 180), oklch(0.8 0.1 210), oklch(0.8 0.1 240), oklch(0.8 0.1 270), oklch(0.8 0.1 300), oklch(0.8 0.1 330), oklch(0.8 0.1 360));
 
-    --display-light-icon: 1;
-    --display-dark-icon: 0;
-
     --admonitions-color-tip: oklch(0.7 0.14 180);
     --admonitions-color-note: oklch(0.7 0.14 250);
     --admonitions-color-important: oklch(0.7 0.14 310);
@@ -115,9 +112,6 @@
     --scrollbar-bg-active: var(--scrollbar-bg-active-dark);
 
     --color-selection-bar: linear-gradient(to right, oklch(0.7 0.1 0), oklch(0.7 0.1 30), oklch(0.7 0.1 60), oklch(0.7 0.1 90), oklch(0.7 0.1 120), oklch(0.7 0.1 150), oklch(0.7 0.1 180), oklch(0.7 0.1 210), oklch(0.7 0.1 240), oklch(0.7 0.1 270), oklch(0.7 0.1 300), oklch(0.7 0.1 330), oklch(0.7 0.1 360));
-
-    --display-light-icon: 0;
-    --display-dark-icon: 1;
 
     --admonitions-color-tip: oklch(0.75 0.14 180);
     --admonitions-color-note: oklch(0.75 0.14 250);
