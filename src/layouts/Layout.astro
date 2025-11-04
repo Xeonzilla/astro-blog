@@ -215,9 +215,7 @@ const bannerOffset =
 	</head>
 	<body
 		class="min-h-screen transition"
-		class:list={[
-			{ "lg:is-home": isHomePage, "enable-banner": enableBanner },
-		]}
+		class:list={[{ "is-home": isHomePage, "enable-banner": enableBanner }]}
 		data-overlayscrollbars-initialize
 	>
 		<ConfigCarrier />
@@ -239,26 +237,25 @@ const bannerOffset =
 	@reference "../styles/main.css";
 	@layer components {
 		.enable-banner.is-home #banner-wrapper {
-			@apply h-[var(--banner-height-home)] translate-y-[var(--banner-height-extend)];
+			@apply lg:translate-y-[var(--banner-height-extend)];
 		}
 		.enable-banner #banner-wrapper {
 			@apply h-[var(--banner-height-home)];
 		}
-
 		.enable-banner.is-home #banner {
-			@apply h-[var(--banner-height-home)] translate-y-0;
+			@apply lg:translate-y-0;
 		}
 		.enable-banner #banner {
 			@apply h-[var(--banner-height-home)] translate-y-[var(--bannerOffset)];
 		}
 		.enable-banner.is-home #main-grid {
-			@apply translate-y-[var(--banner-height-extend)];
+			@apply lg:translate-y-[var(--banner-height-extend)];
 		}
 		.enable-banner #top-row {
 			@apply h-[calc(var(--banner-height-home)_-_4.5rem)] transition-all duration-300;
 		}
 		.enable-banner.is-home #sidebar-sticky {
-			@apply top-[calc(1rem_-_var(--banner-height-extend))];
+			@apply lg:top-[calc(1rem_-_var(--banner-height-extend))]!;
 		}
 		.navbar-hidden {
 			@apply opacity-0 -translate-y-16;
@@ -499,7 +496,7 @@ const bannerOffset =
 			let threshold =
 				window.innerHeight * (BANNER_HEIGHT / 100) - 72 - 16;
 			let navbar = document.getElementById("navbar-wrapper");
-			if (!navbar || !document.body.classList.contains("lg:is-home")) {
+			if (!navbar || !document.body.classList.contains("is-home")) {
 				return;
 			}
 			if (
@@ -519,9 +516,9 @@ const bannerOffset =
 				// change banner height immediately when a link is clicked
 				const bodyElement = document.querySelector("body");
 				if (pathsEqual(visit.to.url, url("/"))) {
-					bodyElement!.classList.add("lg:is-home");
+					bodyElement!.classList.add("is-home");
 				} else {
-					bodyElement!.classList.remove("lg:is-home");
+					bodyElement!.classList.remove("is-home");
 				}
 
 				// increase the page height during page transition to prevent the scrolling animation from jumping
@@ -603,7 +600,7 @@ const bannerOffset =
 
 			let bannerHeight = BANNER_HEIGHT;
 			if (
-				document.body.classList.contains("lg:is-home") &&
+				document.body.classList.contains("is-home") &&
 				window.innerWidth >= 1024
 			) {
 				bannerHeight = BANNER_HEIGHT_HOME;
