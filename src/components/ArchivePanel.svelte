@@ -118,7 +118,7 @@ onMount(async () => {
                         <!-- dot and line -->
                         <div class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center">
                             <div
-                                    class="transition-all mx-auto w-1 h-1 rounded group-hover:h-5
+                                    class="transition-all mx-auto w-1 h-1 rounded-sm group-hover:h-5
                        bg-[oklch(0.5_0.05_var(--hue))] group-hover:bg-(--primary) outline-4 z-50
                        outline-(--card-bg)
                        group-hover:outline-(--btn-plain-bg-hover)
@@ -130,7 +130,7 @@ onMount(async () => {
                         <div
                                 class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
                      group-hover:translate-x-1 transition-all group-hover:text-(--primary)
-                     text-75 pr-8 whitespace-nowrap overflow-ellipsis overflow-hidden"
+                     text-75 pr-8 whitespace-nowrap text-ellipsis overflow-hidden"
                         >
                             {post.data.title}
                         </div>
@@ -138,7 +138,7 @@ onMount(async () => {
                         <!-- tag list -->
                         <div
                                 class="hidden md:block md:w-[15%] text-left text-sm transition
-                     whitespace-nowrap overflow-ellipsis overflow-hidden text-30"
+                     whitespace-nowrap text-ellipsis overflow-hidden text-30"
                         >
                             {formatTag(post.data.tags)}
                         </div>
