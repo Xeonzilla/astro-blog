@@ -9,7 +9,7 @@
 }
 
 .tk-comments {
-    @apply text-[var(--tk-text)] md:px-4;
+    @apply text-(--tk-text) md:px-4;
 }
 
 .tk-submit {
@@ -21,96 +21,106 @@
 .tk-row {
     .tk-col {
         @apply flex-col-reverse;
+
         .tk-input {
             textarea {
-                @apply rounded-lg py-4 px-6 !min-h-[150px] focus:border-[var(--primary)];
+                @apply rounded-lg py-4 px-6 min-h-[150px]! focus:border-(--primary);
             }
         }
     }
 }
 
 .el-input {
-    @apply !rounded-lg;
+    @apply rounded-lg!;
 }
 
 .tk-meta-input {
     @apply min-h-10 relative mt-3;
+
     .el-input-group__prepend {
-        @apply !bg-inherit;
+        @apply bg-inherit!;
     }
+
     div {
         @apply py-1 rounded-l-lg;
         min-height: inherit;
     }
+
     input {
-        @apply px-4 rounded-r-lg focus:!border-[var(--primary)];
+        @apply px-4 rounded-r-lg focus:border-(--primary)!;
         min-height: inherit;
     }
 }
 
 .tk-row.actions {
-    @apply w-full !ml-0 !mt-0;
+    @apply w-full ml-0! mt-0!;
+
     .__markdown {
-        @apply !hidden;
+        @apply hidden!;
     }
+
     .tk-preview,
     .tk-send,
     .tk-cancel {
-        @apply border-none rounded-lg px-3 py-0 h-8
-        !bg-[var(--btn-regular-bg-active)] disabled:!bg-[var(--btn-regular-bg)]
-        !text-[var(--btn-content)] disabled:!text-[#ffffffa1];
+        @apply border-none rounded-lg px-3 py-0 h-8 bg-(--btn-regular-bg-active)! disabled:bg-(--btn-regular-bg)! text-(--btn-content)! disabled:text-[#ffffffa1]!;
     }
 }
 
 .tk-comments-title {
     .__comments svg {
-        @apply fill-[var(--primary)];
+        @apply fill-(--primary);
     }
 }
 
 .tk-comment {
-    @apply border-[1px] border-[rgba(144,147,153,0.31)] p-4 rounded-lg hover:shadow-md transition-all;
+    @apply border border-[rgba(144,147,153,0.31)] p-4 rounded-lg hover:shadow-md transition-all;
+
     .tk-action-icon svg {
-        @apply fill-[var(--primary)];
+        @apply fill-(--primary);
     }
 }
 
 .tk-action {
     .tk-action-count {
-        @apply text-[var(--btn-content)];
+        @apply text-(--btn-content);
     }
 }
 
 .tk-meta {
     .tk-tag {
-        @apply border-none rounded-lg text-[var(--btn-content)];
+        @apply border-none rounded-lg text-(--btn-content);
     }
+
     .tk-tag-green {
-        @apply bg-[var(--btn-regular-bg)] dark:bg-[var(--primary)] dark:text-[var(--deep-text)];
+        @apply bg-(--btn-regular-bg) dark:bg-(--primary) dark:text-(--deep-text);
     }
 }
 
 .tk-content,
 .tk-preview-container {
     a {
-        @apply link link-underline text-[var(--primary)] font-medium;
+        @apply link link-underline text-(--primary) font-medium;
     }
+
     .tk-ruser {
         @apply no-underline;
     }
-    :not(pre) > code {
-        @apply bg-[var(--inline-code-bg)] rounded-md text-[--inline-code-color] px-1 py-0.5 font-semibold;
+
+    :not(pre)>code {
+        @apply bg-(--inline-code-bg) rounded-md text-[--inline-code-color] px-1 py-0.5 font-semibold;
     }
+
     li {
-        @apply before:content-['•'] before:text-[var(--primary)];
+        @apply before:content-['•'] before:text-(--primary);
     }
 }
 
 .tk-replies {
     .tk-comment {
-        @apply bg-[var(--page-bg)];
+        @apply bg-(--page-bg);
+
         .tk-content {
-            > span:first-of-type {
+            >span:first-of-type {
                 @apply text-xs;
             }
         }
@@ -119,8 +129,9 @@
 
 .twikoo .code-block {
     pre {
-        @apply !rounded-xl;
+        @apply rounded-xl!;
     }
+
     .copy-btn-icon {
         width: inherit !important;
         height: inherit !important;
@@ -129,7 +140,7 @@
 
 .tk-expand-wrap .tk-expand,
 .tk-collapse-wrap .tk-expand {
-    @apply hover:rounded-lg mt-1 hover:bg-[var(--btn-plain-bg-hover)];
+    @apply hover:rounded-lg mt-1 hover:bg-(--btn-plain-bg-hover);
 }
 
 .tk-footer {

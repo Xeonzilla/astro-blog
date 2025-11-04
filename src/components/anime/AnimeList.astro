@@ -27,7 +27,7 @@ const interval = 50;
                             <div
                                 class:list={[
                                     "flex flex-row md:flex-col w-full overflow-hidden relative onload-animation",
-                                    "md:card-base md:rounded-[var(--radius-large)]",
+                                    "md:card-base md:rounded-(--radius-large)",
                                 ]}
                                 style={`animation-delay: calc(var(--content-delay) + ${individualDelay}ms);`}
                                 role="article"
@@ -36,7 +36,7 @@ const interval = 50;
                                 <div
                                     class:list={[
                                         "pl-6 pr-4 pt-6 pb-6 relative min-w-0 flex-1 md:flex-none",
-                                        "md:pl-9 md:pr-2 md:pt-7 md:w-[calc(100%_-_var(--coverWidth)_-_0.75rem)]",
+                                        "md:pl-9 md:pr-2 md:pt-7 md:w-[calc(100%-var(--coverWidth)-0.75rem)]",
                                     ]}
                                 >
                                     <a
@@ -44,11 +44,11 @@ const interval = 50;
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class:list={[
-                                            "transition group w-full block font-bold text-3xl text-90 break-words",
-                                            "hover:text-[var(--primary)] dark:hover:text-[var(--primary)]",
-                                            "active:text-[var(--title-active)] dark:active:text-[var(--title-active)]",
+                                            "transition group w-full block font-bold text-3xl text-90 wrap-break-word",
+                                            "hover:text-(--primary) dark:hover:text-(--primary)",
+                                            "active:text-(--title-active) dark:active:text-(--title-active)",
                                             "before:hidden md:before:block before:absolute",
-                                            "before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]",
+                                            "before:w-1 before:h-5 before:rounded-md before:bg-(--primary)",
                                             "before:top-[35px] before:left-[18px]",
                                             anime.originalTitle
                                                 ? "mb-1"
@@ -57,11 +57,11 @@ const interval = 50;
                                     >
                                         {anime.title}
                                         <Icon
-                                            class="inline text-[2rem] text-[var(--primary)] md:hidden translate-y-0.5 absolute"
+                                            class="inline text-[2rem] text-(--primary) md:hidden translate-y-0.5 absolute"
                                             name="material-symbols:chevron-right-rounded"
                                         />
                                         <Icon
-                                            class="text-[var(--primary)] text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0"
+                                            class="text-(--primary) text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0"
                                             name="material-symbols:chevron-right-rounded"
                                         />
                                     </a>
@@ -129,7 +129,7 @@ const interval = 50;
                                                                             i ==
                                                                             0,
                                                                     },
-                                                                    "mx-1.5 text-[var(--meta-divider)] text-sm",
+                                                                    "mx-1.5 text-(--meta-divider) text-sm",
                                                                 ]}
                                                             >
                                                                 /
@@ -150,7 +150,7 @@ const interval = 50;
                                     aria-label={anime.title}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="group transition mr-6 my-6 w-24 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 md:mx-0 md:my-0 md:aspect-auto md:w-[var(--coverWidth)] md:absolute md:top-3 md:bottom-3 md:right-3 active:scale-95"
+                                    class="group transition mr-6 my-6 w-24 aspect-2/3 rounded-lg overflow-hidden shrink-0 md:mx-0 md:my-0 md:aspect-auto md:w-(--coverWidth) md:absolute md:top-3 md:bottom-3 md:right-3 active:scale-95"
                                 >
                                     <div class="absolute pointer-events-none z-10 w-full h-full group-hover:bg-black/30 group-active:bg-black/50 transition" />
                                     <div class="absolute pointer-events-none z-20 w-full h-full flex items-center justify-center ">
@@ -171,7 +171,7 @@ const interval = 50;
                             </div>
 
                             {index < animeList.length - 1 && (
-                                <div class="transition border-t-[1px] border-dashed mx-6 border-black/10 dark:border-white/[0.15] md:hidden" />
+                                <div class="transition border-t border-dashed mx-6 border-black/10 dark:border-white/15 md:hidden" />
                             )}
                         </>
                     );

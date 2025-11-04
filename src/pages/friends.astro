@@ -27,7 +27,7 @@ const commentDelay = markdownDelay + animationInterval;
     description={i18n(I18nKey.friends)}
 >
     <section
-        class="mb-4 grid grid-cols-2 rounded-[var(--radius-large)] bg-[var(--card-bg)] p-4 sm:grid-cols-3 md:gap-4 md:bg-transparent md:p-0 xl:grid-cols-4"
+        class="mb-4 grid grid-cols-2 rounded-(--radius-large) bg-(--card-bg) p-4 sm:grid-cols-3 md:gap-4 md:bg-transparent md:p-0 xl:grid-cols-4"
     >
         {
             friendsConfig.map((friend, index) => {
@@ -78,11 +78,11 @@ const commentDelay = markdownDelay + animationInterval;
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 id={titleId}
-                                class="group/title block text-lg font-bold text-neutral-900 transition hover:text-[var(--primary)] active:text-[var(--title-active)] dark:text-neutral-100 dark:hover:text-[var(--primary)] dark:active:text-[var(--title-active)]"
+                                class="group/title block text-lg font-bold text-neutral-900 transition hover:text-(--primary) active:text-(--title-active) dark:text-neutral-100 dark:hover:text-(--primary) dark:active:text-(--title-active)"
                             >
                                 {friend.title}
                             </a>
-                            <div class="mt-1 h-1 w-5 rounded-full bg-[var(--primary)] transition" />
+                            <div class="mt-1 h-1 w-5 rounded-full bg-(--primary) transition" />
                             {friend.desc && (
                                 <p
                                     id={descriptionId}
@@ -99,7 +99,7 @@ const commentDelay = markdownDelay + animationInterval;
     </section>
 
     <div
-        class="mt-4 flex w-full overflow-hidden rounded-[var(--radius-large)]"
+        class="mt-4 flex w-full overflow-hidden rounded-(--radius-large)"
         aria-label="Friends page markdown content"
     >
         <div
