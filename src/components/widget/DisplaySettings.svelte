@@ -48,6 +48,8 @@ $: if (hue || hue === 0) {
 #display-setting {
     input[type="range"] {
         -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
         height: 1.5rem;
         background-image: var(--color-selection-bar);
         transition: background-image 0.15s ease-in-out;
@@ -55,6 +57,7 @@ $: if (hue || hue === 0) {
         /* Input Thumb */
         &::-webkit-slider-thumb {
             -webkit-appearance: none;
+            appearance: none;
             height: 1rem;
             width: 0.5rem;
             border-radius: 0.125rem;
@@ -70,7 +73,8 @@ $: if (hue || hue === 0) {
         }
 
         &::-moz-range-thumb {
-            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
             height: 1rem;
             width: 0.5rem;
             border-radius: 0.125rem;
@@ -85,23 +89,6 @@ $: if (hue || hue === 0) {
                 background: rgba(255, 255, 255, 0.6);
             }
         }
-
-        &::-ms-thumb {
-            -webkit-appearance: none;
-            height: 1rem;
-            width: 0.5rem;
-            border-radius: 0.125rem;
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: none;
-
-            &:hover {
-                background: rgba(255, 255, 255, 0.8);
-            }
-            &:active {
-                background: rgba(255, 255, 255, 0.6);
-            }
-        }
     }
 }
-
 </style>
