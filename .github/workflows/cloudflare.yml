@@ -1,4 +1,4 @@
-name: Purge Cache
+name: Cloudflare
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
       - main
 
 jobs:
-  purge-cache:
+  Purge-Cache:
     runs-on: ubuntu-latest
+    name: Purge Cache
     steps:
       - name: Purge Cloudflare Cache
         env:
