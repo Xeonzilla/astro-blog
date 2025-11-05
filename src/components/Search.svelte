@@ -3,15 +3,14 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import Icon from "@iconify/svelte";
 import { url } from "@utils/url-utils.ts";
-import { onMount } from "svelte";
 import type { SearchResult } from "@/global";
 
-let keywordDesktop = "";
-let keywordMobile = "";
-let result: SearchResult[] = [];
-let isSearching = false;
-let pagefindLoaded = false;
-let initialized = false;
+let keywordDesktop = $state("");
+let keywordMobile = $state("");
+let result = $state<SearchResult[]>([]);
+let isSearching = $state(false);
+let pagefindLoaded = $state(false);
+let initialized = $state(false);
 
 const fakeResult: SearchResult[] = [
 	{
@@ -86,7 +85,7 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 	}
 };
 
-onMount(() => {
+$effect(() => {
 	const initializeSearch = () => {
 		initialized = true;
 		pagefindLoaded =
@@ -104,38 +103,51 @@ onMount(() => {
 		);
 		initializeSearch();
 	} else {
-		document.addEventListener("pagefindready", () => {
+		const handlePagefindReady = () => {
 			console.log("Pagefind ready event received.");
 			initializeSearch();
-		});
-		document.addEventListener("pagefindloaderror", () => {
+		};
+
+		const handlePagefindLoadError = () => {
 			console.warn(
 				"Pagefind load error event received. Search functionality will be limited.",
 			);
 			initializeSearch(); // Initialize with pagefindLoaded as false
-		});
+		};
+
+		document.addEventListener("pagefindready", handlePagefindReady);
+		document.addEventListener("pagefindloaderror", handlePagefindLoadError);
 
 		// Fallback in case events are not caught or pagefind is already loaded by the time this script runs
-		setTimeout(() => {
+		const timeoutId = setTimeout(() => {
 			if (!initialized) {
 				console.log("Fallback: Initializing search after timeout.");
 				initializeSearch();
 			}
 		}, 2000); // Adjust timeout as needed
+
+		return () => {
+			document.removeEventListener("pagefindready", handlePagefindReady);
+			document.removeEventListener(
+				"pagefindloaderror",
+				handlePagefindLoadError,
+			);
+			clearTimeout(timeoutId);
+		};
 	}
 });
 
-$: if (initialized && keywordDesktop) {
-	(async () => {
-		await search(keywordDesktop, true);
-	})();
-}
+$effect(() => {
+	if (initialized && keywordDesktop) {
+		search(keywordDesktop, true);
+	}
+});
 
-$: if (initialized && keywordMobile) {
-	(async () => {
-		await search(keywordMobile, false);
-	})();
-}
+$effect(() => {
+	if (initialized && keywordMobile) {
+		search(keywordMobile, false);
+	}
+});
 </script>
 
 <div id="search-bar" class="hidden md:flex lg:hidden xl:flex transition-all items-center h-11 mr-2 rounded-lg
@@ -143,13 +155,13 @@ $: if (initialized && keywordMobile) {
       dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
 ">
     <Icon icon="material-symbols:search" class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-    <input placeholder="{i18n(I18nKey.search)}" bind:value={keywordDesktop} on:focus={() => search(keywordDesktop, true)}
+    <input placeholder="{i18n(I18nKey.search)}" bind:value={keywordDesktop} onfocus={() => search(keywordDesktop, true)}
            class="transition-all pl-10 text-sm bg-transparent outline-0
          h-full w-40 active:w-60 focus:w-60 text-black/50 dark:text-white/50"
     >
 </div>
 
-<button on:click={togglePanel} aria-label="Search Panel" id="search-switch"
+<button onclick={togglePanel} aria-label="Search Panel" id="search-switch"
         class="btn-plain scale-animation md:hidden! lg:flex! xl:hidden! rounded-lg w-11 h-11 active:scale-90">
     <Icon icon="material-symbols:search" class="text-[1.25rem]"></Icon>
 </button>
