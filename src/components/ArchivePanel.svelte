@@ -1,13 +1,13 @@
 <script lang="ts">
-import { onMount } from "svelte";
-
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import { getPostUrlBySlug } from "../utils/url-utils";
 
-export let tags: string[];
-export let categories: string[];
-export let sortedPosts: Post[] = [];
+let {
+	tags = [],
+	categories = [],
+	sortedPosts = [],
+}: { tags?: string[]; categories?: string[]; sortedPosts?: Post[] } = $props();
 
 const params = new URLSearchParams(window.location.search);
 tags = params.has("tag") ? params.getAll("tag") : [];
@@ -29,7 +29,7 @@ interface Group {
 	posts: Post[];
 }
 
-let groups: Group[] = [];
+let groups = $state<Group[]>([]);
 
 function formatDate(date: Date) {
 	const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -41,7 +41,7 @@ function formatTag(tagList: string[]) {
 	return tagList.map((t) => `#${t}`).join(" ");
 }
 
-onMount(async () => {
+$effect(() => {
 	let filteredPosts: Post[] = sortedPosts;
 
 	if (tags.length > 0) {
