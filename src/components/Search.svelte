@@ -5,8 +5,8 @@
 	import { url } from "@utils/url-utils.ts";
 	import type { SearchResult } from "@/global";
 
-	const keywordDesktop = $state("");
-	const keywordMobile = $state("");
+	let keywordDesktop = $state("");
+	let keywordMobile = $state("");
 	let result = $state<SearchResult[]>([]);
 	let isSearching = $state(false);
 	let pagefindLoaded = $state(false);
