@@ -218,12 +218,16 @@
     @apply transition underline decoration-2 decoration-dashed decoration-(--link-underline) hover:decoration-(--link-hover) active:decoration-(--link-active) underline-offset-4;
 }
 
+@utility hide {
+  @apply opacity-0 pointer-events-none;
+}
+
 @utility toc-hide {
-    @apply opacity-0 pointer-events-none;
+  @apply hide;
 }
 
 @utility toc-not-ready {
-    @apply opacity-0 pointer-events-none;
+  @apply hide;
 }
 
 @utility hide-scrollbar {
@@ -275,10 +279,6 @@
     &.btn-regular-dark {
         @apply bg-[oklch(0.75_0.14_var(--hue))] dark:bg-[oklch(0.75_0.14_var(--hue))];
     }
-}
-
-@utility is-hidden {
-    @apply opacity-0 pointer-events-none;
 }
 
 @utility loading-bar-track {
