@@ -27,37 +27,28 @@
     }
 
     a:not(.no-styling) {
-        @apply relative bg-none link font-medium text-(--primary) underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4;
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
-        display: inline-block;
+        @apply relative bg-none link font-medium text-(--primary) underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4 box-decoration-clone inline-block;
 
         &:hover,
         &:active {
-            @apply decoration-transparent;
-            background: var(--btn-plain-bg-hover);
-            border-bottom: 1px dashed var(--link-hover);
-            text-decoration: none;
+            @apply decoration-transparent bg-(--btn-plain-bg-hover) border-b border-dashed border-b-(--link-hover) no-underline;
         }
     }
 
     code {
-        @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden;
-
-        font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", "MiSans", monospace;
-
-        &:before {
-            content: none;
-        }
-
-        &:after {
-            content: none;
-        }
-
+        @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden font-mono;
         counter-reset: line;
 
+        &::before {
+            @apply content-none;
+        }
+
+        &::after {
+            @apply content-none;
+        }
+
         span.line {
-            &:before {
+            &::before {
                 @apply text-white/25 mr-4 w-4 inline-block;
                 content: counter(line);
                 counter-increment: line;
@@ -66,7 +57,7 @@
 
             &:last-child:empty,
             &:last-child:has(> span:empty:only-child) {
-                display: none;
+                @apply hidden;
             }
         }
     }
@@ -74,30 +65,36 @@
     .copy-btn {
         all: initial;
         @apply btn-regular-dark opacity-0 shadow-lg shadow-black/50 absolute active:scale-90 h-8 w-8 top-3 right-3 text-sm rounded-lg transition-all ease-in-out z-20 cursor-pointer;
+
+        .copy-icon {
+            @apply opacity-100 fill-white dark:fill-white/75;
+        }
+
+        .success-icon {
+            @apply opacity-0 fill-white;
+        }
+
+        &.success {
+            .copy-icon {
+                @apply opacity-0 fill-(--deep-text);
+            }
+
+            .success-icon {
+                @apply opacity-100;
+            }
+        }
     }
 
-    .frame:hover .copy-btn {
-        opacity: 1;
+    .frame {
+        &:hover {
+            .copy-btn {
+                @apply opacity-100;
+            }
+        }
     }
 
     .copy-btn-icon {
         @apply absolute top-1/2 left-1/2 transition -translate-x-1/2 -translate-y-1/2 w-4 h-4 fill-white pointer-events-none;
-    }
-
-    .copy-btn .copy-icon {
-        @apply opacity-100 fill-white dark:fill-white/75;
-    }
-
-    .copy-btn.success .copy-icon {
-        @apply opacity-0 fill-(--deep-text)
-    }
-
-    .copy-btn .success-icon {
-        @apply opacity-0 fill-white;
-    }
-
-    .copy-btn.success .success-icon {
-        @apply opacity-100
     }
 
     .expressive-code {
@@ -108,11 +105,12 @@
         }
     }
 
-
     ul,
     ol {
-        li::marker {
-            @apply text-(--primary);
+        li {
+            &::marker {
+                @apply text-(--primary);
+            }
         }
     }
 
@@ -120,20 +118,20 @@
         @apply not-italic border-transparent relative;
         font-weight: inherit;
 
-        &:before {
+        &::before {
             @apply content-[''] absolute -left-1 block transition bg-(--btn-regular-bg) h-full w-1 rounded-full;
         }
 
         /* Remove the double quotes from default styles */
-        p:before,
-        p:after {
-            @apply content-none;
+        p {
+            &::before,
+            &::after {
+                @apply content-none;
+            }
         }
     }
 
     .katex-display-container {
-        max-width: 100%;
-        overflow-x: auto;
-        margin: 1em 0;
+        @apply max-w-full overflow-x-auto my-4;
     }
 }

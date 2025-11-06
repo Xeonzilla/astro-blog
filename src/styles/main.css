@@ -7,6 +7,37 @@
     --font-sans:
         "MiSans", sans-serif, ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    --font-mono:
+        "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", "MiSans", monospace;
+
+    /* Fade-in animations for components */
+    @keyframes fade-in-up {
+        0% {
+            transform: translateY(2rem);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes pulsate {
+        0% {
+            opacity: 0.15;
+        }
+
+        50% {
+            opacity: 0.25;
+        }
+
+        100% {
+            opacity: 0.15;
+        }
+    }
 }
 
 @utility card-base {
@@ -90,7 +121,7 @@
     -ms-overflow-style: none;
 
     &::-webkit-scrollbar {
-        display: none;
+        @apply hidden;
     }
 }
 
@@ -137,14 +168,6 @@
 }
 
 @layer base {  
-    button:not(:disabled),
-    [role="button"]:not(:disabled) {    
-        cursor: pointer;  
-    }
-}
-
-@layer components {
-
     h1,
     h2,
     h3,
@@ -167,48 +190,38 @@
         @apply transition;
     }
 
-    #toc-inner-wrapper {
-        mask-image: linear-gradient(to bottom, transparent 0%, black 2rem, black calc(100% - 2rem), transparent 100%);
+    button,
+    [role="button"] {
+        &:not(:disabled) {
+            @apply cursor-pointer;
+        }
     }
 }
 
-.custom-md img,
-#post-cover img {
-    @apply cursor-zoom-in
-}
-
-::selection {
-    background-color: var(--selection-bg)
-}
-
-.dash-line {
-    position: relative;
-}
-
-.dash-line::before {
-    content: "";
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: calc(50% - 1px);
-    border-left: 2px dashed var(--line-color);
-    pointer-events: none;
-    transition: all 0.3s;
-    transform: translateY(-50%);
-}
-
-.collapsed {
-    height: var(--collapsedHeight);
-}
-
-.custom-md spoiler {
-    @apply bg-(--codeblock-bg) hover:bg-transparent px-1 py-0.5 overflow-hidden rounded-md transition-all duration-150;
-
-    &:not(:hover) {
-        color: var(--codeblock-bg);
-
-        * {
-            color: var(--codeblock-bg);
+@layer components {
+    #toc-inner-wrapper {
+        mask-image: linear-gradient(to bottom, transparent 0%, black 2rem, black calc(100% - 2rem), transparent 100%);
+    }
+    
+    #post-cover {
+        img {
+            @apply cursor-zoom-in;
         }
+    }
+
+    ::selection {
+        @apply bg-(--selection-bg)
+    }
+
+    .dash-line {
+        @apply relative;
+
+        &::before {
+            @apply content-[""] absolute w-[10%] h-full left-[calc(50%-1px)] border-l-2 border-dashed border-(--line-color) pointer-events-none transition-all duration-300 -translate-y-1/2;
+        }
+    }
+
+    .collapsed {
+        @apply h-(--collapsedHeight);
     }
 }

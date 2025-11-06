@@ -1,13 +1,5 @@
 @reference "./main.css";
 
-:root {
-    --tk-text: black;
-}
-
-:root.dark {
-    --tk-text: #d1d5db;
-}
-
 .tk-comments {
     @apply text-(--tk-text) md:px-4;
 }
@@ -67,8 +59,10 @@
 }
 
 .tk-comments-title {
-    .__comments svg {
-        @apply fill-(--primary);
+    .__comments {
+        svg {
+            @apply fill-(--primary);
+        }
     }
 }
 
@@ -120,27 +114,33 @@
         @apply bg-(--page-bg);
 
         .tk-content {
-            >span:first-of-type {
-                @apply text-xs;
+            >span {
+                &:first-of-type {
+                    @apply text-xs;
+                }
             }
         }
     }
 }
 
-.twikoo .code-block {
-    pre {
-        @apply rounded-xl!;
-    }
+.twikoo {
+    .code-block {
+        pre {
+            @apply rounded-xl!;
+        }
 
-    .copy-btn-icon {
-        width: inherit !important;
-        height: inherit !important;
+        .copy-btn-icon {
+            width: inherit !important;
+            height: inherit !important;
+        }
     }
 }
 
-.tk-expand-wrap .tk-expand,
-.tk-collapse-wrap .tk-expand {
-    @apply hover:rounded-lg mt-1 hover:bg-(--btn-plain-bg-hover);
+.tk-expand-wrap,
+.tk-collapse-wrap {
+    .tk-expand {
+        @apply hover:rounded-lg mt-1 hover:bg-(--btn-plain-bg-hover);
+    }
 }
 
 .tk-footer {
@@ -148,5 +148,5 @@
 }
 
 .card-base {
-    overflow: visible;
+    @apply overflow-visible;
 }
