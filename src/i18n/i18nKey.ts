@@ -39,6 +39,8 @@ enum I18nKey {
 	animeCountTotal = "animeCountTotal",
 	animeCountWatching = "animeCountWatching",
 	animeCountCompleted = "animeCountCompleted",
+
+	footnotes = "footnotes",
 }
 
 export default I18nKey;

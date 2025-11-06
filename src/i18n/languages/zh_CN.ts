@@ -42,4 +42,6 @@ export const zh_CN: Translation = {
 	[Key.animeCountTotal]: "总计",
 	[Key.animeCountWatching]: "在看",
 	[Key.animeCountCompleted]: "看过",
+
+	[Key.footnotes]: "脚注",
 };

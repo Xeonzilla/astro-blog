@@ -42,4 +42,6 @@ export const en: Translation = {
 	[Key.animeCountTotal]: "Total",
 	[Key.animeCountWatching]: "In Progress",
 	[Key.animeCountCompleted]: "Completed",
+
+	[Key.footnotes]: "Footnotes",
 };

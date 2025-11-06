@@ -20,6 +20,8 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import type { RollupLog } from "rollup";
+import I18nKey from "./src/i18n/i18nKey";
+import { i18n } from "./src/i18n/translation";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge";
 import {
@@ -121,6 +123,9 @@ export default defineConfig({
 	],
 	markdown: {
 		remarkPlugins: [...commonRemarkPlugins],
+		remarkRehype: {
+			footnoteLabel: i18n(I18nKey.footnotes),
+		},
 		rehypePlugins: [
 			rehypeKatex,
 			rehypeSlug,
