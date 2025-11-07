@@ -1,6 +1,6 @@
 {
 	"name": "astro-blog",
-	"compatibility_date": "2025-09-18",
+	"compatibility_date": "2025-10-25",
 	"workers_dev": true,
 	"preview_urls": true,
 	"assets": {
