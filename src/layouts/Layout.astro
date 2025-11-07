@@ -421,46 +421,66 @@ const bannerOffset =
 			const loadingBar =
 				wrapper.querySelector<HTMLElement>(".loading-bar");
 
-			if (!img || !loadingBar || img.dataset.loaded === "true") {
-				return;
-			}
+			if (!img || !loadingBar || img.dataset.loaded === "true") return;
 
 			const markLoaded = () => {
 				img.classList.add("loaded");
+				loadingBar.classList.add("hide");
 				img.dataset.loaded = "true";
 
 				requestAnimationFrame(() => {
-					loadingBar.classList.add("hide");
+					requestAnimationFrame(() => {
+						loadingBar.classList.add("hidden");
+					});
 				});
 			};
 
 			if (img.complete && img.naturalHeight !== 0) {
 				markLoaded();
 			} else {
-				img.addEventListener("load", markLoaded, { once: true });
-				img.addEventListener("error", markLoaded, { once: true });
+				["load", "error"].forEach((event) =>
+					img.addEventListener(event, markLoaded, { once: true }),
+				);
 			}
 		};
 
-		document
-			.querySelectorAll("[data-image-wrapper]")
-			.forEach((el) => markWrapperLoaded(el));
+		const imageObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						markWrapperLoaded(entry.target);
+						imageObserver.unobserve(entry.target);
+					}
+				});
+			},
+			{ rootMargin: "100px" },
+		);
+
+		document.querySelectorAll("[data-image-wrapper]").forEach((el) => {
+			imageObserver.observe(el);
+		});
 
 		const mutationObserver = new MutationObserver((mutations) => {
+			const wrappers = new Set<Element>();
+
 			mutations.forEach((mutation) => {
 				mutation.addedNodes.forEach((node) => {
 					if (node.nodeType === 1) {
 						const el = node as Element;
 						if (el.hasAttribute("data-image-wrapper")) {
-							markWrapperLoaded(el);
+							wrappers.add(el);
 						} else {
 							el.querySelectorAll?.(
 								"[data-image-wrapper]",
-							).forEach((child) => markWrapperLoaded(child));
+							).forEach((child) => {
+								wrappers.add(child);
+							});
 						}
 					}
 				});
 			});
+
+			wrappers.forEach((wrapper) => imageObserver.observe(wrapper));
 		});
 
 		mutationObserver.observe(document.body, {
