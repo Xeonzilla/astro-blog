@@ -4,27 +4,27 @@ import { siteConfig } from "../../config";
 import { url } from "../../utils/url-utils";
 
 interface Props {
-	class?: string;
-	headings: MarkdownHeading[];
+    class?: string;
+    headings: MarkdownHeading[];
 }
 
 let { headings = [] } = Astro.props;
 
 let minDepth = 10;
 for (const heading of headings) {
-	minDepth = Math.min(minDepth, heading.depth);
+    minDepth = Math.min(minDepth, heading.depth);
 }
 
 const className = Astro.props.class;
 const isPostsRoute = Astro.url.pathname.startsWith(url("/posts/"));
 
 const removeTailingHash = (text: string) => {
-	let lastIndexOfHash = text.lastIndexOf("#");
-	if (lastIndexOfHash !== text.length - 1) {
-		return text;
-	}
+    let lastIndexOfHash = text.lastIndexOf("#");
+    if (lastIndexOfHash !== text.length - 1) {
+        return text;
+    }
 
-	return text.substring(0, lastIndexOfHash);
+    return text.substring(0, lastIndexOfHash);
 };
 
 let heading1Count = 1;
@@ -231,9 +231,30 @@ const maxLevel = siteConfig.toc.depth;
                 .composedPath()
                 .find((element) => element instanceof HTMLAnchorElement);
 
-            if (anchor) {
+            if (anchor instanceof HTMLAnchorElement) {
                 const id = decodeURIComponent(anchor.hash?.substring(1));
                 const idx = this.headingIdxMap.get(id);
+
+                if (id === "footnote-label") {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    setTimeout(() => {
+                        const heading = document.getElementById(id);
+                        const section = heading?.parentElement;
+
+                        if (section instanceof HTMLElement) {
+                            section.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                            });
+                        }
+                    }, 0);
+
+                    this.anchorNavTarget = document.getElementById(id);
+                    return;
+                }
+
                 if (idx !== undefined) {
                     this.anchorNavTarget = this.headings[idx];
                 } else {
