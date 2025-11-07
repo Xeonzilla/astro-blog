@@ -244,10 +244,7 @@ const maxLevel = siteConfig.toc.depth;
                         const section = heading?.parentElement;
 
                         if (section instanceof HTMLElement) {
-                            section.scrollIntoView({
-                                behavior: "smooth",
-                                block: "start",
-                            });
+                            section.scrollIntoView({});
                         }
                     }, 0);
 

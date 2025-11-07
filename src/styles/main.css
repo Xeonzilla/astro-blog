@@ -289,7 +289,11 @@
     @apply absolute inset-0 bg-(--primary);
 }
 
-@layer base {  
+@layer base {
+    html {
+        @apply scroll-smooth;
+    }
+
     h1,
     h2,
     h3,
