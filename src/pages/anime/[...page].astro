@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import AnimeList from "../../components/anime/AnimeList.astro";
 import AnimeOverview from "../../components/anime/AnimeOverview.astro";
-import AnimePagination from "../../components/anime/AnimePagination.astro";
+import Pagination from "../../components/control/Pagination.astro";
 import { PAGE_SIZE } from "../../constants/constants";
 import I18nKey from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
@@ -44,9 +44,10 @@ const len = page.data.length;
 
     {
         page.lastPage > 1 && (
-            <AnimePagination
+            <Pagination
                 class="mx-auto onload-animation"
                 page={page}
+                basePath="anime"
                 style={`animation-delay: calc(var(--content-delay) + ${len * 50}ms)`}
             />
         )
