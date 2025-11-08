@@ -3,6 +3,7 @@
     import { i18n } from "@i18n/translation";
     import Icon from "@iconify/svelte";
     import { getDefaultHue, getHue, setHue } from "@utils/setting-utils";
+    import clickOutside from "@utils/svelte/clickOutside";
 
     let hue = $state(getHue());
     const defaultHue = getDefaultHue();
@@ -21,6 +22,7 @@
 <div
     id="display-setting"
     class="float-panel float-panel-closed absolute transition-all w-80 right-4 px-4 py-4"
+    {@attach clickOutside(["display-settings-switch"])}
 >
     <div class="flex flex-row gap-2 mb-3 items-center justify-between">
         <div

@@ -2,6 +2,7 @@
 	import I18nKey from "@i18n/i18nKey";
 	import { i18n } from "@i18n/translation";
 	import Icon from "@iconify/svelte";
+	import clickOutside from "@utils/svelte/clickOutside";
 	import { url } from "@utils/url-utils.ts";
 	import type { SearchResult } from "@/global";
 
@@ -196,6 +197,7 @@
 	id="search-panel"
 	class="float-panel float-panel-closed search-panel absolute md:w-[30rem]
 top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
+	{@attach clickOutside(["search-bar", "search-switch"])}
 >
 	<div
 		id="search-bar-inside"
