@@ -80,10 +80,9 @@ const maxLevel = siteConfig.toc.depth;
                 ))}
             <div
                 id="active-indicator"
-                style="opacity: 0"
                 class:list={[
                     { hidden: headings.length == 0 },
-                    "-z-10 absolute bg-(--toc-btn-hover) left-0 right-0 rounded-xl transition-all " +
+                    "opacity-0 -z-10 absolute bg-(--toc-btn-hover) left-0 right-0 rounded-xl transition-all " +
                         "group-hover:bg-transparent border-2 border-(--toc-btn-hover) group-hover:border-(--toc-btn-active) border-dashed",
                 ]}
             />
@@ -147,8 +146,9 @@ const maxLevel = siteConfig.toc.depth;
                 i--;
             }
             if (min > max) {
-                this.activeIndicator?.setAttribute("style", `opacity: 0`);
+                this.activeIndicator?.classList.add("opacity-0");
             } else {
+                this.activeIndicator?.classList.remove("opacity-0");
                 let parentOffset = this.tocEl?.getBoundingClientRect().top || 0;
                 let scrollOffset = this.tocEl?.scrollTop || 0;
                 let top =
