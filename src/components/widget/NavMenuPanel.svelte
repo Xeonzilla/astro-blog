@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import clickOutside from "@utils/svelte/clickOutside";
+	import offClick from "@utils/svelte/offClick";
 	import { url } from "@utils/url-utils";
 	import type { NavBarLink } from "@/types/config";
 
@@ -10,7 +10,7 @@
 <div
 	id="nav-menu-panel"
 	class="float-panel float-panel-closed absolute transition-all right-4 px-2 py-2"
-	{@attach clickOutside(["nav-menu-switch"])}
+	{@attach offClick(["nav-menu-switch"])}
 >
 	{#each links as link}
 		<a

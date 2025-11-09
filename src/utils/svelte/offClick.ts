@@ -3,7 +3,7 @@
  * @param ignores - Array of element IDs that should not trigger the close action.
  * @returns A Svelte action function.
  */
-export default function clickOutside(ignores: string[]) {
+export default function offClick(ignores: string[]) {
 	return (element: HTMLElement) => {
 		const handleClick = (event: MouseEvent) => {
 			if (!(event.target instanceof Node)) return;
