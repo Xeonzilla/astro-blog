@@ -1,0 +1,19 @@
+{
+	"mcpServers": {
+		"Astro": {
+			"type": "streamable-http",
+			"url": "https://mcp.docs.astro.build/mcp",
+			"alwaysAllow": ["search_astro_docs"]
+		},
+		"Svelte": {
+			"type": "streamable-http",
+			"url": "https://mcp.svelte.dev/mcp",
+			"alwaysAllow": [
+				"get-documentation",
+				"list-sections",
+				"playground-link",
+				"svelte-autofixer"
+			]
+		}
+	}
+}
