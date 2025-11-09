@@ -4,6 +4,7 @@
 	import Icon from "@iconify/svelte";
 	import offClick from "@utils/svelte/offClick";
 	import { url } from "@utils/url-utils.ts";
+	import { untrack } from "svelte";
 	import type { SearchResult } from "@/global";
 
 	let keywordDesktop = $state("");
@@ -54,20 +55,28 @@
 	): Promise<void> => {
 		if (!keyword) {
 			setPanelVisibility(false, isDesktop);
-			result = [];
+			untrack(() => {
+				result = [];
+			});
 			return;
 		}
 
-		if (!initialized) {
+		if (!untrack(() => initialized)) {
 			return;
 		}
 
-		isSearching = true;
+		untrack(() => {
+			isSearching = true;
+		});
 
 		try {
 			let searchResults: SearchResult[] = [];
 
-			if (import.meta.env.PROD && pagefindLoaded && window.pagefind) {
+			if (
+				import.meta.env.PROD &&
+				untrack(() => pagefindLoaded) &&
+				window.pagefind
+			) {
 				const response = await window.pagefind.search(keyword);
 				searchResults = await Promise.all(
 					response.results.map((item) => item.data()),
@@ -81,14 +90,20 @@
 				);
 			}
 
-			result = searchResults;
-			setPanelVisibility(result.length > 0, isDesktop);
+			untrack(() => {
+				result = searchResults;
+			});
+			setPanelVisibility(searchResults.length > 0, isDesktop);
 		} catch (error) {
 			console.error("Search error:", error);
-			result = [];
+			untrack(() => {
+				result = [];
+			});
 			setPanelVisibility(false, isDesktop);
 		} finally {
-			isSearching = false;
+			untrack(() => {
+				isSearching = false;
+			});
 		}
 	};
 

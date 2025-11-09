@@ -1,9 +1,13 @@
+import type { Attachment } from "svelte/attachments";
+
 /**
- * Svelte 5 action to close an element when clicking outside of it.
- * @param ignores - Array of element IDs that should not trigger the close action.
- * @returns A Svelte action function.
+ * Svelte 5 attachment to detect clicks outside an element.
+ * Automatically adds "float-panel-closed" class when clicking outside.
+ *
+ * @param ignores - Optional array of element IDs to ignore
+ * @returns Svelte attachment
  */
-export default function offClick(ignores: string[]) {
+export default function offClick(ignores?: string[]): Attachment<HTMLElement> {
 	return (element: HTMLElement) => {
 		const handleClick = (event: MouseEvent) => {
 			if (!(event.target instanceof Node)) return;
@@ -14,18 +18,20 @@ export default function offClick(ignores: string[]) {
 			if (element.contains(target)) return;
 
 			// Ignore clicks on specified elements
-			const shouldIgnore = ignores.some((id) =>
-				document.getElementById(id)?.contains(target),
-			);
+			if (ignores) {
+				const shouldIgnore = ignores.some((id) =>
+					document.getElementById(id)?.contains(target),
+				);
 
-			if (!shouldIgnore) {
-				element.classList.add("float-panel-closed");
+				if (shouldIgnore) return;
 			}
+
+			// Add close class to trigger closing animation
+			element.classList.add("float-panel-closed");
 		};
 
 		document.addEventListener("click", handleClick, true);
 
-		// Cleanup function called when component is destroyed
 		return () => {
 			document.removeEventListener("click", handleClick, true);
 		};
