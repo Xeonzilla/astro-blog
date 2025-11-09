@@ -120,7 +120,7 @@ export function GithubCardComponent(
 			class: "card-github fetch-waiting no-styling",
 			href: `https://github.com/${repo}`,
 			target: "_blank",
-			rel: "noopener noreferrer nofollow",
+			rel: "noopener noreferrer",
 			repo,
 		},
 		[
