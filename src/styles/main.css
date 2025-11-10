@@ -170,10 +170,6 @@
     @apply top-21 rounded-(--radius-large) overflow-hidden bg-(--float-panel-bg) transition shadow-xl dark:shadow-none;
 }
 
-@utility float-panel-closed {
-    @apply -translate-y-1 opacity-0 pointer-events-none;
-}
-
 @utility search-panel {
     & mark {
         @apply bg-transparent text-(--primary);
