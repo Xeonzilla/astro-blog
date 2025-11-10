@@ -13,6 +13,7 @@ import "misans/lib/Normal/MiSans-Medium.min.css"; // 380
 import "misans/lib/Normal/MiSans-Bold.min.css"; // 630
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
+import ImageManager from "@components/misc/ImageManager.svelte";
 import { profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
@@ -223,6 +224,7 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+		<ImageManager client:idle />
 	</body>
 </html>
 
@@ -370,87 +372,10 @@ const bannerOffset =
 		document.dispatchEvent(new Event("loadComment"));
 	}
 
-	function initImageLoader() {
-		const markWrapperLoaded = (wrapper: Element) => {
-			const img = wrapper.querySelector<HTMLImageElement>(
-				"[data-image-element]",
-			);
-			const loadingBar =
-				wrapper.querySelector<HTMLElement>(".loading-bar");
-
-			if (!img || !loadingBar || img.dataset.loaded === "true") return;
-
-			const markLoaded = () => {
-				img.classList.add("loaded");
-				loadingBar.classList.add("hide");
-				img.dataset.loaded = "true";
-
-				requestAnimationFrame(() => {
-					requestAnimationFrame(() => {
-						loadingBar.classList.add("hidden");
-					});
-				});
-			};
-
-			if (img.complete && img.naturalHeight !== 0) {
-				markLoaded();
-			} else {
-				["load", "error"].forEach((event) =>
-					img.addEventListener(event, markLoaded, { once: true }),
-				);
-			}
-		};
-
-		const imageObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						markWrapperLoaded(entry.target);
-						imageObserver.unobserve(entry.target);
-					}
-				});
-			},
-			{ rootMargin: "100px" },
-		);
-
-		document.querySelectorAll("[data-image-wrapper]").forEach((el) => {
-			imageObserver.observe(el);
-		});
-
-		const mutationObserver = new MutationObserver((mutations) => {
-			const wrappers = new Set<Element>();
-
-			mutations.forEach((mutation) => {
-				mutation.addedNodes.forEach((node) => {
-					if (node.nodeType === 1) {
-						const el = node as Element;
-						if (el.hasAttribute("data-image-wrapper")) {
-							wrappers.add(el);
-						} else {
-							el.querySelectorAll?.(
-								"[data-image-wrapper]",
-							).forEach((child) => {
-								wrappers.add(child);
-							});
-						}
-					}
-				});
-			});
-
-			wrappers.forEach((wrapper) => imageObserver.observe(wrapper));
-		});
-
-		mutationObserver.observe(document.body, {
-			childList: true,
-			subtree: true,
-		});
-	}
-
 	function init() {
 		initCustomScrollbar();
 		showBanner();
 		initCommentComponent();
-		initImageLoader();
 	}
 
 	/* Load settings when entering the site */
@@ -608,72 +533,4 @@ const bannerOffset =
 			`${offset}px`,
 		);
 	};
-</script>
-
-<script>
-	import PhotoSwipeLightbox from "photoswipe/lightbox";
-	import "photoswipe/style.css";
-
-	let lightbox: PhotoSwipeLightbox;
-	let pswp = import("photoswipe");
-
-	function createPhotoSwipe() {
-		lightbox = new PhotoSwipeLightbox({
-			gallery: ".custom-md img, #post-cover img",
-			pswpModule: () => pswp,
-			closeSVG:
-				'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>',
-			zoomSVG:
-				'<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M340-540h-40q-17 0-28.5-11.5T260-580q0-17 11.5-28.5T300-620h40v-40q0-17 11.5-28.5T380-700q17 0 28.5 11.5T420-660v40h40q17 0 28.5 11.5T500-580q0 17-11.5 28.5T460-540h-40v40q0 17-11.5 28.5T380-460q-17 0-28.5-11.5T340-500v-40Zm40 220q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>',
-			padding: { top: 20, bottom: 20, left: 20, right: 20 },
-			wheelToZoom: true,
-			arrowPrev: false,
-			arrowNext: false,
-			imageClickAction: "close",
-			tapAction: "close",
-			doubleTapAction: "zoom",
-		});
-
-		lightbox.addFilter("domItemData", (itemData, element) => {
-			if (element instanceof HTMLImageElement) {
-				itemData.src = element.src;
-
-				itemData.w = Number(
-					element.getAttribute("width") || element.naturalWidth,
-				);
-				itemData.h = Number(
-					element.getAttribute("height") || element.naturalHeight,
-				);
-
-				itemData.msrc = element.src;
-			}
-
-			return itemData;
-		});
-
-		lightbox.init();
-	}
-
-	const setup = () => {
-		if (!lightbox) {
-			createPhotoSwipe();
-		}
-		window.swup.hooks.on("page:view", () => {
-			createPhotoSwipe();
-		});
-
-		window.swup.hooks.on(
-			"content:replace",
-			() => {
-				lightbox?.destroy?.();
-			},
-			{ before: true },
-		);
-	};
-
-	if (window.swup) {
-		setup();
-	} else {
-		document.addEventListener("swup:enable", setup);
-	}
 </script>
