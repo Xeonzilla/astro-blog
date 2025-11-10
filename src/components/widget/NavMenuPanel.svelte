@@ -26,7 +26,7 @@
 	<div
 		id="nav-menu-panel"
 		class="float-panel absolute right-4 px-2 py-2"
-		{@attach offClick(() => isOpen = false, ["nav-menu-switch"])}
+		{@attach offClick(() => (isOpen = false), ["nav-menu-switch"])}
 		transition:fly={{ y: -4, duration: 150 }}
 	>
 		{#each links as link}
@@ -45,15 +45,23 @@
 				</div>
 
 				{#if !link.external}
-					<Icon
-						icon="material-symbols:chevron-right-rounded"
-						class="transition text-[1.25rem] text-(--primary)"
-					/>
+					<div
+						class="w-5 h-5 flex items-center justify-center shrink-0"
+					>
+						<Icon
+							icon="material-symbols:chevron-right-rounded"
+							class="transition text-xl text-(--primary)"
+						/>
+					</div>
 				{:else}
-					<Icon
-						icon="fa6-solid:arrow-up-right-from-square"
-						class="transition text-[0.75rem] text-black/25 dark:text-white/25 -translate-x-1"
-					/>
+					<div
+						class="w-3 h-3 flex items-center justify-center shrink-0 -translate-x-1"
+					>
+						<Icon
+							icon="fa6-solid:arrow-up-right-from-square"
+							class="transition text-xs text-black/25 dark:text-white/25"
+						/>
+					</div>
 				{/if}
 			</a>
 		{/each}
