@@ -271,12 +271,6 @@ const bannerOffset =
 		// SizeObserverPlugin,
 		// ClickScrollPlugin
 	} from "overlayscrollbars";
-	import {
-		getHue,
-		getStoredTheme,
-		setHue,
-		setTheme,
-	} from "../utils/setting-utils";
 	import { pathsEqual, url } from "../utils/url-utils";
 	import {
 		BANNER_HEIGHT,
@@ -287,15 +281,6 @@ const bannerOffset =
 	import { siteConfig } from "../config";
 
 	const bannerEnabled = !!document.getElementById("banner-wrapper");
-
-	function loadTheme() {
-		const theme = getStoredTheme();
-		setTheme(theme);
-	}
-
-	function loadHue() {
-		setHue(getHue());
-	}
 
 	function initCustomScrollbar() {
 		const bodyElement = document.querySelector("body");
@@ -462,8 +447,6 @@ const bannerOffset =
 	}
 
 	function init() {
-		loadTheme();
-		loadHue();
 		initCustomScrollbar();
 		showBanner();
 		initCommentComponent();
