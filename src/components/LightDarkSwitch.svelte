@@ -2,7 +2,7 @@
     import { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants.ts";
     import I18nKey from "@i18n/i18nKey";
     import { i18n } from "@i18n/translation";
-    import Icon from "@iconify/svelte";
+    import Icon, { loadIcons } from "@iconify/svelte";
     import {
         applyThemeToDocument,
         getStoredTheme,
@@ -13,6 +13,13 @@
 
     const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, AUTO_MODE];
     let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
+
+    // Preload icons
+    loadIcons([
+        "material-symbols:wb-sunny-outline-rounded",
+        "material-symbols:dark-mode-outline-rounded",
+        "material-symbols:radio-button-partial-outline",
+    ]);
 
     onMount(() => {
         mode = getStoredTheme();

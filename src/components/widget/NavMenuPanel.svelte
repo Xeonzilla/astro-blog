@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon from "@iconify/svelte";
+	import Icon, { loadIcons } from "@iconify/svelte";
 	import offClick from "@utils/svelte/offClick";
 	import { url } from "@utils/url-utils";
 	import { fly } from "svelte/transition";
@@ -8,8 +8,15 @@
 	let { links }: { links: NavBarLink[] } = $props();
 	let isOpen = $state(false);
 
-	// Listen for toggle button clicks
+	// Preload icons on mobile and listen for toggle button clicks
 	$effect(() => {
+		if (window.matchMedia("(max-width: 1023px)").matches) {
+			loadIcons([
+				"material-symbols:chevron-right-rounded",
+				"fa6-solid:arrow-up-right-from-square",
+			]);
+		}
+
 		const switchBtn = document.getElementById("nav-menu-switch");
 		if (!switchBtn) return;
 

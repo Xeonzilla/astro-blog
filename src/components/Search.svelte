@@ -1,7 +1,7 @@
 <script lang="ts">
 	import I18nKey from "@i18n/i18nKey";
 	import { i18n } from "@i18n/translation";
-	import Icon from "@iconify/svelte";
+	import Icon, { loadIcons } from "@iconify/svelte";
 	import offClick from "@utils/svelte/offClick";
 	import { url } from "@utils/url-utils.ts";
 	import { untrack } from "svelte";
@@ -15,6 +15,9 @@
 	let pagefindLoaded = $state(false);
 	let initialized = $state(false);
 	let isPanelOpen = $state(false);
+
+	// Preload icons
+	loadIcons(["material-symbols:search", "fa6-solid:chevron-right"]);
 
 	const fakeResult: SearchResult[] = [
 		{
@@ -207,7 +210,10 @@
 	<div
 		id="search-panel"
 		class="float-panel search-panel absolute md:w-[30rem] top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
-		{@attach offClick(() => isPanelOpen = false, ["search-bar", "search-switch"])}
+		{@attach offClick(
+			() => (isPanelOpen = false),
+			["search-bar", "search-switch"],
+		)}
 		transition:fly={{ y: -4, duration: 150 }}
 	>
 		<div

@@ -38,7 +38,7 @@
     <div
         id="display-setting"
         class="float-panel absolute w-80 right-4 px-4 py-4"
-        {@attach offClick(() => isOpen = false, ["display-settings-switch"])}
+        {@attach offClick(() => (isOpen = false), ["display-settings-switch"])}
         transition:fly={{ y: -4, duration: 150 }}
     >
         <div class="flex flex-row gap-2 mb-3 items-center justify-between">
