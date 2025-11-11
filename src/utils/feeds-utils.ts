@@ -47,7 +47,7 @@ export async function generateFeed(context: APIContext) {
 		id: site,
 		link: site,
 		language: siteConfig.lang,
-		favicon: url("/favicon/favicon-192.png"),
+		favicon: url(siteConfig.favicon.at(-1)?.src || ""),
 		copyright: `All rights reserved ${new Date().getFullYear()}, ${
 			profileConfig.name
 		}`,
