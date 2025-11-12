@@ -51,25 +51,22 @@ const configHue = siteConfig.themeColor.hue;
 
 const enableBanner = siteConfig.banner.enable;
 
-let pageTitle: string;
-if (title) {
-	pageTitle = `${title} - ${siteConfig.title}`;
-} else {
-	pageTitle = `${siteConfig.title} - ${siteConfig.subtitle}`;
-}
+const pageTitle = title
+	? `${title} - ${siteConfig.title}`
+	: `${siteConfig.title} - ${siteConfig.subtitle}`;
 
-let ogImageUrl: string | undefined;
-if (siteConfig.generateOgImages && postSlug) {
-	ogImageUrl = new URL(`/og/${postSlug}.png`, Astro.site).toString();
-} else if (siteConfig.banner.enable && siteConfig.banner.src) {
-	ogImageUrl = new URL(url(siteConfig.banner.src), Astro.site).toString();
-}
+const ogImageUrl =
+	siteConfig.generateOgImages && postSlug
+		? new URL(`/og/${postSlug}.png`, Astro.site).toString()
+		: siteConfig.banner.enable && siteConfig.banner.src
+			? new URL(url(siteConfig.banner.src), Astro.site).toString()
+			: undefined;
 
 const favicons: Favicon[] = siteConfig.favicon;
 
 const siteLang = (lang || siteConfig.lang).replace("_", "-");
 
-const bannerOffsetByPosition = {
+const bannerOffsetByPosition: Record<string, string> = {
 	top: `${BANNER_HEIGHT_EXTEND}vh`,
 	center: `${BANNER_HEIGHT_EXTEND / 2}vh`,
 	bottom: "0",
@@ -423,7 +420,7 @@ const bannerOffset =
 			// hide the temp high element when the transition is done
 			const heightExtend = document.getElementById("page-height-extend");
 			if (heightExtend) {
-				heightExtend.classList.remove("hidden");
+				heightExtend.classList.add("hidden");
 			}
 		});
 		window.swup.hooks.on("visit:end", (_visit: { to: { url: string } }) => {
