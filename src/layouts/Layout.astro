@@ -14,6 +14,7 @@ import "misans/lib/Normal/MiSans-Bold.min.css"; // 630
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import ImageManager from "@components/misc/ImageManager.svelte";
+import SEO from "@components/SEO.astro";
 import { profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
@@ -92,49 +93,18 @@ const bannerOffset =
 			data-cf-beacon='{"send":{"to": "https://cwa.xeonzilla.top/fuwari-debug"},"token": "b9c63268ef0347f2a3f9dd68ad60b8cc"}'
 		></script>
 
-		<title>{pageTitle}</title>
-
-		<meta charset="UTF-8" />
-		<meta name="description" content={description || pageTitle} />
-		<meta name="author" content={profileConfig.name} />
-
-		<meta property="og:site_name" content={siteConfig.title} />
-		<meta property="og:url" content={Astro.url} />
-		<meta property="og:title" content={pageTitle} />
-		<meta property="og:description" content={description || pageTitle} />
-		{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-		{
-			setOGTypeArticle ? (
-				<meta property="og:type" content="article" />
-			) : (
-				<meta property="og:type" content="website" />
-			)
-		}
-
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={Astro.url} />
-		<meta name="twitter:title" content={pageTitle} />
-		<meta name="twitter:description" content={description || pageTitle} />
-
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		{
-			favicons.map((favicon) => (
-				<link
-					rel="icon"
-					href={
-						favicon.src.startsWith("/")
-							? url(favicon.src)
-							: favicon.src
-					}
-					sizes={favicon.sizes}
-					media={
-						favicon.theme &&
-						`(prefers-color-scheme: ${favicon.theme})`
-					}
-				/>
-			))
-		}
+		<SEO
+			pageTitle={pageTitle}
+			description={description || pageTitle}
+			siteLang={siteLang}
+			ogImageUrl={ogImageUrl}
+			setOGTypeArticle={setOGTypeArticle || false}
+			favicons={favicons}
+			authorName={profileConfig.name}
+			siteTitle={siteConfig.title}
+			url={Astro.url}
+			siteUrl={Astro.site!}
+		/>
 
 		<!-- Set the theme before the page is rendered to avoid a flash -->
 		<script
@@ -192,19 +162,6 @@ const bannerOffset =
 		<!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
 
 		<slot name="head" />
-
-		<link
-			rel="alternate"
-			type="application/rss+xml"
-			title={profileConfig.name}
-			href={`${Astro.site}rss.xml`}
-		/>
-		<link
-			rel="alternate"
-			type="application/atom+xml"
-			title={profileConfig.name}
-			href={`${Astro.site}atom.xml`}
-		/>
 	</head>
 	<body
 		class="min-h-screen transition"

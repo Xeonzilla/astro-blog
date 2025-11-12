@@ -1,0 +1,80 @@
+---
+import type { Favicon } from "@/types/config";
+
+interface Props {
+	pageTitle: string;
+	description: string;
+	siteLang: string;
+	ogImageUrl: string | undefined;
+	setOGTypeArticle: boolean;
+	favicons: Favicon[];
+	authorName: string;
+	siteTitle: string;
+	url: URL;
+	siteUrl: URL;
+}
+
+const {
+	pageTitle,
+	description,
+	siteLang,
+	ogImageUrl,
+	setOGTypeArticle,
+	favicons,
+	authorName,
+	siteTitle,
+	url: pageUrl,
+	siteUrl,
+} = Astro.props;
+
+import { url } from "@/utils/url-utils";
+
+const ogType = setOGTypeArticle ? "article" : "website";
+const rssUrl = `${siteUrl}rss.xml`;
+const atomUrl = `${siteUrl}atom.xml`;
+---
+
+<title>{pageTitle}</title>
+
+<meta charset="UTF-8" />
+<meta name="description" content={description} />
+<meta name="author" content={authorName} />
+
+<meta property="og:locale" content={siteLang} />
+<meta property="og:site_name" content={siteTitle} />
+<meta property="og:url" content={pageUrl} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+<meta property="og:type" content={ogType} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={pageUrl} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+{
+	favicons.map((favicon) => (
+		<link
+			rel="icon"
+			href={favicon.src.startsWith("/") ? url(favicon.src) : favicon.src}
+			sizes={favicon.sizes}
+			media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
+		/>
+	))
+}
+
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={authorName}
+	href={rssUrl}
+/>
+<link
+	rel="alternate"
+	type="application/atom+xml"
+	title={authorName}
+	href={atomUrl}
+/>
