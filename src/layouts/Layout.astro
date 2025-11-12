@@ -274,7 +274,43 @@ const bannerOffset =
 	} from "../constants/constants";
 	import { siteConfig } from "../config";
 
-	const bannerEnabled = !!document.getElementById("banner-wrapper");
+	// Banner utility functions
+	const bannerEnabled = siteConfig.banner.enable;
+	const NAVBAR_HEIGHT = 72;
+
+	// Calculate --banner-height-extend, must be a multiple of 4 to avoid blurry text
+	function calculateBannerHeightExtend() {
+		let offset = Math.floor(
+			window.innerHeight * (BANNER_HEIGHT_EXTEND / 100),
+		);
+		offset = offset - (offset % 4);
+		document.documentElement.style.setProperty(
+			"--banner-height-extend",
+			`${offset}px`,
+		);
+	}
+
+	function getScrollTop(): number {
+		return document.documentElement.scrollTop || document.body.scrollTop;
+	}
+
+	function isHomePage(): boolean {
+		return document.body.classList.contains("is-home");
+	}
+
+	function getCurrentBannerHeight(): number {
+		const isHome = isHomePage();
+		const isLargeScreen = window.innerWidth >= 1024;
+		const heightVh =
+			isHome && isLargeScreen ? BANNER_HEIGHT_HOME : BANNER_HEIGHT;
+		return window.innerHeight * (heightVh / 100);
+	}
+
+	function calculateNavbarThreshold(): number {
+		const bannerHeight = getCurrentBannerHeight();
+		const mainPanelExcessHeight = MAIN_PANEL_OVERLAPS_BANNER_HEIGHT * 16;
+		return bannerHeight - NAVBAR_HEIGHT - mainPanelExcessHeight - 16;
+	}
 
 	function initCustomScrollbar() {
 		const bodyElement = document.querySelector("body");
@@ -349,7 +385,7 @@ const bannerOffset =
 	}
 
 	function showBanner() {
-		if (!siteConfig.banner.enable) return;
+		if (!bannerEnabled) return;
 
 		const banner = document.getElementById("banner");
 		if (!banner) {
@@ -365,6 +401,7 @@ const bannerOffset =
 	}
 
 	function init() {
+		calculateBannerHeightExtend();
 		initCustomScrollbar();
 		showBanner();
 		initCommentComponent();
@@ -385,16 +422,14 @@ const bannerOffset =
 			if (!bannerEnabled) {
 				return;
 			}
-			let threshold =
-				window.innerHeight * (BANNER_HEIGHT / 100) - 72 - 16;
-			let navbar = document.getElementById("navbar-wrapper");
-			if (!navbar || !document.body.classList.contains("is-home")) {
+
+			const navbar = document.getElementById("navbar-wrapper");
+			if (!navbar || !isHomePage()) {
 				return;
 			}
-			if (
-				document.body.scrollTop >= threshold ||
-				document.documentElement.scrollTop >= threshold
-			) {
+
+			const threshold = calculateNavbarThreshold();
+			if (getScrollTop() >= threshold) {
 				navbar.classList.add("navbar-hidden");
 			}
 		});
@@ -456,73 +491,43 @@ const bannerOffset =
 		document.addEventListener("swup:enable", setup);
 	}
 
-	let backToTopBtn = document.getElementById("back-to-top-btn");
-	let toc = document.getElementById("toc-wrapper");
-	let navbar = document.getElementById("navbar-wrapper");
-	function scrollFunction() {
-		let bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100);
+	const backToTopBtn = document.getElementById("back-to-top-btn");
+	const toc = document.getElementById("toc-wrapper");
+	const navbar = document.getElementById("navbar-wrapper");
 
+	function scrollFunction() {
+		const scrollTop = getScrollTop();
+		const bannerHeight = getCurrentBannerHeight();
+
+		// Control back to top button visibility
 		if (backToTopBtn) {
-			if (
-				document.body.scrollTop > bannerHeight ||
-				document.documentElement.scrollTop > bannerHeight
-			) {
+			if (scrollTop > bannerHeight) {
 				backToTopBtn.classList.remove("hide");
 			} else {
 				backToTopBtn.classList.add("hide");
 			}
 		}
 
+		// Control TOC visibility
 		if (bannerEnabled && toc) {
-			if (
-				document.body.scrollTop > bannerHeight ||
-				document.documentElement.scrollTop > bannerHeight
-			) {
+			if (scrollTop > bannerHeight) {
 				toc.classList.remove("toc-hide");
 			} else {
 				toc.classList.add("toc-hide");
 			}
 		}
 
-		if (!bannerEnabled) return;
-		if (navbar) {
-			const NAVBAR_HEIGHT = 72;
-			const MAIN_PANEL_EXCESS_HEIGHT =
-				MAIN_PANEL_OVERLAPS_BANNER_HEIGHT * 16; // The height the main panel overlaps the banner
-
-			let bannerHeight = BANNER_HEIGHT;
-			if (
-				document.body.classList.contains("is-home") &&
-				window.innerWidth >= 1024
-			) {
-				bannerHeight = BANNER_HEIGHT_HOME;
-			}
-			let threshold =
-				window.innerHeight * (bannerHeight / 100) -
-				NAVBAR_HEIGHT -
-				MAIN_PANEL_EXCESS_HEIGHT -
-				16;
-			if (
-				document.body.scrollTop >= threshold ||
-				document.documentElement.scrollTop >= threshold
-			) {
+		// Control navbar visibility
+		if (bannerEnabled && navbar) {
+			const threshold = calculateNavbarThreshold();
+			if (scrollTop >= threshold) {
 				navbar.classList.add("navbar-hidden");
 			} else {
 				navbar.classList.remove("navbar-hidden");
 			}
 		}
 	}
-	window.onscroll = scrollFunction;
 
-	window.onresize = () => {
-		// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
-		let offset = Math.floor(
-			window.innerHeight * (BANNER_HEIGHT_EXTEND / 100),
-		);
-		offset = offset - (offset % 4);
-		document.documentElement.style.setProperty(
-			"--banner-height-extend",
-			`${offset}px`,
-		);
-	};
+	window.onscroll = scrollFunction;
+	window.onresize = calculateBannerHeightExtend;
 </script>
