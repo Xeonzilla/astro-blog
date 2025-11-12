@@ -221,8 +221,6 @@ export default defineConfig({
 				protocol: "https",
 			},
 		],
-		responsiveStyles: true,
-		layout: "constrained",
 	},
 	i18n: {
 		locales: ["zh-cn"],
