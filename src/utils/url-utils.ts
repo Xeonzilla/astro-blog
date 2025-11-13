@@ -34,7 +34,7 @@ export function getCategoryUrl(category: string | null): string {
 export function getDir(path: string): string {
 	const lastSlashIndex = path.lastIndexOf("/");
 	if (lastSlashIndex < 0) {
-		return "/";
+		return path ? `${path}/` : "";
 	}
 	return path.substring(0, lastSlashIndex + 1);
 }
