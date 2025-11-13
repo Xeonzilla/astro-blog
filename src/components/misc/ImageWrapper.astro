@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import path from "node:path";
-import { markdownImageConfig } from "@/config";
 import { url } from "../../utils/url-utils";
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
     priority?: boolean;
     widths?: number[];
     sizes?: string;
-    quality?: string | number;
+    quality?: number;
 }
 
 const {
@@ -24,9 +23,9 @@ const {
     position = "center",
     basePath = "",
     priority,
-    widths = markdownImageConfig.widths,
-    sizes = markdownImageConfig.sizes,
-    quality = markdownImageConfig.quality,
+    widths,
+    sizes,
+    quality,
 } = Astro.props;
 const className = Astro.props.class;
 
@@ -36,6 +35,9 @@ const isRemote =
     src.startsWith("https") ||
     src.startsWith("data:");
 const isLocal = !(isPublic || isRemote);
+
+// Detect AVIF
+const isAvif = /\.avif$/i.test(src);
 
 // TODO temporary workaround for images dynamic import
 // https://github.com/withastro/astro/issues/3373
@@ -62,6 +64,16 @@ if (isLocal) {
 
 const imageClass = "object-cover h-full w-full opacity-0 image-content";
 const imageStyle = `object-position: ${position}`;
+const imageProps = {
+    alt,
+    priority,
+    widths,
+    sizes,
+    quality,
+    class: imageClass,
+    style: imageStyle,
+    "data-image-element": true,
+};
 ---
 
 <div
@@ -105,15 +117,9 @@ const imageStyle = `object-position: ${position}`;
         isRemote && (
             <Image
                 src={src}
-                alt={alt}
-                priority={priority}
-                widths={widths}
-                sizes={sizes}
-                quality={quality}
                 inferSize={true}
-                class={imageClass}
-                style={imageStyle}
-                data-image-element
+                {...imageProps}
+                {...(isAvif && { format: "avif" })}
             />
         )
     }
@@ -121,14 +127,8 @@ const imageStyle = `object-position: ${position}`;
         isLocal && img && (
             <Image
                 src={img}
-                alt={alt}
-                priority={priority}
-                widths={widths}
-                sizes={sizes}
-                quality={quality}
-                class={imageClass}
-                style={imageStyle}
-                data-image-element
+                {...imageProps}
+                {...(isAvif && { format: "avif" })}
             />
         )
     }

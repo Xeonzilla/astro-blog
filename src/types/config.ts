@@ -99,5 +99,5 @@ export type FriendsConfig = {
 export type ImageConfig = {
 	widths: number[];
 	sizes: string;
-	quality: number | "low" | "mid" | "high" | "max";
+	quality?: number;
 };

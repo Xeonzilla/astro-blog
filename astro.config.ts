@@ -216,6 +216,9 @@ export default defineConfig({
 		prefetchAll: true,
 	},
 	image: {
+		service: {
+			entrypoint: "./src/services/customImageService",
+		},
 		remotePatterns: [
 			{
 				protocol: "https",

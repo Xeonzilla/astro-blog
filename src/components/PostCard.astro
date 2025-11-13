@@ -2,7 +2,6 @@
 import type { CollectionEntry } from "astro:content";
 import path from "node:path";
 import { Icon } from "astro-icon/components";
-import { coverImageConfig } from "@/config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import { getDir } from "../utils/url-utils";
@@ -10,32 +9,32 @@ import ImageWrapper from "./misc/ImageWrapper.astro";
 import PostMetadata from "./PostMeta.astro";
 
 interface Props {
-	class?: string;
-	entry: CollectionEntry<"posts">;
-	title: string;
-	url: string;
-	published: Date;
-	updated?: Date;
-	tags: string[];
-	category: string | null;
-	image: string;
-	description: string;
-	draft: boolean;
-	style: string;
-	pinned?: boolean;
+    class?: string;
+    entry: CollectionEntry<"posts">;
+    title: string;
+    url: string;
+    published: Date;
+    updated?: Date;
+    tags: string[];
+    category: string | null;
+    image: string;
+    description: string;
+    draft: boolean;
+    style: string;
+    pinned?: boolean;
 }
 const {
-	entry,
-	title,
-	url,
-	published,
-	updated,
-	tags,
-	category,
-	image,
-	description,
-	style,
-	pinned,
+    entry,
+    title,
+    url,
+    published,
+    updated,
+    tags,
+    category,
+    image,
+    description,
+    style,
+    pinned,
 } = Astro.props;
 const className = Astro.props.class;
 
@@ -165,9 +164,6 @@ const { remarkPluginFrontmatter } = await entry.render();
                 <ImageWrapper
                     src={image}
                     basePath={path.join("content/posts/", getDir(entry.id))}
-                    widths={coverImageConfig.widths}
-                    sizes={coverImageConfig.sizes}
-                    quality={coverImageConfig.quality}
                     alt="Cover Image of the Post"
                     class="w-full h-full"
                 />

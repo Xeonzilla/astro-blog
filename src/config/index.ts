@@ -10,11 +10,7 @@ export type {
 export { friendsConfig } from "./friendsConfig";
 export {
 	animeImageConfig,
-	avatarImageConfig,
-	bannerImageConfig,
-	coverImageConfig,
 	friendsImageConfig,
-	markdownImageConfig,
 } from "./imageConfig";
 export { licenseConfig } from "./licenseConfig";
 export { navBarConfig } from "./navBarConfig";
