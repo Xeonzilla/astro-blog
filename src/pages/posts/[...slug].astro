@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import path from "node:path";
 import Comment from "@components/Comment.astro";
 import License from "@components/misc/License.astro";
@@ -18,13 +19,13 @@ import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 export async function getStaticPaths() {
     const blogEntries = await getSortedPosts();
     return blogEntries.map((entry) => ({
-        params: { slug: entry.slug },
+        params: { slug: entry.id },
         props: { entry },
     }));
 }
 
 const { entry } = Astro.props;
-const { Content, headings, remarkPluginFrontmatter } = await entry.render();
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
 const jsonLd = {
     "@context": "https://schema.org",
@@ -50,7 +51,7 @@ const jsonLd = {
     description={entry.data.description}
     lang={entry.data.lang}
     setOGTypeArticle={true}
-    postSlug={entry.slug}
+    postSlug={entry.id}
     headings={headings}
 >
     <script
@@ -159,7 +160,7 @@ const jsonLd = {
                 licenseConfig.enable && (
                     <License
                         title={entry.data.title}
-                        slug={entry.slug}
+                        id={entry.id}
                         pubDate={entry.data.published}
                         class="mb-6 rounded-xl license-container onload-animation"
                     />
@@ -172,16 +173,16 @@ const jsonLd = {
         class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full"
     >
         <a
-            href={entry.data.nextSlug
-                ? getPostUrlBySlug(entry.data.nextSlug)
+            href={entry.data.nextId
+                ? getPostUrlBySlug(entry.data.nextId)
                 : "#"}
             class:list={[
                 "w-full font-bold overflow-hidden active:scale-95",
-                { "pointer-events-none": !entry.data.nextSlug },
+                { "pointer-events-none": !entry.data.nextId },
             ]}
         >
             {
-                entry.data.nextSlug && (
+                entry.data.nextId && (
                     <div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center justify-start! gap-4">
                         <Icon
                             name="material-symbols:chevron-left-rounded"
@@ -196,16 +197,16 @@ const jsonLd = {
         </a>
 
         <a
-            href={entry.data.prevSlug
-                ? getPostUrlBySlug(entry.data.prevSlug)
+            href={entry.data.prevId
+                ? getPostUrlBySlug(entry.data.prevId)
                 : "#"}
             class:list={[
                 "w-full font-bold overflow-hidden active:scale-95",
-                { "pointer-events-none": !entry.data.prevSlug },
+                { "pointer-events-none": !entry.data.prevId },
             ]}
         >
             {
-                entry.data.prevSlug && (
+                entry.data.prevId && (
                     <div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center justify-end! gap-4">
                         <div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-black/75 dark:text-white/75">
                             {entry.data.prevTitle}
@@ -221,6 +222,6 @@ const jsonLd = {
     </div>
 
     <div class="card-base p-6 mb-4">
-        <Comment path={`/posts/${entry.slug}`} />
+        <Comment path={`/posts/${entry.id}`} />
     </div>
 </MainGridLayout>

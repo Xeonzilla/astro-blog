@@ -62,12 +62,12 @@ export async function generateFeed(context: APIContext) {
 	const posts = await getSortedPosts();
 
 	for (const post of posts) {
-		const postUrl = url(`/posts/${post.slug}/`);
+		const postUrl = url(`/posts/${post.id}/`);
 		// Process description and body HTML conversion in parallel.
 		// The caching in `mdxToHtml` will prevent redundant work.
 		const [descriptionHtml, contentHtml] = await Promise.all([
 			mdxToHtml(post.data.description || "", site),
-			mdxToHtml(post.body, site),
+			mdxToHtml(post.body || "", site),
 		]);
 
 		feed.addItem({

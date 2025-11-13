@@ -4,9 +4,9 @@ import { getPostUrlBySlug } from "@utils/url-utils";
 import PostCard from "./PostCard.astro";
 
 interface Props {
-	page: {
-		data: CollectionEntry<"posts">[];
-	};
+    page: {
+        data: CollectionEntry<"posts">[];
+    };
 }
 
 const { page }: Props = Astro.props;
@@ -27,7 +27,7 @@ const interval = 50;
                 category={entry.data.category}
                 published={entry.data.published}
                 updated={entry.data.updated}
-                url={getPostUrlBySlug(entry.slug)}
+                url={getPostUrlBySlug(entry.id)}
                 image={entry.data.image}
                 description={entry.data.description}
                 draft={entry.data.draft}

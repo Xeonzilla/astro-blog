@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import fs from "node:fs";
 import type { APIContext, GetStaticPaths } from "astro";
 import satori from "satori";
@@ -46,7 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const publishedPosts = allPosts.filter((post) => !post.data.draft);
 
 	return publishedPosts.map((post) => ({
-		params: { slug: post.slug },
+		params: { slug: post.id },
 		props: { post },
 	}));
 };
@@ -114,7 +114,7 @@ export async function GET({
 
 	const {
 		remarkPluginFrontmatter: { excerpt },
-	} = await post.render();
+	} = await render(post);
 	const description = post.data.description || excerpt;
 
 	const template = {
