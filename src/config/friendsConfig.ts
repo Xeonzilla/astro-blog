@@ -80,4 +80,10 @@ export const friendsConfig: FriendsConfig[] = [
 		imgurl: "https://www.lansganbs.cn/images/friends/lansganbs.png",
 		desc: "红叶最多情，一舞寄相思。",
 	},
+	{
+		title: "夏夜流萤",
+		siteurl: "https://blog.cuteleaf.cn/",
+		imgurl: "https://q1.qlogo.cn/g?b=qq&nk=7618557&s=640",
+		desc: "飞萤之火自无梦的长夜亮起，绽放在终竟的明天。",
+	},
 ];
