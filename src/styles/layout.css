@@ -21,15 +21,26 @@
 .enable-banner {
     #banner-wrapper {
         @apply h-(--banner-height-home);
+        contain: content;
     }
 
     #banner {
         @apply h-(--banner-height-home) translate-y-(--bannerOffset);
+        contain: content;
     }
 
     #top-row {
         @apply h-[calc(var(--banner-height-home)-4.5rem)];
     }
+
+    #main-grid,
+    #sidebar-sticky {
+        contain: layout style;
+    }
+}
+
+#page-height-extend {
+	contain: size layout;
 }
 
 .navbar-hidden {
