@@ -285,7 +285,15 @@
     @apply absolute inset-0 bg-(--primary);
 }
 
-@layer base {  
+@layer base {
+    html {
+        color-scheme: light dark;
+    }
+    
+    html.dark {
+        color-scheme: dark;
+    }
+    
     h1,
     h2,
     h3,
