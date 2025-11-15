@@ -33,10 +33,14 @@
 
     --inline-code-bg: var(--btn-regular-bg);
     --inline-code-color: var(--btn-content);
+    
     --selection-bg: oklch(0.9 0.05 var(--hue));
-    --codeblock-selection: oklch(0.4 0.08 var(--hue));
-    --codeblock-bg: oklch(0.17 0.015 var(--hue));
-    --codeblock-topbar-bg: oklch(0.3 0.02 var(--hue));
+
+    --codeblock-selection: var(--selection-bg);
+    --codeblock-badge-content: var(--btn-content);
+    --codeblock-badge-bg: var(--btn-regular-bg);
+    --codeblock-bg: oklch(0.98 0.01 var(--hue));
+    --codeblock-topbar-bg: oklch(0.93 0.01 var(--hue));
 
     --license-block-bg: rgba(0, 0, 0, 0.03);
 
@@ -98,6 +102,7 @@
     --meta-divider: rgba(255, 255, 255, 0.2);
 
     --selection-bg: oklch(0.4 0.08 var(--hue));
+
     --codeblock-bg: oklch(0.17 0.015 var(--hue));
     --codeblock-topbar-bg: oklch(0.12 0.015 var(--hue));
 

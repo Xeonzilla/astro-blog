@@ -110,7 +110,10 @@ export default defineConfig({
 					markHue: "250",
 				},
 			},
-			themes: ["github-dark"],
+			themes: ["github-light", "github-dark"],
+			themeCssSelector: (theme) => {
+				return theme.name.includes("dark") ? ".dark" : "";
+			},
 			frames: {
 				showCopyToClipboardButton: false,
 			},
