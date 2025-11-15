@@ -1,0 +1,193 @@
+---
+title: "为 Fuwari 定制图像服务"
+published: 2025-11-16
+image: "https://blog-static.xeonzilla.top/img/fuwari-custom-image-service/cover.avif"
+tags: 
+  - "技术"
+  - "Astro"
+  - "Fuwari"
+category: "站点建设"
+---
+
+## 前言
+
+因为 Cloudflare Workers 存在 20 分钟的构建限制，在迁移至 Workers 后，我被迫使用了 WebP，但是我一直没有放弃 AVIF。在仔细研究 Astro 文档后，我决定构建一个自定义图像处理服务，该服务能够跳过对 AVIF 格式的图像处理，同时将所有其他格式的图像转换为 WebP。。
+
+为了更好地理解本文的背景和探索过程，我建议先阅读姊妹篇[为 Fuwari 启用响应式图像](/posts/fuwari-responsive-images/)，以了解我在进行本次修改前所做的修改。同样地，本文侧重于过程记录而非详尽的教程，因此文中可能存在不严谨之处或信息缺漏。
+
+## 筛选格式
+
+Astro 的图像服务专注于处理图像本身，而不直接介入格式筛选，因此在图像服务内部筛选 AVIF 是不可行的。由于在之前的修改中，所有图像都由 `ImageWrapper.astro` 包装，所以我们可以在包装器中进行筛选，并显式标记 `format="avif"`。
+
+```astro title="src/components/misc/ImageWrapper.astro"
+---
+const isAvif = /\.avif$/i.test(src);
+---
+
+<Image {...(isAvif && { format: "avif" })} />
+```
+
+核心逻辑非常简单，识别 `.avif` 的文件名即可。对于其他格式的图像，我们不必标记格式，因为所有其他格式的图像都会被转换为 WebP。鉴于 WebP 的转换速度很快，且我在源文件中不使用 WebP 格式，因此，构建过程中少量从 WebP 到 WebP 的冗余转换是可以接受的。
+
+## 转换图像
+
+经过包装器的分类后，我们的自定义图像服务就能够根据是否存在 `format="avif"` ，对不同格式的图像采取不同的处理流程。
+
+```typescript title="src/services/customImageService.ts"
+import type { LocalImageService } from "astro";
+import { baseService } from "astro/assets";
+import sharp from "sharp";
+
+// AVIF passthrough, others convert to WebP
+const customImageService: LocalImageService = {
+	validateOptions: baseService.validateOptions,
+	getHTMLAttributes: baseService.getHTMLAttributes,
+	getURL: baseService.getURL,
+	parseURL: baseService.parseURL,
+
+	async transform(inputBuffer, transformOptions) {
+		if (!inputBuffer || inputBuffer.length === 0) {
+			throw new Error("Invalid input buffer: buffer is empty");
+		}
+
+		// Return original data
+		if (transformOptions.format === "avif") {
+			return {
+				data: inputBuffer,
+				format: "avif" as const,
+			};
+		}
+
+		try {
+			const { width, height, quality } = transformOptions;
+
+			// Validate dimensions
+			if (
+				(width !== undefined && width < 0) ||
+				(height !== undefined && height < 0)
+			) {
+				throw new Error(
+					"Invalid dimensions: width and height must be non-negative",
+				);
+			}
+
+			// Clamp quality to 1-100
+			const validQuality = quality
+				? Math.max(1, Math.min(100, quality))
+				: undefined;
+
+			// Create Sharp instance with optimized config
+			let sharpInstance = sharp(inputBuffer, {
+				failOnError: false,
+				pages: -1,
+				limitInputPixels: 268402689,
+				sequentialRead: true,
+			});
+
+			// Resize if needed
+			if (width || height) {
+				sharpInstance = sharpInstance.resize({
+					width,
+					height,
+					fit: "inside",
+					withoutEnlargement: true,
+				});
+			}
+
+			// Convert to WebP
+			const buffer = await sharpInstance
+				.webp(validQuality ? { quality: validQuality } : undefined)
+				.toBuffer();
+			const data = new Uint8Array(buffer);
+
+			return {
+				data,
+				format: "webp",
+			};
+		} catch (error) {
+			console.error("Image transform failed:", error);
+			console.error("Transform options:", transformOptions);
+
+			// Return original data as fallback
+			return {
+				data: inputBuffer,
+				format: transformOptions.format || "webp",
+			};
+		}
+	},
+
+	getSrcSet(options, imageConfig) {
+		if (options.format === "avif") {
+			return [];
+		}
+
+		return baseService.getSrcSet?.(options, imageConfig) ?? [];
+	},
+};
+
+export default customImageService;
+```
+
+对于传入的 AVIF，我们不进行任何处理，直接输出原始图像；对于其他格式的图像，我们使用 `sharp` 模拟原始的图像处理流程，在不进行额外设置的情况下，默认生成质量为 80 的 WebP，而在接收到配置的 `sizes` 与 `widths` 时，此服务也能够生成一系列对应尺寸与质量的响应式图像。Astro 在内部设置了一系列预设值，使得用户能够在不同格式之间自动标准化，但是我们的图像处理服务只输出 WebP，所以也没有必要重新实现这一功能。
+
+现在所有的 AVIF 都会被拉取到本地，并在文件名添加哈希标识。为什么选择拉取图像而不直接使用远程 URL，并且拉取后又不进行优化呢？因为拉取后，所有图像都将位于站点的 `/_astro` 路径下。这样做有两个好处：首先，可以一定程度上隐藏原始的远程图像 URL；其次，资源与主站处于同一域名，有利于缓存优化。Cloudflare Workers 环境下，拉取一张来自 Cloudflare R2 的图像用时 15 毫秒以内，相较于此方案带来的安全与性能优化，增加少许的构建时间是完全可接受的。
+
+## 清理代码
+
+完成了自定义图像处理服务的构建后，先前新增的响应式图像相关代码已无必要，可以安全地回滚代码。这里同样以 Avatar 所在的 `Profile.astro` 为例。
+
+```astro title="src/components/widget/Profile.astro" collapse={10-18,22-39} del={3} {20}
+---
+import { Icon } from "astro-icon/components";
+import { avatarImageConfig } from "@/image-config";
+import { profileConfig } from "../../config";
+import { url } from "../../utils/url-utils";
+import ImageWrapper from "../misc/ImageWrapper.astro";
+
+const config = profileConfig;
+---
+<div class="card-base p-3">
+    <a aria-label="Go to About Page" href={url('/about/')}
+       class="group block relative mx-auto mt-1 lg:mx-0 lg:mt-0 mb-3
+       max-w-[12rem] lg:max-w-none overflow-hidden rounded-xl active:scale-95">
+        <div class="absolute transition pointer-events-none group-hover:bg-black/30 group-active:bg-black/50
+        w-full h-full z-50 flex items-center justify-center">
+            <Icon name="fa6-regular:address-card"
+                  class="transition opacity-0 scale-90 group-hover:scale-100 group-hover:opacity-100 text-white text-5xl">
+            </Icon>
+        </div>
+        <ImageWrapper src={config.avatar || ""} alt="Profile Image of the Author" class="mx-auto lg:w-full h-full lg:mt-0 "></ImageWrapper>
+    </a>
+    <div class="px-2">
+        <div class="font-bold text-xl text-center mb-1 dark:text-neutral-50 transition">{config.name}</div>
+        <div class="h-1 w-5 bg-[var(--primary)] mx-auto rounded-full mb-2 transition"></div>
+        <div class="text-center text-neutral-400 mb-2.5 transition">{config.bio}</div>
+        <div class="flex gap-2 justify-center mb-1">
+            {config.links.length > 1 && config.links.map(item =>
+                    <a rel="me" aria-label={item.name} href={item.url} target="_blank" class="btn-regular rounded-lg h-10 w-10 active:scale-90">
+                        <Icon name={item.icon} class="text-[1.5rem]"></Icon>
+                    </a>
+            )}
+            {config.links.length == 1 && <a rel="me" aria-label={config.links[0].name} href={config.links[0].url} target="_blank"
+                                            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
+                <Icon name={config.links[0].icon} class="text-[1.5rem]"></Icon>
+                {config.links[0].name}
+            </a>}
+        </div>
+    </div>
+</div>
+```
+
+最终我只保留了追番页与友链页的相关配置，因为这些页面的图像均为外部来源，我无法直接优化图像本身，因此构建时优化便非常有必要。
+
+## 小结
+
+总结一下，我们本次修改的核心是：保留站点内所有的 AVIF 图像，不对其进行转换或生成响应式尺寸，仅通过 Astro 的 `<Image />` 组件来避免 CLS（累积布局偏移）。在大多数情况下，AVIF 已经足够高效，将其转换为 WebP 不仅影响图像的准确性，还增加了无谓的体积。
+
+对于其他的 Astro 主题，如果出于同样的绕过 AVIF 的需求，可以直接使用本文的自定义图像服务，但需要一个类似 `ImageWrapper.astro` 的包装器或是分类器，又或是手动标记所使用的 AVIF，在图像处理前完成分类的工作。
+
+## 图像优化效率学
+
+我始终建议所有站点维护者提前优化由自己控制的图像资源，因为构建前的优化仅需一次，就能得到永久的收益；依靠每次的构建时转换，耗费了远超单次转换所需的时间，仅能得到相同的收益，显然是不划算的。现代的图像格式，例如 WebP 与 AVIF，能够在不损失画面素质的情况下大幅减小图像体积，对于没有特殊需求的使用者，根本没有坚持在站点使用 JPG 与 PNG 的理由。
+
+同样，对于目前的 WebP 使用者，我建议逐步迁移至 AVIF。同为现代图像格式，AVIF 在压缩性能上比 WebP 要好上不少；而对比尚在发展中的下一代图像格式，如 WebP2 与 JPEG XL，AVIF 在当前的普及度和浏览器兼容性上更具优势。而 AVIF 唯一的劣势转换速度，在构建前单次转换的前提下，也不算什么大问题。
