@@ -93,7 +93,7 @@ const isPublic = src.startsWith("/");
 
 第二处修改在最下方，我们为远程图像应用 `<Image />` 组件的写法。
 
-```html title="src/components/misc/ImageWrapper.astro" startLineNumber=50 "inferSize={true}"
+```astro title="src/components/misc/ImageWrapper.astro" startLineNumber=50 "inferSize={true}"
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
     <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
     {isLocal && img && <Image src={img} alt={alt || ""} quality="max" class={imageClass} style={imageStyle}/>}
@@ -110,7 +110,7 @@ const isPublic = src.startsWith("/");
 
 文章数量太多时，替换某个语句或者调整某个选项非常耗时，此时就可以借助大模型，让它为你编写一个批量替换的脚本。我在插入 `quality="high"` 时，就用到了 ChatGPT 提供的代码：
 
-```python title="process.py"
+```py title="process.py"
 import os
 import re
 
@@ -236,7 +236,7 @@ export default defineConfig({
 
 我们先从文章中的图像开始修改，这一点与上面一致。这一次，为了节约调用的成本，我决定自行封装一个图像组件，这样在使用图像语法时，就不必再写重复的参数了。
 
-```js title="src/components/MarkdownImage.astro"
+```astro title="src/components/MarkdownImage.astro"
 ---
 import { Image } from "astro:assets";
 import { markdownImageConfig } from "@/image-config.ts";
@@ -280,7 +280,7 @@ const {
 
 这些图像仍由 `ImageWrapper.astro` 控制，因此在修改时，我们还是要先改造 `ImageWrapper.astro`。
 
-```js title="src/components/misc/ImageWrapper.astro" collapse={1-3,15-18,30-60} ins={11-13,25-27} "widths={widths} quality={quality} sizes={sizes}"
+```astro title="src/components/misc/ImageWrapper.astro" collapse={1-3,15-18,30-60} ins={11-13,25-27} "widths={widths} quality={quality} sizes={sizes}"
 ---
 import path from "node:path";
 
@@ -353,7 +353,7 @@ const imageStyle = `object-position: ${position}`;
 
 然后，我们就得进入对应的组件里，添加我们新增的参数。这里以 Avatar 所在的 `Profile.astro` 为例。
 
-```js title="src/components/widget/Profile.astro" collapse={22-39} ins={3} {20}
+```astro title="src/components/widget/Profile.astro" collapse={22-39} ins={3} {20}
 ---
 import { Icon } from "astro-icon/components";
 import { avatarImageConfig } from "@/image-config";
@@ -421,7 +421,7 @@ import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
 然后在 `<Content>` 标签处传入我们的组件：
 
-```js title="src/pages/posts/[...slug].astro" startLineNumber=108 "components={{ MarkdownImage: MarkdownImage }}"
+```astro title="src/pages/posts/[...slug].astro" startLineNumber=108 "components={{ MarkdownImage: MarkdownImage }}"
 <Markdown class="mb-6 markdown-content onload-animation">
     <Content components={{ MarkdownImage: MarkdownImage }} />
 </Markdown>

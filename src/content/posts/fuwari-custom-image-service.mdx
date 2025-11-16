@@ -33,7 +33,7 @@ const isAvif = /\.avif$/i.test(src);
 
 经过包装器的分类后，我们的自定义图像服务就能够根据是否存在 `format="avif"` ，对不同格式的图像采取不同的处理流程。
 
-```typescript title="src/services/customImageService.ts"
+```ts title="src/services/customImageService.ts"
 import type { LocalImageService } from "astro";
 import { baseService } from "astro/assets";
 import sharp from "sharp";
