@@ -21,15 +21,15 @@ export const prerender = true;
 
 const { regular: fontRegular, bold: fontBold } = await fetchNotoSansSCFonts();
 
-const avatarBase64 = `data:image/png;base64,${(
-	await sharp(fs.readFileSync(`./src/${profileConfig.avatar}`))
+const [avatarBase64, iconBase64] = await Promise.all([
+	sharp(fs.readFileSync(`./src/${profileConfig.avatar}`))
 		.png()
-		.toBuffer()
-).toString("base64")}`;
-
-const iconBase64 = `data:image/png;base64,${fs
-	.readFileSync(`./public${siteConfig.favicon.at(-1)?.src}`)
-	.toString("base64")}`;
+		.toBuffer(),
+	fs.promises.readFile(`./public${siteConfig.favicon.at(-1)?.src}`),
+]).then(([avatar, icon]) => [
+	`data:image/png;base64,${avatar.toString("base64")}`,
+	`data:image/png;base64,${icon.toString("base64")}`,
+]);
 
 const hue = siteConfig.themeColor.hue;
 const textColor = "hsl(0, 0%, 95%)";
@@ -45,10 +45,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	const allPosts = await getCollection("posts");
 	const publishedPosts = allPosts.filter((post) => !post.data.draft);
 
-	return publishedPosts.map((post) => ({
-		params: { slug: post.id },
-		props: { post },
-	}));
+	return await Promise.all(
+		publishedPosts.map(async (post) => {
+			const {
+				remarkPluginFrontmatter: { excerpt },
+			} = await render(post);
+			return {
+				params: { slug: post.id },
+				props: { post, excerpt },
+			};
+		}),
+	);
 };
 
 async function fetchNotoSansSCFonts() {
@@ -103,8 +110,8 @@ async function fetchNotoSansSCFonts() {
 
 export async function GET({
 	props,
-}: APIContext<{ post: CollectionEntry<"posts"> }>) {
-	const { post } = props;
+}: APIContext<{ post: CollectionEntry<"posts">; excerpt: string }>) {
+	const { post, excerpt } = props;
 
 	const pubDate = post.data.published.toLocaleDateString("en-US", {
 		year: "numeric",
@@ -112,9 +119,6 @@ export async function GET({
 		day: "numeric",
 	});
 
-	const {
-		remarkPluginFrontmatter: { excerpt },
-	} = await render(post);
 	const description = post.data.description || excerpt;
 
 	const template = {
@@ -321,8 +325,8 @@ export async function GET({
 
 	const png = await sharp(Buffer.from(svg))
 		.png({
-			quality: 85,
 			palette: true,
+			quality: 85,
 		})
 		.toBuffer();
 
