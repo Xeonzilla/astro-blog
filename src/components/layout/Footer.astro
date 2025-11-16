@@ -1,23 +1,23 @@
 ---
 import { getCollection, render } from "astro:content";
+import { url } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
-import { profileConfig, siteConfig } from "../config";
-import { url } from "../utils/url-utils";
+import { profileConfig, siteConfig } from "@/config";
 
 const siteLocale = siteConfig.lang?.replace(/_/g, "-") || "en";
 
 const formattedWordCount = (
-	await Promise.all(
-		(
-			await getCollection("posts", (post) => !post.data.draft)
-		).map(async (post) => {
-			const rendered = await render(post);
-			return rendered.remarkPluginFrontmatter?.words ?? 0;
-		}),
-	)
+    await Promise.all(
+        (await getCollection("posts", (post) => !post.data.draft)).map(
+            async (post) => {
+                const rendered = await render(post);
+                return rendered.remarkPluginFrontmatter?.words ?? 0;
+            },
+        ),
+    )
 )
-	.reduce((summary, words) => summary + words, 0)
-	.toLocaleString(siteLocale);
+    .reduce((summary, words) => summary + words, 0)
+    .toLocaleString(siteLocale);
 
 const currentYear = new Date().getFullYear();
 ---

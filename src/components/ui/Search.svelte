@@ -3,7 +3,7 @@
 	import { i18n } from "@i18n/translation";
 	import Icon, { loadIcons } from "@iconify/svelte";
 	import offClick from "@utils/svelte/offClick";
-	import { url } from "@utils/url-utils.ts";
+	import { url } from "@utils/url-utils";
 	import { fly } from "svelte/transition";
 	import type { SearchResult } from "@/global";
 

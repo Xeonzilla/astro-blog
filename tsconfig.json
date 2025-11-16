@@ -21,12 +21,10 @@
 		"skipLibCheck": true,
 		"paths": {
 			"@components/*": ["src/components/*"],
-			"@config/*": ["src/config/*"],
 			"@constants/*": ["src/constants/*"],
 			"@i18n/*": ["src/i18n/*"],
 			"@layouts/*": ["src/layouts/*"],
 			"@styles/*": ["src/styles/*"],
-			"@types/*": ["src/types/*"],
 			"@utils/*": ["src/utils/*"],
 			"@/*": ["src/*"]
 		},

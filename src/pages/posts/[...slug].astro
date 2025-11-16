@@ -1,20 +1,19 @@
 ---
 import { render } from "astro:content";
 import path from "node:path";
-import Comment from "@components/Comment.astro";
-import License from "@components/misc/License.astro";
-import Markdown from "@components/misc/Markdown.astro";
+import Comment from "@components/content/Comment.astro";
+import License from "@components/content/License.astro";
+import Markdown from "@components/content/Markdown.astro";
+import PostMetadata from "@components/content/PostMeta.astro";
+import ImageWrapper from "@components/media/ImageWrapper.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@utils/content-utils";
+import { formatDateToYYYYMMDD } from "@utils/date-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
-import { licenseConfig } from "src/config";
-import { profileConfig, siteConfig } from "@/config";
-import ImageWrapper from "../../components/misc/ImageWrapper.astro";
-import PostMetadata from "../../components/PostMeta.astro";
-import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import { licenseConfig, profileConfig, siteConfig } from "@/config";
 
 export async function getStaticPaths() {
     const blogEntries = await getSortedPosts();
@@ -173,9 +172,7 @@ const jsonLd = {
         class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full"
     >
         <a
-            href={entry.data.nextId
-                ? getPostUrlBySlug(entry.data.nextId)
-                : "#"}
+            href={entry.data.nextId ? getPostUrlBySlug(entry.data.nextId) : "#"}
             class:list={[
                 "w-full font-bold overflow-hidden active:scale-95",
                 { "pointer-events-none": !entry.data.nextId },
@@ -197,9 +194,7 @@ const jsonLd = {
         </a>
 
         <a
-            href={entry.data.prevId
-                ? getPostUrlBySlug(entry.data.prevId)
-                : "#"}
+            href={entry.data.prevId ? getPostUrlBySlug(entry.data.prevId) : "#"}
             class:list={[
                 "w-full font-bold overflow-hidden active:scale-95",
                 { "pointer-events-none": !entry.data.prevId },

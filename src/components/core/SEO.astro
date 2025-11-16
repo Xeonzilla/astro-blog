@@ -1,4 +1,5 @@
 ---
+import { url } from "@utils/url-utils";
 import type { Favicon } from "@/types/config";
 
 interface Props {
@@ -27,8 +28,6 @@ const {
 	siteUrl,
 } = Astro.props;
 
-import { url } from "@/utils/url-utils";
-
 const ogType = setOGTypeArticle ? "article" : "website";
 const rssUrl = `${siteUrl}rss.xml`;
 const atomUrl = `${siteUrl}atom.xml`;
@@ -53,7 +52,7 @@ const atomUrl = `${siteUrl}atom.xml`;
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
 
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light dark" />
 
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />

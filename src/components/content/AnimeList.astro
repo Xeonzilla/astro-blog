@@ -1,12 +1,12 @@
 ---
+import ImageWrapper from "@components/media/ImageWrapper.astro";
+import type { ProcessedAnime } from "@utils/bangumi-utils";
 import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
 import { animeImageConfig } from "@/config";
-import type { ProcessedAnime } from "../../utils/bangumi-utils";
-import ImageWrapper from "../misc/ImageWrapper.astro";
 
 interface Props {
-	page: Page<ProcessedAnime | null>;
+    page: Page<ProcessedAnime | null>;
 }
 
 const { page } = Astro.props;
