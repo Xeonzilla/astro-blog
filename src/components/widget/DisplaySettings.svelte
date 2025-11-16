@@ -14,25 +14,26 @@
         hue = getDefaultHue();
     }
 
+    function toggleMenu() {
+        isOpen = !isOpen;
+    }
+
     $effect(() => {
         if (hue || hue === 0) {
             setHue(hue);
         }
     });
-
-    // Listen for toggle button clicks
-    $effect(() => {
-        const switchBtn = document.getElementById("display-settings-switch");
-        if (!switchBtn) return;
-
-        const handleToggle = () => {
-            isOpen = !isOpen;
-        };
-
-        switchBtn.addEventListener("click", handleToggle);
-        return () => switchBtn.removeEventListener("click", handleToggle);
-    });
 </script>
+
+<svelte:document
+    onclick={(e) => {
+        const target = e.target as HTMLElement;
+        const switchBtn = document.getElementById("display-settings-switch");
+        if (switchBtn?.contains(target)) {
+            toggleMenu();
+        }
+    }}
+/>
 
 {#if isOpen}
     <div
