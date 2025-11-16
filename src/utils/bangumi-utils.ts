@@ -1,5 +1,7 @@
 const BANGUMI_USER_ID = "Xeonzilla";
 const BANGUMI_API_BASE = "https://api.bgm.tv";
+const CONTAINS_NUMBER_REGEX = /\d/;
+const BANGUMI_DETAIL_BASE = "https://bgm.tv/subject/";
 
 export interface ProcessedAnime {
 	title: string;
@@ -48,31 +50,54 @@ async function fetchCollectionCount(type: number): Promise<number> {
 
 async function fetchWatchingCollection(): Promise<BangumiCollectionItem[]> {
 	try {
-		const allData: BangumiCollectionItem[] = [];
-		let offset = 0;
 		const limit = 50;
-		let hasMore = true;
-		while (hasMore) {
-			const response = await fetch(
-				`${BANGUMI_API_BASE}/v0/users/${BANGUMI_USER_ID}/collections?subject_type=2&type=3&limit=${limit}&offset=${offset}`,
+
+		const firstResponse = await fetch(
+			`${BANGUMI_API_BASE}/v0/users/${BANGUMI_USER_ID}/collections?subject_type=2&type=3&limit=${limit}&offset=0`,
+		);
+
+		if (!firstResponse.ok) {
+			throw new Error(
+				`Failed to fetch Bangumi data. Status: ${firstResponse.status} ${firstResponse.statusText}`,
 			);
-			if (!response.ok) {
-				throw new Error(
-					`Failed to fetch Bangumi data. Status: ${response.status} ${response.statusText}`,
+		}
+
+		const firstData: { total: number; data: BangumiCollectionItem[] } =
+			await firstResponse.json();
+		const total = firstData.total || 0;
+		const allData: BangumiCollectionItem[] = firstData.data || [];
+
+		if (total > limit) {
+			const totalPages = Math.ceil(total / limit);
+			const remainingRequests = [];
+
+			for (let page = 1; page < totalPages; page++) {
+				const offset = page * limit;
+				remainingRequests.push(
+					fetch(
+						`${BANGUMI_API_BASE}/v0/users/${BANGUMI_USER_ID}/collections?subject_type=2&type=3&limit=${limit}&offset=${offset}`,
+					)
+						.then(async (response) => {
+							if (!response.ok) {
+								throw new Error(`Failed to fetch page ${page}`);
+							}
+							const data: { data: BangumiCollectionItem[] } =
+								await response.json();
+							return data.data || [];
+						})
+						.then(async (data) => {
+							await new Promise((resolve) => setTimeout(resolve, 100 * page));
+							return data;
+						}),
 				);
 			}
 
-			const data: { data: BangumiCollectionItem[] } = await response.json();
-			if (data.data?.length > 0) {
-				allData.push(...data.data);
+			const results = await Promise.all(remainingRequests);
+			for (const pageData of results) {
+				allData.push(...pageData);
 			}
-			if (!data.data || data.data.length < limit) {
-				hasMore = false;
-			} else {
-				offset += limit;
-			}
-			await new Promise((resolve) => setTimeout(resolve, 100));
 		}
+
 		return allData;
 	} catch (error) {
 		console.error("Error fetching Bangumi data:", error);
@@ -88,16 +113,16 @@ async function fetchWatchingCollection(): Promise<BangumiCollectionItem[]> {
 
 function processBangumiData(data: BangumiCollectionItem[]): ProcessedAnime[] {
 	if (!data) return [];
-	const containsNumberRegex = /\d/;
+
 	return data.map((item) => {
 		const progress = item.ep_status || 0;
 		const totalEpisodes = item.subject.eps || progress;
-		const genre = item.subject.tags
-			? item.subject.tags
-					.filter((tag) => !containsNumberRegex.test(tag.name))
-					.slice(0, 2)
-					.map((tag) => tag.name)
-			: [];
+
+		const genre =
+			item.subject.tags
+				?.filter((tag) => !CONTAINS_NUMBER_REGEX.test(tag.name))
+				.slice(0, 2)
+				.map((tag) => tag.name) || [];
 
 		const title = item.subject.name_cn || item.subject.name;
 		const originalTitle = item.subject.name_cn ? item.subject.name : "";
@@ -107,10 +132,10 @@ function processBangumiData(data: BangumiCollectionItem[]): ProcessedAnime[] {
 			cover: item.subject.images.large,
 			originalTitle,
 			year: item.subject.date,
-			genre: genre,
-			progress: progress,
-			totalEpisodes: totalEpisodes,
-			detailUrl: `${BANGUMI_API_BASE.replace("api.", "")}/subject/${item.subject.id}`,
+			genre,
+			progress,
+			totalEpisodes,
+			detailUrl: `${BANGUMI_DETAIL_BASE}${item.subject.id}`,
 		};
 	});
 }
