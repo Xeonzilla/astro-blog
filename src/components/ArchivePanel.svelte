@@ -4,18 +4,14 @@
     import { getPostUrlBySlug } from "../utils/url-utils";
 
     let {
-        tags = [],
-        categories = [],
         sortedPosts = [],
     }: {
-        tags?: string[];
-        categories?: string[];
         sortedPosts?: Post[];
     } = $props();
 
     const params = new URLSearchParams(window.location.search);
-    tags = params.has("tag") ? params.getAll("tag") : [];
-    categories = params.has("category") ? params.getAll("category") : [];
+    const tags = params.has("tag") ? params.getAll("tag") : [];
+    const categories = params.has("category") ? params.getAll("category") : [];
     const uncategorized = params.get("uncategorized");
 
     interface Post {
@@ -28,13 +24,6 @@
         };
     }
 
-    interface Group {
-        year: number;
-        posts: Post[];
-    }
-
-    let groups = $state<Group[]>([]);
-
     function formatDate(date: Date) {
         const month = (date.getMonth() + 1).toString().padStart(2, "0");
         const day = date.getDate().toString().padStart(2, "0");
@@ -45,7 +34,7 @@
         return tagList.map((t) => `#${t}`).join(" ");
     }
 
-    $effect(() => {
+    const groups = $derived.by(() => {
         let filteredPosts: Post[] = sortedPosts;
 
         if (tags.length > 0) {
@@ -87,12 +76,12 @@
 
         groupedPostsArray.sort((a, b) => b.year - a.year);
 
-        groups = groupedPostsArray;
+        return groupedPostsArray;
     });
 </script>
 
 <div class="card-base px-8 py-6">
-    {#each groups as group}
+    {#each groups as group (group.year)}
         <div>
             <div class="flex flex-row w-full items-center h-[3.75rem]">
                 <div
@@ -116,7 +105,7 @@
                 </div>
             </div>
 
-            {#each group.posts as post}
+            {#each group.posts as post (post.id)}
                 <a
                     href={getPostUrlBySlug(post.id)}
                     aria-label={post.data.title}
