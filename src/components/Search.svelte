@@ -4,7 +4,6 @@
 	import Icon, { loadIcons } from "@iconify/svelte";
 	import offClick from "@utils/svelte/offClick";
 	import { url } from "@utils/url-utils.ts";
-	import { untrack } from "svelte";
 	import { fly } from "svelte/transition";
 	import type { SearchResult } from "@/global";
 
@@ -12,9 +11,15 @@
 	let keywordMobile = $state("");
 	let result = $state<SearchResult[]>([]);
 	let isSearching = $state(false);
-	let pagefindLoaded = $state(false);
-	let initialized = $state(false);
 	let isPanelOpen = $state(false);
+
+	let pagefind = $state.raw<{
+		loaded: boolean;
+		initialized: boolean;
+	}>({
+		loaded: false,
+		initialized: false,
+	});
 
 	// Preload icons
 	loadIcons(["material-symbols:search", "fa6-solid:chevron-right"]);
@@ -25,18 +30,32 @@
 			meta: {
 				title: "This Is a Fake Search Result",
 			},
-			excerpt:
-				"Because the search cannot work in the <mark>dev</mark> environment.",
+			excerpt: "Because the search cannot work in the dev environment.",
 		},
 		{
 			url: url("/"),
 			meta: {
 				title: "If You Want to Test the Search",
 			},
-			excerpt:
-				"Try running <mark>npm build && npm preview</mark> instead.",
+			excerpt: "Try running npm build && npm preview instead.",
 		},
 	];
+
+	function sanitizeHTML(html: string): string {
+		const allowedTags = ["mark"];
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(html, "text/html");
+
+		const allElements = doc.body.getElementsByTagName("*");
+		for (let i = allElements.length - 1; i >= 0; i--) {
+			const element = allElements[i];
+			if (!allowedTags.includes(element.tagName.toLowerCase())) {
+				element.replaceWith(element.textContent || "");
+			}
+		}
+
+		return doc.body.innerHTML;
+	}
 
 	const togglePanel = () => {
 		isPanelOpen = !isPanelOpen;
@@ -53,28 +72,20 @@
 	): Promise<void> => {
 		if (!keyword) {
 			setPanelVisibility(false, isDesktop);
-			untrack(() => {
-				result = [];
-			});
+			result = [];
 			return;
 		}
 
-		if (!untrack(() => initialized)) {
+		if (!pagefind.initialized) {
 			return;
 		}
 
-		untrack(() => {
-			isSearching = true;
-		});
+		isSearching = true;
 
 		try {
 			let searchResults: SearchResult[] = [];
 
-			if (
-				import.meta.env.PROD &&
-				untrack(() => pagefindLoaded) &&
-				window.pagefind
-			) {
+			if (import.meta.env.PROD && pagefind.loaded && window.pagefind) {
 				const response = await window.pagefind.search(keyword);
 				searchResults = await Promise.all(
 					response.results.map((item) => item.data()),
@@ -88,51 +99,45 @@
 				);
 			}
 
-			untrack(() => {
-				result = searchResults;
-			});
+			result = searchResults;
 			setPanelVisibility(searchResults.length > 0, isDesktop);
 		} catch (error) {
 			console.error("Search error:", error);
-			untrack(() => {
-				result = [];
-			});
+			result = [];
 			setPanelVisibility(false, isDesktop);
 		} finally {
-			untrack(() => {
-				isSearching = false;
-			});
+			isSearching = false;
 		}
 	};
 
 	$effect(() => {
-		const initializeSearch = () => {
-			initialized = true;
-			pagefindLoaded =
-				typeof window !== "undefined" &&
-				!!window.pagefind &&
-				typeof window.pagefind.search === "function";
-			console.log("Pagefind status on init:", pagefindLoaded);
-			if (keywordDesktop) search(keywordDesktop, true);
-			if (keywordMobile) search(keywordMobile, false);
+		const initializePagefind = () => {
+			pagefind = {
+				loaded:
+					typeof window !== "undefined" &&
+					!!window.pagefind &&
+					typeof window.pagefind.search === "function",
+				initialized: true,
+			};
+			console.log("Pagefind status on init:", pagefind.loaded);
 		};
 
 		if (import.meta.env.DEV) {
 			console.log(
 				"Pagefind is not available in development mode. Using mock data.",
 			);
-			initializeSearch();
+			initializePagefind();
 		} else {
 			const handlePagefindReady = () => {
 				console.log("Pagefind ready event received.");
-				initializeSearch();
+				initializePagefind();
 			};
 
 			const handlePagefindLoadError = () => {
 				console.warn(
 					"Pagefind load error event received. Search functionality will be limited.",
 				);
-				initializeSearch(); // Initialize with pagefindLoaded as false
+				initializePagefind();
 			};
 
 			document.addEventListener("pagefindready", handlePagefindReady);
@@ -141,13 +146,12 @@
 				handlePagefindLoadError,
 			);
 
-			// Fallback in case events are not caught or pagefind is already loaded by the time this script runs
 			const timeoutId = setTimeout(() => {
-				if (!initialized) {
+				if (!pagefind.initialized) {
 					console.log("Fallback: Initializing search after timeout.");
-					initializeSearch();
+					initializePagefind();
 				}
-			}, 2000); // Adjust timeout as needed
+			}, 2000);
 
 			return () => {
 				document.removeEventListener(
@@ -164,13 +168,13 @@
 	});
 
 	$effect(() => {
-		if (initialized && keywordDesktop) {
+		if (pagefind.initialized && keywordDesktop) {
 			search(keywordDesktop, true);
 		}
 	});
 
 	$effect(() => {
-		if (initialized && keywordMobile) {
+		if (pagefind.initialized && keywordMobile) {
 			search(keywordMobile, false);
 		}
 	});
@@ -236,11 +240,11 @@
 		</div>
 
 		<!-- search results -->
-		{#each result as item}
+		{#each result as item (item.url)}
 			<a
 				href={item.url}
 				class="transition first-of-type:mt-2 lg:first-of-type:mt-0 group block
-       rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active)"
+		     rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active)"
 			>
 				<div
 					class="transition text-90 inline-flex font-bold group-hover:text-(--primary)"
@@ -251,7 +255,7 @@
 					></Icon>
 				</div>
 				<div class="transition text-sm text-50">
-					{@html item.excerpt}
+					{@html sanitizeHTML(item.excerpt)}
 				</div>
 			</a>
 		{/each}
@@ -262,6 +266,7 @@
 	input:focus {
 		outline: 0;
 	}
+
 	.search-panel {
 		max-height: calc(100vh - 100px);
 		overflow-y: auto;
