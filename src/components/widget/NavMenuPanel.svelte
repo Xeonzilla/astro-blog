@@ -2,32 +2,37 @@
 	import Icon, { loadIcons } from "@iconify/svelte";
 	import offClick from "@utils/svelte/offClick";
 	import { url } from "@utils/url-utils";
+	import { onMount } from "svelte";
 	import { fly } from "svelte/transition";
 	import type { NavBarLink } from "@/types/config";
 
 	let { links }: { links: NavBarLink[] } = $props();
 	let isOpen = $state(false);
 
-	// Preload icons on mobile and listen for toggle button clicks
-	$effect(() => {
+	// Preload icons on mobile
+	onMount(() => {
 		if (window.matchMedia("(max-width: 1023px)").matches) {
 			loadIcons([
 				"material-symbols:chevron-right-rounded",
 				"fa6-solid:arrow-up-right-from-square",
 			]);
 		}
-
-		const switchBtn = document.getElementById("nav-menu-switch");
-		if (!switchBtn) return;
-
-		const handleToggle = () => {
-			isOpen = !isOpen;
-		};
-
-		switchBtn.addEventListener("click", handleToggle);
-		return () => switchBtn.removeEventListener("click", handleToggle);
 	});
+
+	function toggleMenu() {
+		isOpen = !isOpen;
+	}
 </script>
+
+<svelte:document
+	onclick={(e) => {
+		const target = e.target as HTMLElement;
+		const switchBtn = document.getElementById("nav-menu-switch");
+		if (switchBtn?.contains(target)) {
+			toggleMenu();
+		}
+	}}
+/>
 
 {#if isOpen}
 	<div
@@ -36,7 +41,7 @@
 		{@attach offClick(() => (isOpen = false), ["nav-menu-switch"])}
 		transition:fly={{ y: -4, duration: 150 }}
 	>
-		{#each links as link}
+		{#each links as link (link.url)}
 			<a
 				href={link.external ? link.url : url(link.url)}
 				class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
