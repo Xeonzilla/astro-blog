@@ -94,15 +94,11 @@
 				searchResults = fakeResult;
 			} else {
 				searchResults = [];
-				console.error(
-					"Pagefind is not available in production environment.",
-				);
 			}
 
 			result = searchResults;
 			setPanelVisibility(searchResults.length > 0, isDesktop);
 		} catch (error) {
-			console.error("Search error:", error);
 			result = [];
 			setPanelVisibility(false, isDesktop);
 		} finally {
@@ -119,24 +115,16 @@
 					typeof window.pagefind.search === "function",
 				initialized: true,
 			};
-			console.log("Pagefind status on init:", pagefind.loaded);
 		};
 
 		if (import.meta.env.DEV) {
-			console.log(
-				"Pagefind is not available in development mode. Using mock data.",
-			);
 			initializePagefind();
 		} else {
 			const handlePagefindReady = () => {
-				console.log("Pagefind ready event received.");
 				initializePagefind();
 			};
 
 			const handlePagefindLoadError = () => {
-				console.warn(
-					"Pagefind load error event received. Search functionality will be limited.",
-				);
 				initializePagefind();
 			};
 
@@ -148,7 +136,6 @@
 
 			const timeoutId = setTimeout(() => {
 				if (!pagefind.initialized) {
-					console.log("Fallback: Initializing search after timeout.");
 					initializePagefind();
 				}
 			}, 2000);
