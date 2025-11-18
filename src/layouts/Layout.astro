@@ -198,11 +198,11 @@ const bannerOffset =
 		BANNER_HEIGHT_HOME,
 		BANNER_HEIGHT_EXTEND,
 		MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
+		NAVBAR_HEIGHT,
 	} from "../constants/constants";
 	import { siteConfig } from "../config";
 
 	const bannerEnabled = siteConfig.banner.enable;
-	const NAVBAR_HEIGHT = 72;
 
 	// Calculate --banner-height-extend, must be a multiple of 4 to avoid blurry text
 	function calculateBannerHeightExtend() {
