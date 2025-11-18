@@ -15,6 +15,7 @@ import "misans/lib/Normal/MiSans-Bold.min.css"; // 630
 
 import ConfigCarrier from "@components/core/ConfigCarrier.astro";
 import SEO from "@components/core/SEO.astro";
+import ScrollManager from "@components/layout/ScrollManager.svelte";
 import ImageManager from "@components/media/ImageManager.svelte";
 import {
 	AUTO_MODE,
@@ -171,6 +172,7 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+		<ScrollManager client:load />
 		<ImageManager client:idle />
 	</body>
 </html>
@@ -193,13 +195,7 @@ const bannerOffset =
 		// ClickScrollPlugin
 	} from "overlayscrollbars";
 	import { pathsEqual, url } from "@utils/url-utils";
-	import {
-		BANNER_HEIGHT,
-		BANNER_HEIGHT_HOME,
-		BANNER_HEIGHT_EXTEND,
-		MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
-		NAVBAR_HEIGHT,
-	} from "@constants/constants";
+	import { BANNER_HEIGHT_EXTEND } from "@constants/constants";
 	import { siteConfig } from "@/config";
 
 	const bannerEnabled = siteConfig.banner.enable;
@@ -216,14 +212,6 @@ const bannerOffset =
 		);
 	}
 
-	function getCurrentBannerHeight(): number {
-		const isHome = isHomePage();
-		const isLargeScreen = window.innerWidth >= 1024;
-		const heightVh =
-			isHome && isLargeScreen ? BANNER_HEIGHT_HOME : BANNER_HEIGHT;
-		return window.innerHeight * (heightVh / 100);
-	}
-
 	function showBanner() {
 		if (!bannerEnabled) return;
 
@@ -234,20 +222,6 @@ const bannerOffset =
 		}
 
 		banner.classList.remove("opacity-0", "scale-105");
-	}
-
-	function getScrollTop(): number {
-		return document.documentElement.scrollTop || document.body.scrollTop;
-	}
-
-	function isHomePage(): boolean {
-		return document.body.classList.contains("is-home");
-	}
-
-	function calculateNavbarThreshold(): number {
-		const bannerHeight = getCurrentBannerHeight();
-		const mainPanelExcessHeight = MAIN_PANEL_OVERLAPS_BANNER_HEIGHT * 16;
-		return bannerHeight - NAVBAR_HEIGHT - mainPanelExcessHeight - 16;
 	}
 
 	function initCustomScrollbar() {
@@ -340,17 +314,6 @@ const bannerOffset =
 	function handleLinkClick() {
 		// Remove the delay for the first time page load
 		document.documentElement.style.setProperty("--content-delay", "0ms");
-
-		// prevent elements from overlapping the navbar
-		if (!bannerEnabled) return;
-
-		const navbar = document.getElementById("navbar-wrapper");
-		if (!navbar || !isHomePage()) return;
-
-		const threshold = calculateNavbarThreshold();
-		if (getScrollTop() >= threshold) {
-			navbar.classList.add("navbar-hidden");
-		}
 	}
 
 	function handleContentReplace() {
@@ -411,48 +374,6 @@ const bannerOffset =
 		window.swup.hooks.on("visit:end", handleVisitEnd);
 	};
 
-	function toggleElementVisibility(
-		element: HTMLElement | null,
-		shouldShow: boolean,
-		showClass?: string,
-		hideClass?: string,
-	) {
-		if (!element) return;
-
-		if (shouldShow) {
-			if (hideClass) element.classList.remove(hideClass);
-			if (showClass) element.classList.add(showClass);
-		} else {
-			if (showClass) element.classList.remove(showClass);
-			if (hideClass) element.classList.add(hideClass);
-		}
-	}
-
-	function scrollFunction() {
-		const scrollTop = getScrollTop();
-		const bannerHeight = getCurrentBannerHeight();
-		const isScrolledPastBanner = scrollTop > bannerHeight;
-
-		// Control back to top button visibility
-		const backToTopBtn = document.getElementById("back-to-top-btn");
-		toggleElementVisibility(backToTopBtn, isScrolledPastBanner, "", "hide");
-
-		// Control TOC visibility
-		if (bannerEnabled) {
-			const toc = document.getElementById("toc-wrapper");
-			toggleElementVisibility(toc, isScrolledPastBanner, "", "toc-hide");
-
-			// Control navbar visibility
-			const navbar = document.getElementById("navbar-wrapper");
-			const threshold = calculateNavbarThreshold();
-			toggleElementVisibility(
-				navbar,
-				scrollTop >= threshold,
-				"navbar-hidden",
-			);
-		}
-	}
-
 	// Load settings when entering the site
 	init();
 
@@ -462,6 +383,5 @@ const bannerOffset =
 		document.addEventListener("swup:enable", setupSwup);
 	}
 
-	window.onscroll = scrollFunction;
 	window.onresize = calculateBannerHeightExtend;
 </script>
