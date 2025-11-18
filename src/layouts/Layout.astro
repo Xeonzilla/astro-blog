@@ -16,7 +16,6 @@ import "misans/lib/Normal/MiSans-Bold.min.css"; // 630
 import ConfigCarrier from "@components/core/ConfigCarrier.astro";
 import SEO from "@components/core/SEO.astro";
 import ImageManager from "@components/media/ImageManager.svelte";
-import { profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
 	BANNER_HEIGHT,
@@ -26,9 +25,10 @@ import {
 	DEFAULT_THEME,
 	LIGHT_MODE,
 	PAGE_WIDTH,
-} from "../constants/constants";
-import type { Favicon } from "../types/config";
-import { pathsEqual, url } from "../utils/url-utils";
+} from "@constants/constants";
+import { pathsEqual, url } from "@utils/url-utils";
+import { profileConfig, siteConfig } from "@/config";
+import type { Favicon } from "@/types/config";
 import "katex/dist/katex.css";
 
 interface Props {
@@ -192,15 +192,15 @@ const bannerOffset =
 		// SizeObserverPlugin,
 		// ClickScrollPlugin
 	} from "overlayscrollbars";
-	import { pathsEqual, url } from "../utils/url-utils";
+	import { pathsEqual, url } from "@utils/url-utils";
 	import {
 		BANNER_HEIGHT,
 		BANNER_HEIGHT_HOME,
 		BANNER_HEIGHT_EXTEND,
 		MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 		NAVBAR_HEIGHT,
-	} from "../constants/constants";
-	import { siteConfig } from "../config";
+	} from "@constants/constants";
+	import { siteConfig } from "@/config";
 
 	const bannerEnabled = siteConfig.banner.enable;
 
