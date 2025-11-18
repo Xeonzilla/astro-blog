@@ -73,6 +73,6 @@
     "typescript": "^5.9.3",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
-    "wrangler": "^4.48.0"
+    "wrangler": "^4.49.0"
   }
 }
