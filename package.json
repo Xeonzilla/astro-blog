@@ -68,7 +68,7 @@
     "remark-sectionize": "^2.1.0",
     "satori": "^0.18.3",
     "sharp": "^0.34.5",
-    "svelte": "^5.43.11",
+    "svelte": "^5.43.12",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
     "unified": "^11.0.5",
