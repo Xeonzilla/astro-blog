@@ -2,7 +2,7 @@
     import I18nKey from "@i18n/i18nKey";
     import { i18n } from "@i18n/translation";
     import { getPostUrlBySlug } from "@utils/url-utils";
-    import { onMount } from "svelte";
+    import { SvelteURLSearchParams } from "svelte/reactivity";
 
     let {
         sortedPosts = [],
@@ -10,16 +10,15 @@
         sortedPosts?: Post[];
     } = $props();
 
-    let tags = $state<string[]>([]);
-    let categories = $state<string[]>([]);
-    let uncategorized = $state<string | null>(null);
+    const params = new SvelteURLSearchParams(
+        typeof window !== "undefined" ? window.location.search : "",
+    );
 
-    onMount(() => {
-        const params = new URLSearchParams(window.location.search);
-        tags = params.has("tag") ? params.getAll("tag") : [];
-        categories = params.has("category") ? params.getAll("category") : [];
-        uncategorized = params.get("uncategorized");
-    });
+    let tags = $derived(params.has("tag") ? params.getAll("tag") : []);
+    let categories = $derived(
+        params.has("category") ? params.getAll("category") : [],
+    );
+    let uncategorized = $derived(params.get("uncategorized"));
 
     interface Post {
         id: string;
