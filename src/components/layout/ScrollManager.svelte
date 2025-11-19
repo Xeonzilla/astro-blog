@@ -5,7 +5,7 @@
 		MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 		NAVBAR_HEIGHT,
 	} from "@constants/constants";
-	import { onMount } from "svelte";
+	import { on } from "svelte/events";
 	import { siteConfig } from "@/config";
 
 	// State variables
@@ -83,18 +83,22 @@
 		windowHeight = window.innerHeight;
 	}
 
-	onMount(() => {
+	$effect(() => {
 		// Initialize state from DOM
 		handleResize();
 		handleScroll();
 
-		// Add passive event listeners for better performance
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		window.addEventListener("resize", handleResize, { passive: true });
+		// Use svelte/events 'on' function with passive listeners
+		const cleanupScroll = on(window, "scroll", handleScroll, {
+			passive: true,
+		});
+		const cleanupResize = on(window, "resize", handleResize, {
+			passive: true,
+		});
 
 		return () => {
-			window.removeEventListener("scroll", handleScroll);
-			window.removeEventListener("resize", handleResize);
+			cleanupScroll();
+			cleanupResize();
 		};
 	});
 </script>

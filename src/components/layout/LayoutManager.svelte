@@ -3,6 +3,7 @@
 	import "overlayscrollbars/overlayscrollbars.css";
 	import { BANNER_HEIGHT_EXTEND } from "@constants/constants";
 	import { pathsEqual, url } from "@utils/url-utils";
+	import { on } from "svelte/events";
 	import { siteConfig } from "@/config";
 
 	const bannerEnabled = siteConfig.banner.enable;
@@ -194,22 +195,28 @@
 		katexObserver?.disconnect();
 		katexObserver = null;
 
-		window.removeEventListener("resize", calculateBannerHeightExtend);
-		document.removeEventListener("swup:enable", setupSwupHooks);
 		cleanupSwupHooks();
 	}
 
 	$effect(() => {
 		init();
 
-		window.addEventListener("resize", calculateBannerHeightExtend);
+		const cleanupResize = on(window, "resize", calculateBannerHeightExtend);
 
 		if (window.swup?.hooks) {
 			setupSwupHooks();
 		} else {
-			document.addEventListener("swup:enable", setupSwupHooks);
+			const cleanupSwup = on(document, "swup:enable", setupSwupHooks);
+			return () => {
+				cleanupResize();
+				cleanupSwup();
+				cleanup();
+			};
 		}
 
-		return cleanup;
+		return () => {
+			cleanupResize();
+			cleanup();
+		};
 	});
 </script>
