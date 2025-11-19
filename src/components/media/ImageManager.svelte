@@ -1,6 +1,5 @@
 <script lang="ts">
 	import PhotoSwipeLightbox from "photoswipe/lightbox";
-	import { SvelteSet } from "svelte/reactivity";
 	import "photoswipe/style.css";
 
 	const PHOTOSWIPE_CONFIG = {
@@ -76,7 +75,7 @@
 
 		// Watch for dynamically added images
 		mutationObserver = new MutationObserver((mutations) => {
-			const wrappers = new SvelteSet<Element>();
+			const wrappers = new Set<Element>();
 
 			mutations.forEach((mutation) => {
 				mutation.addedNodes.forEach((node) => {
