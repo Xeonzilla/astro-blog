@@ -36,23 +36,22 @@ export default function offClick(
 		let registered = false;
 
 		const handleClick = (event: MouseEvent) => {
-			if (!(event.target instanceof Node)) return;
-
 			const target = event.target;
+
+			if (!(target instanceof Node)) return;
 
 			// Ignore clicks inside the element
 			if (element.contains(target)) return;
 
-			// Ignore clicks on specified elements
-			if (ignores) {
-				const shouldIgnore = ignores.some((id) =>
-					document.getElementById(id)?.contains(target),
-				);
-
-				if (shouldIgnore) return;
+			// Ignore clicks on specified elements (cache getElementById results)
+			if (ignores?.length) {
+				for (const id of ignores) {
+					const ignoredEl = document.getElementById(id);
+					if (ignoredEl?.contains(target)) return;
+				}
 			}
 
-			// Notify component to update state
+			// Invoke callback
 			callback();
 		};
 
