@@ -40,21 +40,45 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 	if (typeof window === "undefined") {
 		return;
 	}
+
+	const html = document.documentElement;
+
+	const optimizeStyle = document.createElement("style");
+	optimizeStyle.id = "theme-transition-optimize";
+	optimizeStyle.textContent = `
+		@layer base {
+			*,
+			*::before,
+			*::after {
+				transition-property: background-color, border-color, box-shadow !important;
+				transition-timing-function: ease !important;
+				transition-duration: 0.2s !important;
+			}
+		}
+	`;
+	document.head.appendChild(optimizeStyle);
+
 	switch (theme) {
 		case LIGHT_MODE:
-			document.documentElement.classList.remove("dark");
+			html.classList.remove("dark");
 			break;
 		case DARK_MODE:
-			document.documentElement.classList.add("dark");
+			html.classList.add("dark");
 			break;
 		case AUTO_MODE:
 			if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-				document.documentElement.classList.add("dark");
+				html.classList.add("dark");
 			} else {
-				document.documentElement.classList.remove("dark");
+				html.classList.remove("dark");
 			}
 			break;
 	}
+
+	void html.offsetHeight;
+
+	setTimeout(() => {
+		optimizeStyle.remove();
+	}, 300);
 }
 
 export function setTheme(theme: LIGHT_DARK_MODE): void {
