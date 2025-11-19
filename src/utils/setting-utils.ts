@@ -40,17 +40,31 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 	if (typeof window === "undefined") {
 		return;
 	}
-
 	const html = document.documentElement;
 
 	const optimizeStyle = document.createElement("style");
 	optimizeStyle.id = "theme-transition-optimize";
 	optimizeStyle.textContent = `
 		@layer base {
-			*,
-			*::before,
-			*::after {
-				transition-property: background-color, border-color, box-shadow !important;
+			:root,
+			body,
+			.card-base,
+			.float-panel,
+			.link,
+			.link-lg,
+			.btn-card,
+			.btn-plain,
+			.btn-regular,
+			.btn-regular-dark,
+			.link-underline,
+			.meta-icon,
+			.expand-animation::before,
+			.dash-line::before,
+			[class*="bg-"],
+			[class*="text-"],
+			[class*="border-"],
+			[class*="prose"] {
+				transition-property: background-color, border-color, box-shadow, color !important;
 				transition-timing-function: ease !important;
 				transition-duration: 0.2s !important;
 			}
