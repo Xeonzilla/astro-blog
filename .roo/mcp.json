@@ -5,6 +5,22 @@
 			"url": "https://mcp.docs.astro.build/mcp",
 			"alwaysAllow": ["search_astro_docs"]
 		},
+		"Context7": {
+			"type": "streamable-http",
+			"url": "https://mcp.context7.com/mcp",
+			"alwaysAllow": ["resolve-library-id", "get-library-docs"]
+		},
+		"Exa": {
+			"type": "streamable-http",
+			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,deep_researcher_start,deep_researcher_check",
+			"alwaysAllow": [
+				"web_search_exa",
+				"get_code_context_exa",
+				"crawling_exa",
+				"deep_researcher_start",
+				"deep_researcher_check"
+			]
+		},
 		"Svelte": {
 			"type": "streamable-http",
 			"url": "https://mcp.svelte.dev/mcp",
