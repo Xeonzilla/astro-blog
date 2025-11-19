@@ -13,10 +13,7 @@
 	let isSearching = $state(false);
 	let isPanelOpen = $state(false);
 
-	let pagefind = $state.raw<{
-		loaded: boolean;
-		initialized: boolean;
-	}>({
+	let pagefind = $state.raw({
 		loaded: false,
 		initialized: false,
 	});
