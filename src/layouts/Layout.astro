@@ -15,9 +15,9 @@ import "misans/lib/Normal/MiSans-Bold.min.css"; // 630
 
 import ConfigCarrier from "@components/core/ConfigCarrier.astro";
 import SEO from "@components/core/SEO.astro";
-import LayoutManager from "@components/layout/LayoutManager.svelte";
-import ScrollManager from "@components/layout/ScrollManager.svelte";
-import ImageManager from "@components/media/ImageManager.svelte";
+import LayoutManager from "@components/layout/LayoutManager.tsx";
+import ScrollManager from "@components/layout/ScrollManager.tsx";
+import ImageManager from "@components/media/ImageManager.tsx";
 import {
 	AUTO_MODE,
 	BANNER_HEIGHT,
@@ -173,9 +173,9 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
-		<ScrollManager client:load />
-		<LayoutManager client:idle={{ timeout: 1000 }} />
-		<ImageManager client:idle={{ timeout: 500 }} />
+		<ScrollManager />
+		<LayoutManager />
+		<ImageManager />
 	</body>
 </html>
 

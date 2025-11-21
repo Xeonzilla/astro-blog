@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import qwikdev from "@qwikdev/astro";
 import swup from "@swup/astro";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -119,6 +120,7 @@ export default defineConfig({
 			},
 		}),
 		svelte(),
+		qwikdev(),
 		sitemap(),
 		mdx({
 			remarkPlugins: [remarkImageComponent, ...commonRemarkPlugins],

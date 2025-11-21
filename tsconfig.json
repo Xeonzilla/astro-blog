@@ -13,6 +13,8 @@
 		"src/content/spec"
 	],
 	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "@builder.io/qwik",
 		"baseUrl": ".",
 		"removeComments": true,
 		"allowJs": false,
