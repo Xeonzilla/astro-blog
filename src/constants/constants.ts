@@ -9,7 +9,7 @@ export const LIGHT_MODE = "light",
 export const DEFAULT_THEME = AUTO_MODE;
 
 // The height the main panel overlaps the banner, unit: rem
-export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 3.5;
+export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 4.5;
 
 // Page width, unit: rem
 export const PAGE_WIDTH = 75;
