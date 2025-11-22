@@ -5,16 +5,12 @@ import {
 	useVisibleTask$,
 } from "@builder.io/qwik";
 import {
-	BANNER_HEIGHT,
-	BANNER_HEIGHT_HOME,
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 	NAVBAR_HEIGHT,
 } from "@constants/constants";
 import { siteConfig } from "@/config";
 
 export default component$(() => {
-	const bannerEnabled = siteConfig.banner.enable;
-
 	// State variables
 	const scrollTop = useSignal(0);
 	const isHome = useSignal(false);
@@ -22,16 +18,12 @@ export default component$(() => {
 	const windowHeight = useSignal(768);
 
 	// Derived values - automatically recompute when dependencies change
+	// Use the configured banner height from siteConfig
 	const bannerHeight = useComputed$(() => {
-		return (
-			windowHeight.value *
-			((isHome.value && windowWidth.value >= 1024
-				? BANNER_HEIGHT_HOME
-				: BANNER_HEIGHT) /
-				100)
-		);
+		return windowHeight.value * (siteConfig.banner.height / 100);
 	});
 
+	// Calculate when to hide navbar - when user scrolls past banner into content area
 	const navbarThreshold = useComputed$(() => {
 		return (
 			bannerHeight.value -
@@ -44,7 +36,8 @@ export default component$(() => {
 	const isScrolledPastBanner = useComputed$(
 		() => scrollTop.value > bannerHeight.value,
 	);
-	const shouldShowNavbarHidden = useComputed$(
+
+	const shouldHideNavbar = useComputed$(
 		() => scrollTop.value >= navbarThreshold.value,
 	);
 
@@ -52,7 +45,7 @@ export default component$(() => {
 	useVisibleTask$(({ track }) => {
 		// Track state changes
 		track(() => isScrolledPastBanner.value);
-		track(() => shouldShowNavbarHidden.value);
+		track(() => shouldHideNavbar.value);
 
 		if (typeof document === "undefined") return;
 
@@ -65,14 +58,12 @@ export default component$(() => {
 			backToTopBtn.classList.toggle("hide", !isScrolledPastBanner.value);
 		}
 
-		// Update TOC and navbar (only if banner is enabled)
-		if (bannerEnabled) {
-			if (toc) {
-				toc.classList.toggle("toc-hide", !isScrolledPastBanner.value);
-			}
-			if (navbar) {
-				navbar.classList.toggle("navbar-hidden", shouldShowNavbarHidden.value);
-			}
+		// Update TOC and navbar
+		if (toc) {
+			toc.classList.toggle("toc-hide", !isScrolledPastBanner.value);
+		}
+		if (navbar) {
+			navbar.classList.toggle("navbar-hidden", shouldHideNavbar.value);
 		}
 	});
 

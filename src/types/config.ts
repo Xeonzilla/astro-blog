@@ -11,9 +11,9 @@ export type SiteConfig = {
 		fixed: boolean;
 	};
 	banner: {
-		enable: boolean;
 		src: string;
 		position?: "top" | "center" | "bottom";
+		height: number; // Banner height in vh units
 		credit: {
 			enable: boolean;
 			text: string;

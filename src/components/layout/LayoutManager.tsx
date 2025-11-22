@@ -1,13 +1,9 @@
 import { component$, useVisibleTask$ } from "@builder.io/qwik";
 import { OverlayScrollbars } from "overlayscrollbars";
 import "overlayscrollbars/overlayscrollbars.css";
-import { BANNER_HEIGHT_EXTEND } from "@constants/constants";
 import { pathsEqual, url } from "@utils/url-utils";
-import { siteConfig } from "@/config";
 
 export default component$(() => {
-	const bannerEnabled = siteConfig.banner.enable;
-
 	const SCROLLBAR_CONFIG = {
 		body: {
 			scrollbars: {
@@ -38,31 +34,6 @@ export default component$(() => {
 		let overlayScrollbarsInstance: ReturnType<typeof OverlayScrollbars> | null =
 			null;
 		let katexObserver: IntersectionObserver | null = null;
-
-		// Calculate banner height, must be multiple of 4 to avoid blurry text
-		const calculateBannerHeightExtend = () => {
-			let offset = Math.floor(
-				window.innerHeight * (BANNER_HEIGHT_EXTEND / 100),
-			);
-			offset -= offset % 4;
-			document.documentElement.style.setProperty(
-				"--banner-height-extend",
-				`${offset}px`,
-			);
-		};
-
-		// Show banner by removing initial opacity and scale classes
-		const showBanner = () => {
-			if (!bannerEnabled) return;
-
-			const banner = document.getElementById("banner");
-			if (!banner) {
-				console.error("Banner element not found");
-				return;
-			}
-
-			banner.classList.remove("opacity-0", "scale-105");
-		};
 
 		// Process individual KaTeX element for scrollbar initialization
 		const processKatexElement = (element: HTMLElement) => {
@@ -195,13 +166,8 @@ export default component$(() => {
 		};
 
 		// Initialize
-		calculateBannerHeightExtend();
 		initCustomScrollbar();
-		showBanner();
 		dispatchCommentLoad();
-
-		// Setup event listeners
-		window.addEventListener("resize", calculateBannerHeightExtend);
 
 		if (window.swup?.hooks) {
 			setupSwupHooks();
@@ -210,14 +176,12 @@ export default component$(() => {
 			document.addEventListener("swup:enable", handleSwupEnable);
 
 			return () => {
-				window.removeEventListener("resize", calculateBannerHeightExtend);
 				document.removeEventListener("swup:enable", handleSwupEnable);
 				cleanup();
 			};
 		}
 
 		return () => {
-			window.removeEventListener("resize", calculateBannerHeightExtend);
 			cleanup();
 		};
 	});

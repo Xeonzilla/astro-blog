@@ -9,9 +9,9 @@ export const siteConfig: SiteConfig = {
 		fixed: false,
 	},
 	banner: {
-		enable: true,
 		src: "assets/img/banner.avif",
 		position: "center",
+		height: 65,
 		credit: {
 			enable: true,
 			text: "焦茶 / ǝɯ uo ǝʞɐ⊥",

@@ -1,46 +1,17 @@
 @reference "./main.css";
 
-.enable-banner.is-home {
-    #banner-wrapper {
-	    @apply lg:translate-y-(--banner-height-extend);
-    }
-
-    #banner {
-	    @apply lg:translate-y-0;
-    }
-
-    #main-grid {
-        @apply lg:translate-y-(--banner-height-extend);
-    }
-
-    #sidebar-sticky {
-        @apply lg:top-[calc(1rem-var(--banner-height-extend))];
-    }
-}
-
 .enable-banner {
     #banner-wrapper {
-        @apply h-(--banner-height-home);
-        contain: content;
+        @apply h-(--banner-height);
     }
 
     #banner {
-        @apply h-(--banner-height-home) translate-y-(--bannerOffset);
-        contain: content;
+        @apply h-(--banner-height);
     }
 
     #top-row {
-        @apply h-[calc(var(--banner-height-home)-4.5rem)];
+        @apply h-[calc(var(--banner-height)-4.5rem)];
     }
-
-    #main-grid,
-    #sidebar-sticky {
-        contain: layout style;
-    }
-}
-
-#page-height-extend {
-	contain: size layout;
 }
 
 .navbar-hidden {
