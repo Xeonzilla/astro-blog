@@ -1,3 +1,6 @@
+// Special value to represent uncategorized posts
+export const UNCATEGORIZED = "uncategorized";
+
 export const PAGE_SIZE = 8;
 
 export const LIGHT_MODE = "light",

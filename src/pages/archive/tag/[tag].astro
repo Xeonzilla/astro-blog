@@ -1,0 +1,46 @@
+---
+import ArchivePanel from "@components/ArchivePanel.astro";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@utils/content-utils";
+import { getAllTagSlugs, getTagBySlug } from "@utils/slug-utils";
+
+export async function getStaticPaths() {
+    const posts = await getSortedPosts();
+
+    const allTags = posts.reduce<Set<string>>((acc, post) => {
+        if (Array.isArray(post.data.tags)) {
+            post.data.tags.forEach((tag) => {
+                acc.add(String(tag).trim());
+            });
+        }
+        return acc;
+    }, new Set());
+
+    const allTagsArray = Array.from(allTags);
+    const tagSlugs = getAllTagSlugs(allTagsArray);
+
+    return allTagsArray.map((tag) => ({
+        params: {
+            tag: tagSlugs.get(tag),
+        },
+        props: {
+            tagName: tag,
+        },
+    }));
+}
+
+const { tagName } = Astro.props;
+const tag =
+    tagName ||
+    getTagBySlug(Astro.params.tag as string) ||
+    (Astro.params.tag as string);
+---
+
+<MainGridLayout
+    title={i18n(I18nKey.archive)}
+    description={i18n(I18nKey.archive)}
+>
+    <ArchivePanel tags={[tag]} />
+</MainGridLayout>

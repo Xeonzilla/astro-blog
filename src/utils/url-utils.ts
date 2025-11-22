@@ -1,5 +1,4 @@
-import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { getCategorySlug, getTagSlug } from "@utils/slug-utils";
 
 export function pathsEqual(path1: string, path2: string) {
 	const normalizedPath1 = path1.replace(/^\/|\/$/g, "").toLowerCase();
@@ -17,18 +16,16 @@ export function getPostUrlBySlug(id: string): string {
 }
 
 export function getTagUrl(tag: string): string {
-	if (!tag) return url("/archive/");
-	return url(`/archive/?tag=${encodeURIComponent(tag.trim())}`);
+	if (!tag) return url("/archive/tag/");
+
+	const slug = getTagSlug(tag);
+	const tagUrl = `/archive/tag/${slug}/`;
+	return url(tagUrl);
 }
 
 export function getCategoryUrl(category: string | null): string {
-	if (
-		!category ||
-		category.trim() === "" ||
-		category.trim().toLowerCase() === i18n(I18nKey.uncategorized).toLowerCase()
-	)
-		return url("/archive/?uncategorized=true");
-	return url(`/archive/?category=${encodeURIComponent(category.trim())}`);
+	const slug = getCategorySlug(category?.trim() || "");
+	return url(`/archive/category/${slug}/`);
 }
 
 export function getDir(path: string): string {
