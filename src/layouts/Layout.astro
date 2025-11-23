@@ -10,9 +10,6 @@ import "@styles/transition.css";
 import "@styles/twikoo.css";
 import "@styles/variables.css";
 
-import "misans/lib/Normal/MiSans-Medium.min.css"; // 380
-import "misans/lib/Normal/MiSans-Bold.min.css"; // 630
-
 import ConfigCarrier from "@components/core/ConfigCarrier.astro";
 import SEO from "@components/core/SEO.astro";
 import LayoutManager from "@components/layout/LayoutManager.svelte";
@@ -85,6 +82,24 @@ const bannerOffset =
 	data-overlayscrollbars-initialize
 >
 	<head>
+		<link
+			rel="preconnect"
+			href="https://cdnjs.cloudflare.com"
+			crossorigin
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/misans-webfont/4.3.1/misans/misans-regular/result.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/misans-webfont/4.3.1/misans/misans-medium/result.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/misans-webfont/4.3.1/misans/misans-bold/result.min.css"
+		/>
+
 		<!-- Cloudflare Web Analytics -->
 		<script
 			is:inline

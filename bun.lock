@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "astro-blog",
@@ -11,7 +12,6 @@
         "@iconify-json/material-symbols": "^1.2.47",
         "@iconify/svelte": "^5.1.0",
         "@swup/astro": "^1.7.0",
-        "misans": "^4.1.0",
         "overlayscrollbars": "^2.12.0",
         "photoswipe": "^5.4.4",
       },
@@ -1593,8 +1593,6 @@
     "minipass": ["minipass@4.2.8", "", {}, "sha512-fNzuVyifolSLFL4NzpF+wEF4qrgqaaKX0haXPQEdQ7NKAN+WecoKMHV09YcuL/DHxrUsYQOK3MiuDf7Ip2OXfQ=="],
 
     "minizlib": ["minizlib@2.1.2", "", { "dependencies": { "minipass": "^3.0.0", "yallist": "^4.0.0" } }, "sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg=="],
-
-    "misans": ["misans@4.1.0", "", {}, "sha512-CcIRrIVhnt+OpGXvw1Q8llGBVAy5P2mdov/kJ0gGa81sJ0RY7mZp2fNAt2ySTCeZos+wo7ZnzDZxl1In//7FdA=="],
 
     "mkdirp": ["mkdirp@1.0.4", "", { "bin": { "mkdirp": "bin/cmd.js" } }, "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="],
 
