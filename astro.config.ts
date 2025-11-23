@@ -5,7 +5,7 @@ import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import astroExpressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import type { ElementContent } from "hast";
@@ -90,8 +90,7 @@ export default defineConfig({
 				borderRadius: "0.75rem",
 				borderColor: "none",
 				codeFontSize: "0.875rem",
-				codeFontFamily:
-					"'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', 'MiSans', monospace",
+				codeFontFamily: "var(--jetbrains-mono)",
 				codeLineHeight: "1.5rem",
 				frames: {
 					editorBackground: "var(--codeblock-bg)",
@@ -238,6 +237,26 @@ export default defineConfig({
 		defaultLocale: "zh-cn",
 	},
 	experimental: {
+		fonts: [
+			{
+				provider: fontProviders.fontsource(),
+				name: "JetBrains Mono",
+				cssVariable: "--jetbrains-mono",
+				weights: ["100 900"],
+				subsets: ["latin"],
+				fallbacks: [
+					"ui-monospace",
+					"SFMono-Regular",
+					"Menlo",
+					"Monaco",
+					"Consolas",
+					"Liberation Mono",
+					"Courier New",
+					"MiSans",
+					"monospace",
+				],
+			},
+		],
 		clientPrerender: true,
 		contentIntellisense: true,
 		preserveScriptOrder: true,

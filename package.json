@@ -16,7 +16,6 @@
     "upload-version": "bun wrangler versions upload"
   },
   "dependencies": {
-    "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-regular": "^1.2.4",
     "@iconify-json/fa6-solid": "^1.2.4",

@@ -10,6 +10,7 @@ import "@styles/transition.css";
 import "@styles/twikoo.css";
 import "@styles/variables.css";
 
+import { Font } from "astro:assets";
 import ConfigCarrier from "@components/core/ConfigCarrier.astro";
 import SEO from "@components/core/SEO.astro";
 import LayoutManager from "@components/layout/LayoutManager.svelte";
@@ -82,6 +83,7 @@ const bannerOffset =
 	data-overlayscrollbars-initialize
 >
 	<head>
+		<Font cssVariable="--jetbrains-mono" />
 		<link
 			rel="preconnect"
 			href="https://cdnjs.cloudflare.com"
