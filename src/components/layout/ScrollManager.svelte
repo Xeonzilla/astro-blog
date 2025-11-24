@@ -14,8 +14,6 @@
 	let windowWidth = $state(1024);
 	let windowHeight = $state(768);
 
-	const bannerEnabled = siteConfig.banner.enable;
-
 	// Derived values - automatically recompute when dependencies change
 	const bannerHeight = $derived(
 		windowHeight *
@@ -59,16 +57,14 @@
 		// Update back to top button (always)
 		updateElementVisibility(backToTopBtn, isScrolledPastBanner, "", "hide");
 
-		// Update TOC and navbar (only if banner is enabled)
-		if (bannerEnabled) {
-			updateElementVisibility(toc, isScrolledPastBanner, "", "toc-hide");
-			updateElementVisibility(
-				navbar,
-				shouldShowNavbarHidden,
-				"navbar-hidden",
-				"",
-			);
-		}
+		// Update TOC and navbar
+		updateElementVisibility(toc, isScrolledPastBanner, "", "toc-hide");
+		updateElementVisibility(
+			navbar,
+			shouldShowNavbarHidden,
+			"navbar-hidden",
+			"",
+		);
 	});
 
 	// Event handlers - throttle not needed due to passive listeners and minimal work

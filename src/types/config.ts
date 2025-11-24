@@ -11,7 +11,6 @@ export type SiteConfig = {
 		fixed: boolean;
 	};
 	banner: {
-		enable: boolean;
 		src: string;
 		position?: "top" | "center" | "bottom";
 		credit: {

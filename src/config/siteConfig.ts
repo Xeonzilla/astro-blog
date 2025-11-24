@@ -9,7 +9,6 @@ export const siteConfig: SiteConfig = {
 		fixed: false,
 	},
 	banner: {
-		enable: true,
 		src: "assets/img/banner.avif",
 		position: "center",
 		credit: {

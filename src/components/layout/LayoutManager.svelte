@@ -4,9 +4,6 @@
 	import { BANNER_HEIGHT_EXTEND } from "@constants/constants";
 	import { pathsEqual, url } from "@utils/url-utils";
 	import { on } from "svelte/events";
-	import { siteConfig } from "@/config";
-
-	const bannerEnabled = siteConfig.banner.enable;
 
 	const SCROLLBAR_CONFIG = {
 		body: {
@@ -51,8 +48,6 @@
 
 	// Show banner by removing initial opacity and scale classes
 	function showBanner() {
-		if (!bannerEnabled) return;
-
 		const banner = document.getElementById("banner");
 		if (!banner) {
 			console.error("Banner element not found");

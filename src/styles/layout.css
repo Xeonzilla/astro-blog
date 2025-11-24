@@ -1,6 +1,6 @@
 @reference "./main.css";
 
-.enable-banner.is-home {
+.is-home {
     #banner-wrapper {
 	    @apply lg:translate-y-(--banner-height-extend);
     }
@@ -18,25 +18,23 @@
     }
 }
 
-.enable-banner {
-    #banner-wrapper {
-        @apply h-(--banner-height-home);
-        contain: content;
-    }
+#banner-wrapper {
+    @apply h-(--banner-height-home);
+    contain: content;
+}
 
-    #banner {
-        @apply h-(--banner-height-home) translate-y-(--bannerOffset);
-        contain: content;
-    }
+#banner {
+    @apply h-(--banner-height-home) translate-y-(--bannerOffset);
+    contain: content;
+}
 
-    #top-row {
-        @apply h-[calc(var(--banner-height-home)-4.5rem)];
-    }
+#top-row {
+    @apply h-[calc(var(--banner-height-home)-4.5rem)];
+}
 
-    #main-grid,
-    #sidebar-sticky {
-        contain: layout style;
-    }
+#main-grid,
+#sidebar-sticky {
+    contain: layout style;
 }
 
 #page-height-extend {
