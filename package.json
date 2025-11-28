@@ -40,7 +40,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
-    "astro": "5.16.1",
+    "astro": "5.16.2",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
     "feed": "^5.1.0",
