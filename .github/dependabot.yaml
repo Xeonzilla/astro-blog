@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "cron"
+      cronjob: 0 5 * * *
+      timezone: Asia/Macau
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
