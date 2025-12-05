@@ -21,7 +21,7 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^12.6.10",
+		"@astrojs/cloudflare": "^12.6.12",
 		"@astrojs/markdown-remark": "^6.3.9",
 		"@astrojs/mdx": "^4.3.12",
 		"@astrojs/sitemap": "^3.6.0",
