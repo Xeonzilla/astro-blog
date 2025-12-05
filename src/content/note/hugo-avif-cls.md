@@ -1,0 +1,311 @@
+---
+title: Hugo 中的 AVIF 与累积布局偏移（CLS）
+timestamp: 2024-07-31 13:58:00+08:00
+series: 站点建设
+tags: [Hugo]
+toc: true
+---
+
+## CLS 的伪解决方案
+
+### 何谓 CLS
+
+Google 的 PageSpeed Insights 报告中展示了四大维度的指标：`FCP`、`LCP`、`TBT`、`CLS`。其中，CLS 是指 Cumulative Layout Shift，即累积布局偏移。
+
+> Cumulative Layout Shift (CLS) 是一项稳定的 Core Web Vitals 指标。它是一项以用户为中心的重要指标，用于衡量视觉稳定性，因为它有助于量化用户遇到意外布局偏移的频率，而较低的 CLS 有助于确保网页带来愉悦的体验。
+> 
+> 意外的布局偏移可能会在很多方面影响用户体验，例如，如果文本突然移动，导致用户在阅读时失去位置，或让用户点击错误的链接或按钮。在某些情况下，这可能会造成严重损害。
+>
+> 当以异步方式加载资源，或将 DOM 元素动态添加到网页中的现有内容之前时，通常会发生网页内容意外移动。导致布局偏移的原因可能包括尺寸未知的图片或视频、呈现的字体大于或小于其初始后备尺寸，或者是会自行动态调整大小的第三方广告或微件。
+
+简单来说，CLS 是网站设计时应该避免的问题。在 Hugo 中，一般需要利用利用响应式图片（Responsive images）[^1]、页面束（Page bundles）[^2]、图像渲染挂钩（Image render hooks）[^3]和图像处理（Image processing）[^4]等工具或处理方法。
+
+在我的“伪解决方案”中，主要借助了 HTML 和 CSS 的特性，不依赖于 Hugo 的图像处理。
+
+### 方案展示
+
+#### render-image.html
+
+首先需要在 Hugo 站点目录 `layouts/_default/_markup` 路径下，创建名为 `render-image.html` 的文件，它负责 Hugo 对图像的渲染。
+
+我所使用的 `render-image.html` 代码如下：
+
+```html
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 720px;
+        aspect-ratio: 16/9;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .container img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
+
+<div class="container">
+    <img onload="resizeContainer(this)" loading="lazy" src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{with.Title}} title="{{ . }}" {{end}} />
+</div>
+
+<script>
+    function resizeContainer(img) {
+        const container = img.parentElement;
+        const aspectRatio = img.naturalHeight / img.naturalWidth;
+        container.style.height = `${container.clientWidth * aspectRatio}px`;
+    }
+</script>
+```
+
+其中，`max-width: 720px; aspect-ratio: 16/9;` 是根据所使用的主题文章内图片大小而设定的值，需要根据实际情况修改，我所使用的 PaperMod 主题在文章内图片尺寸为 720 px * 405 px。
+
+#### cover.html
+
+接下来以 PaperMod 为例，因为 Hugo 各个主题之间的结构可能略有不同，修改前应当自行调整。在 `themes/PaperMod/layouts/partials` 下复制一份`cover.html`，粘贴到 `layouts/partials` 下。PaperMod 提供的有关封面显示的代码为：
+
+```html
+    {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
+    <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
+                    {{- if (ge $cover.Width $size) -}}
+                    {{ printf "%s %s" (($cover.Resize (printf "%sx" $size)).Permalink) (printf "%sw ," $size) -}}
+                    {{ end }}
+                {{- end -}}{{$cover.Permalink }} {{printf "%dw" ($cover.Width)}}" 
+        sizes="(min-width: 768px) 720px, 100vw" src="{{ $cover.Permalink }}" alt="{{ $alt }}" 
+        width="{{ $cover.Width }}" height="{{ $cover.Height }}">
+    {{- else }}{{/* Unprocessable image or responsive images disabled */}}
+    <img loading="{{$loading}}" src="{{ (path.Join .RelPermalink .Params.cover.image) | absURL }}" alt="{{ $alt }}">
+    {{- end }}
+{{- else }}{{/* For absolute urls and external links, no img processing here */}}
+    {{- if $addLink }}<a href="{{ (.Params.cover.image) | absURL }}" target="_blank"
+        rel="noopener noreferrer">{{ end -}}
+        <img loading="{{$loading}}" src="{{ (.Params.cover.image) | absURL }}" alt="{{ $alt }}">
+{{- end }}
+```
+
+仿照上面的 `render-image.html`，将其修改为：
+
+```html
+    {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
+    <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
+                    {{- if (ge $cover.Width $size) -}}
+                    {{ printf "%s %s" (($cover.Resize (printf "%sx" $size)).Permalink) (printf "%sw ," $size) -}}
+                    {{ end }}
+                {{- end -}}{{$cover.Permalink }} {{printf "%dw" ($cover.Width)}}" 
+        sizes="(min-width: 768px) 720px, 100vw" src="{{ $cover.Permalink }}" alt="{{ $alt }}" 
+        width="{{ $cover.Width }}" height="{{ $cover.Height }}">
+    {{- else }}{{/* Unprocessable image or responsive images disabled */}}
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 670.4px;
+            aspect-ratio: 16/9;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0);
+        }
+        .container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+
+    <div class="container">
+        <img onload="resizeContainer(this)" loading="{{$loading}}" src="{{ (path.Join .RelPermalink .Params.cover.image) | absURL }}" alt="{{ $alt }}">
+    </div>
+
+    <script>
+        function resizeContainer(img) {
+            const container = img.parentElement;
+            const aspectRatio = img.naturalHeight / img.naturalWidth;
+            container.style.height = `${container.clientWidth * aspectRatio}px`;
+        }
+    </script>        
+    {{- end }}
+{{- else }}{{/* For absolute urls and external links, no img processing here */}}
+    {{- if $addLink }}<a href="{{ (.Params.cover.image) | absURL }}" target="_blank"
+        rel="noopener noreferrer">{{ end -}}
+        <style>
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                max-width: 670.4px;
+                aspect-ratio: 16/9;
+                position: relative;
+                background-color: rgba(0, 0, 0, 0);
+            }
+            .container img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+            }
+        </style>
+
+        <div class="container">
+            <img onload="resizeContainer(this)" loading="{{$loading}}" src="{{ (.Params.cover.image) | absURL }}" alt="{{ $alt }}">
+        </div>
+
+        <script>
+            function resizeContainer(img) {
+                const container = img.parentElement;
+                const aspectRatio = img.naturalHeight / img.naturalWidth;
+                container.style.height = `${container.clientWidth * aspectRatio}px`;
+            }
+        </script>            
+  {- end }}
+```
+
+同上面一样，`max-width: 670.4px; aspect-ratio: 16/9;` 是根据所使用的主题封面图片大小而设定的值，需要根据实际情况修改，我所使用的 PaperMod 主题封面图片尺寸为 670.4 px * 377.1 px。
+
+可以看到，PaperMod 提供的有关封面显示的代码提供了 3 段 HTML，但是我只修改了后面两段，这是因为第 1 段 HTML 需要 `params.cover.responsiveImages = true` 触发，而我关闭了响应式图片，所以无需修改。
+
+#### inner_cover.html 与 single.html
+
+在上面的 cover.html 中，我们给定了 `max-width: 670.4px`，这帮助我们规定封面的大小。然而，PaperMod 主题在主页的封面和在文章内的封面大小又有不同，在文章详情页，封面的大小为 720 px * 405 px，同文章内图片大小一样。
+
+为了保持内外封面的尺寸，我们需要将两处封面的有关代码解耦。复制一份 `cover.html` 并将其重命名，为了便于辨认，我将其命名为 `inner_cover.html`，意为“内部的封面”，在 `inner_cover.html` 中，设置 `max-width: 720px`。
+
+接着，去到所用主题路径下的 `layouts/_default`，复制其中的 `single.html` 至站点目录下的 `layouts/_default`。PaperMod 主题所提供的 `single.html` 有关封面渲染的代码为 `{{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}`，将 `cover.html` 替换为 `inner_cover.html`，至此，Hugo 在渲染文章时，会将 `inner_cover.html` 的设定应用到文章详情页封面。
+
+上面的解耦操作参考了 [Hugo 博客文章封面图片缩小并移到侧边 | PaperMod 主题 | Sulv's Blog](https://www.sulvblog.cn/posts/blog/img_right/#3-%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81)，相关操作也可参阅这篇文章。这篇文章提到：
+
+> 把 cover1.html 文件里的 `<figure class="entry-cover">` 修改为 `<figure class="entry-cover1">`。
+
+但是，在我进行了如上操作后，文章内封面的圆角消失，似乎这个操作影响文章内封面的样式。本着“如无必要，勿增实体”的奥卡姆剃刀精神，我选择不进行修改。经快速测试，不进行如上操作并未带来可见的负面效果。
+
+此外，在进行解耦前，如果文章同时存在封面和插图，那么文章内封面的尺寸与图片一致；文章只存在封面而无插图，则文章内封面尺寸与主页封面一致。这种情况应该是某处代码调用导致的，不一定是 Bug。
+
+### 细节说明
+
+#### CSS
+
+方案中的 CSS 部分除常规的样式调整外，还有占位作用，是本方案的核心。
+
+```html
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 720px;
+        aspect-ratio: 16/9;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .container img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
+```
+
+其中，`width: 100%; max-width: 720px; aspect-ratio: 16/9;` 是起占位作用的关键：将 `<div>` 设置为有最大宽度，且比例固定的容器。这样，便能在图片加载前预留一定的空间。
+
+在前几版的代码中，有过设置固定 `width` 或 `height` 的尝试，但是固定大小会使不同客户端的图片尺寸显示一致，导致移动端的排版异常。使用“最大”和“最小”来规定大小，使得容器能够适应不同客户端的排版。
+
+设置 `aspect-ratio` 是以间接的方法通过容器宽度得到容器高度，不能通过固定数值设置的原因同上；同时，也不能使用 `max-height` 、`min-height` 来设置高度，他们同样可能导致排版异常，而且作为最大值与最小值，他们只能规定高度的范围，不能起固定数值的占位作用。`aspect-ratio` 能在暂时不设置高度的情况下固定容器高度，以得到一个有大小的 `<div>`。
+
+`display: flex; justify-content: center; align-items: center;` 起居中作用，居中不仅可以避免许多意外的排版错误，还能使图像的替代文字（alt 属性）居中，更加美观。
+
+容器的背景颜色使用 `background-color: rgba(0, 0, 0, 0);` 设置为透明。当然，也可以设置为其它颜色，或者显示自定义的 CSS 样式和图片。建议设置时辅以 `border-radius`，避免背景圆角与上层图片不匹配，导致背景露出；或者使用 JavaScript，在图片加载后隐藏容器背景。
+
+#### JavaScript
+
+方案中使用的 JavaScript 功能为计算容器的高度，使其与图片高度一致。
+
+```html
+<script>
+    function resizeContainer(img) {
+        const container = img.parentElement;
+        const aspectRatio = img.naturalHeight / img.naturalWidth;
+        container.style.height = `${container.clientWidth * aspectRatio}px`;
+    }
+</script>
+```
+
+如果能够接受超宽图片带来的上下空间，那么这个函数就不是必要的。删除这段 JavaScript 后，在显示超宽图片时，会出现类似“以 `16:9` 的屏幕播放 `21:9` 的视频”造成的上下空余；然而，在显示超高图片时，由于 `aspect-ratio` 的非强制性，图片和容器均会正常显示，显示情况与下图一致。
+
+![超高图片示例](https://blog-static.xeonzilla.top/img/hugo-avif-cls/01.avif "超高图片示例")
+
+函数中通过比例间接计算 `<div>` 所需高度，这会在某些过于复杂的情况下引入细微不可见的误差。但是直接通过图片高度赋值容器高度，会出现较大程度的偏差，所得高度值远超图片实际高度，所以间接计算在这个情况下是优解。
+
+## AVIF 困境
+
+### Hugo 中的 AVIF
+
+上面花了不少时间，得到了一个“伪解决方案”，那么为什么要伪解决而不能真正解决呢？
+
+实际上，有关 Hugo 的 CLS 问题，前人提供了很多解决方案，例如：
+
+- [修复 Hugo 本地图片的累计布局偏移（CLS）问题 - Dvel's Blog](https://dvel.me/posts/fix-hugo-cls/)
+- [使用 Hugo 实现响应式和优化的图片 | 流动](https://liudon.com/posts/responsive-and-optimized-images-with-hugo/)
+- [Hugo 图片懒加载和自适应 CSS 图片占位 | DSRBLOG](https://blog.dsrkafuu.net/posts/2022/hugo-image-lazyload-and-placeholder/)
+
+这些方案我都一一尝试，但是无一例外，都会遇到形如 `execute of template failed at <$img.Width>: error calling Width: this method is only available for image resources` 的错误。
+
+一开始我以为是站点结构、函数参数之类的代码错误，一番碰壁心灰意冷后，在无意间搜索“Hugo AVIF”时，才得到答案：Hugo 并不支持处理 AVIF。
+
+Hugo 的 GitHub 仓库中有一个 2020 年创建的 Issue：[Add image processing support for AVIF · Issue #7837 · gohugoio/hugo](https://github.com/gohugoio/hugo/issues/7837)，其中就有对 AVIF 支持的请求，而开发者也做出了回复：
+> No. I'm the one who spend the most of my free time maintaining this project, so adding new C(++) dependencies is almost never going to happen unless we really, really need it. I have not calculated the cost of adding WebP to Hugo, but it wasn't cheap. I'll keep this issue open as things may change, but it's not very likely unless a top quality native Go decoder/encoder pops up.
+>
+> 不。我是那个花费大量空闲时间维护这个项目的人，所以除非我们真的非常需要，否则几乎不会添加新的 C(++) 依赖。我没有计算过将 WebP 支持添加到 Hugo 的成本，但成本并不低。我会保持这个问题的开放状态，因为情况可能会发生变化，但除非出现高质量的（以 Go 编写的）AVIF 解码器/编码器，否则这种可能性不大。
+
+直到这篇文章诞生之时，许多 Hugo 用户期待的“以 Go 编写的高质量的 AVIF 解码器/编码器”仍然没有出现，或是出现了但是没有合并到 Hugo 之中，于是 Hugo 对 AVIF 的支持也就没有了下文。
+
+### 伪解决方案的优劣
+
+既然 Hugo 不支持处理 AVIF 格式的图片，出现“this method is only available for image resources”的报错也就不难理解了：在 Hugo 眼中，AVIF 格式的图片不属于图片资源。
+
+失去了 Hugo 的图片处理功能，不仅让我的“响应式图片”被禁用，更让 CLS 的解决变得很曲折，最终在有限的时间和知识储备下，我得到了上面的伪解决方案。虽说称其为“伪解决方案”，但是这种方法还是有其独特的优势：
+- 图片格式的向后兼容性
+- 跨生成器的兼容性
+
+图片格式的兼容性很好理解，因为 HTML、CSS 和 JavaScript 不涉及对图片本身的处理，即使将图片格式从 AVIF 换到 JPEG XL、WebP2 或是更加先进的格式，上面的代码也应该能够正常工作。
+
+跨生成器兼容性是在 Hugo 不支持 AVIF 的情况下应运而生的，失去了 Hugo 的图片处理功能也意味着不需要 Hugo 的图片处理功能，即使有一天我需要更换静态站点生成器（SSG），通过简单的代码替换，就可以完成移植。
+
+虽然有优点，但是它的缺点也不能忽视：
+- 占位元素大小固定，不随图片尺寸变化
+- 没有二次计算的能力
+
+占位元素大小固定是非常致命的缺点，也是这个方案被称作“伪解决”的根本原因。在无法提前获知图片尺寸的情况下，我们无法对占位容器做出调整，只能够选择固定一个通用大小。通过 HTML 和 JavaScript 当然也能够实现提前获知图片尺寸，但是这样实现的图片加载前调整在网页加载周期的位置过于靠后，几乎是调整容器大小和图片加载同步进行，起不到“提前”的作用，同样会引入 CLS，还会使代码更加复杂，因此作罢。
+
+上面的伪解决方案在加载非 `16:9` 比例的图片时，会二次调整位置。鉴于我所使用的图片大多为动画截图，比例一致，二次调整位置所引入的 CLS 较少，于是这个伪解决方案在我个人的使用场景才下有了成立的可能。
+
+如果所使用的图片大小不一，这个方案的效果就会较差，这时便不应称其为伪解决方案了，叫改善方案更为合适。当然，也可以选择固定容器大小，令图片比例固定以适应容器，代价就是图片四周空余和缩放。
+
+第二点问题是在调试时偶然发现的，当使用调试台，将响应式设计模式设置在移动端和桌面端来回切换时，会产生图片错位。这是预期内的行为，因为按照设计，JavaScript 函数只会计算一次容器高度，当 UA 改变导致站点排版发生变化，函数并不会再次计算。不知道使用了 Hugo 相关功能的方案是否会出现这种情况，但是鉴于这种行为过于稀少且异常，我无意针对这个问题改进代码。
+
+### 为什么是 AVIF
+
+其实在遇到这个问题的一刻，我也有考虑过将站点的所有图片格式更换为 WebP，但是经过个人不严谨且主观的尝试与对比后，我放弃了。AVIF 在压缩质量和体积上都比 WebP 更有优势，尤其在某些纹理复杂的场景，WebP 会涂抹细节，而 AVIF 能将纹理尽可能地保留。作为一个主要发布观后感和动画截图的博客，我个人认为图片质量还是相当重要的，于是 AVIF 就这样被坚持了下来。
+
+个人认为 AVIF 是一个典型的“半代产品”，前有 WebP，作为出现相对早且被广泛应用的现代图片格式；后有 JPEG XL 和 WebP2，提供了更高的压缩率、画面细节与其它参数。AVIF 作为中间派，在浏览器普及率和性能间取得了平衡，是我比较喜欢的中庸做派。
+
+AVIF 的压缩性能过于强大，以至于质量为 20 的 WebP 需要和同样大小、质量为 50 的 AVIF 做比较。在 AVIF 面前的 WebP 显得过于“不现代、不先进”。经过时间积累，现代浏览器对 AVIF 的支持情况已经相当完善了，我认为现在使用 AVIF，百利而无一害。
+
+## Zola 初探
+
+作为静态站点生成器的新星，Zola[^5] 是我预定的下一个所使用的框架。在遇到 Hugo 与 AVIF 的问题时，我也去了解了一番 Zola 对于 AVIF 的支持情况，毕竟如果 AVIF 的痛点在 Hugo 无法解决，可以通过迁移站点到新的框架根除。
+
+令我大跌眼镜的是，Zola 作为使用 Rust 编写的静态站点生成器，竟然也不支持处理 AVIF。Hugo 不支持 AVIF 是在等待一个以 Go 编写的 AVIF 解码器/编码器，而 Rust 早已拥有了一个 AVIF 编码器 rav1e[^6]，只能怪开发者们对现代图片格式的支持不太上心了。
+
+另外，Zola 的生态相比 Hugo 也太过贫瘠。在 Zola 官方网站的主题页中，我似乎找不到一个包含文章封面、搜索和目录等功能的高度可用的主题，作为新事物，这是无可避免的情况。看来想要体验 Zola，还需要社区的成长和时间的沉淀。
+
+[^1]:[响应式图片 - 学习 Web 开发 | MDN](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
+[^2]:[Page bundles | Hugo](https://gohugo.io/content-management/page-bundles/)
+[^3]:[Image render hooks | Hugo](https://gohugo.io/render-hooks/images/)
+[^4]:[Image processing | Hugo](https://gohugo.io/content-management/image-processing/)
+[^5]:[Zola](https://www.getzola.org/)
+[^6]:[xiph/rav1e: The fastest and safest AV1 encoder.](https://github.com/xiph/rav1e)

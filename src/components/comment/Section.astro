@@ -1,0 +1,29 @@
+---
+import i18nit from "$i18n";
+import Comments from "./Section.svelte";
+
+interface Props {
+	locale: string;
+	link: string;
+	section: string;
+	item: string;
+	compact?: boolean;
+}
+
+const { locale, link, section, item, compact } = Astro.props;
+const t = i18nit(locale);
+
+const env = import.meta.env;
+
+// Check which OAuth providers are configured for comment authentication
+const oauth = {
+	github: env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET,
+	google: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET,
+	x: env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET
+};
+
+// Get the Turnstile site key if unauthenticated comments are allowed
+const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
+---
+
+<Comments client:visible {locale} {link} {section} {item} {oauth} {turnstile} {compact} />
