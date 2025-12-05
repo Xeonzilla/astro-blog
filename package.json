@@ -89,7 +89,7 @@
 		"@types/mdast": "^4.0.4",
 		"@types/ms": "^2.1.0",
 		"@types/unist": "^3.0.3",
-		"drizzle-kit": "^0.31.6",
+		"drizzle-kit": "^0.31.8",
 		"esm-loader-yaml": "^1.0.2",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
