@@ -68,7 +68,7 @@
 		"remark-rehype": "^11.1.2",
 		"remark-ruby-directive": "^0.3.0",
 		"shiki": "^3.19.0",
-		"svelte": "^5.45.5",
+		"svelte": "^5.45.6",
 		"tailwindcss": "^4.1.17",
 		"typescript": "^5.9.3",
 		"unified": "^11.0.5",
