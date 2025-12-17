@@ -25,7 +25,7 @@ tags: [TVA-2024]
 
 片中女主所属的虚拟 YouTuber 公司“Live-ON”应该也存在现实中的原型，但是囿于 VTuber 相关知识不足，我并不知道“Live-ON”到底是影射了哪家公司。
 
-除了上面“犹抱琵琶半遮面”的广告，本片还有更加开门见山的广告：在第 3 话中，出现了 YUZU SOFT 的 Galgame「星光咖啡馆与死神之蝶」[^3] [^4]和「魔女的夜宴」[^5] [^6]，在第 6 话中，出现了「BanG Dream!」企划下的手游「BanG Dream! 少女乐团派对」[^7] [^8]。
+除了上面“犹抱琵琶半遮面”的广告，本片还有更加开门见山的广告：在第 3 话中，出现了 YUZU SOFT 的 Galgame「星光咖啡馆与死神之蝶」[^3][^4]和「魔女的夜宴」[^5][^6]，在第 6 话中，出现了「BanG Dream!」企划下的手游「BanG Dream! 少女乐团派对」[^7][^8]。
 
 ![直播玩「BanG Dream! 少女乐团派对」](https://blog-static.xeonzilla.top/img/vtuber-legend/02.avif "直播玩「BanG Dream! 少女乐团派对」")
 
