@@ -24,7 +24,7 @@ Chroma Shift 是一种动画视频画面的瑕疵，这里直接引用 [[VCB-Stu
 
 偶然间我得知了另外一种“Shift”，名为 RGB Shift。它和 Chroma Shift 一样，效果非常不明显，比较难以观察到。
 
-最为新鲜而典型的例子就是由伏原茜担任摄影监督的「间谍过家家」、「别当欧尼酱了！」和[「葬送的芙莉莲」](/note/sousou-no-frieren/)，这几部动画的线条周围，都有着若隐若现的重影。
+最为新鲜而典型的例子就是由伏原茜担任摄影监督的「间谍过家家」、「别当欧尼酱了！」和[「葬送的芙莉莲」](/note/sousou-no-frieren)，这几部动画的线条周围，都有着若隐若现的重影。
 
 ![「别当欧尼酱了！」](https://blog-static.xeonzilla.top/img/chroma-shift-and-rgb-shift/02.avif "「别当欧尼酱了！」")
 

@@ -42,7 +42,7 @@ Managed databases 的选择其实已经呼之欲出，因为在 Umami 文档提�
 
 ## 迁移 Waline
 
-之前在[更换博客评论系统：Waline](/note/waline/)中，我没有提到数据库的选择，当时为了快速部署，直接选用了官方推荐的 LeanCloud。
+之前在[更换博客评论系统：Waline](/note/waline)中，我没有提到数据库的选择，当时为了快速部署，直接选用了官方推荐的 LeanCloud。
 
 Umami 使用 Supabase，而 Waline 使用 LeanCloud，显得有些复杂，更多的平台在维护上也不方便。Waline 支持多种数据库，其中就包括 Supabase 使用的 PostgreSQL，于是我顺手迁移了 Waline 的数据。
 

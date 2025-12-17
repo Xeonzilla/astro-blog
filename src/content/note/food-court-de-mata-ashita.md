@@ -7,7 +7,7 @@ tags: [TVA-2025]
 
 ![](https://blog-static.xeonzilla.top/img/food-court-de-mata-ashita/cover.avif)
 
-本季度出现了两部半长的作品，一部[「章鱼哔的原罪」](/note/takopii-no-genzai/)，另一部就是「明天，美食广场见。」，而且这两部作品的反响都不错，难怪有观众说要解放思想，打破“12 话、24 分钟”定式的限制。
+本季度出现了两部半长的作品，一部[「章鱼哔的原罪」](/note/takopii-no-genzai)，另一部就是「明天，美食广场见。」，而且这两部作品的反响都不错，难怪有观众说要解放思想，打破“12 话、24 分钟”定式的限制。
 
 ## 坐这就是跟你唠
 

@@ -9,7 +9,7 @@ toc: true
 
 ## 最速迁移
 
-就在我写完[上篇文章](/note/netlify-supabase-umami/)没多久，在论坛查找资料的途中，我偶然发现了 Supabase 的新兴竞品，Neon[^1]。一番对比后，我决定火速将 Waline 和 Umami 的数据库迁移到 Neon。
+就在我写完[上篇文章](/note/netlify-supabase-umami)没多久，在论坛查找资料的途中，我偶然发现了 Supabase 的新兴竞品，Neon[^1]。一番对比后，我决定火速将 Waline 和 Umami 的数据库迁移到 Neon。
 
 Neon 和 Supabase 的免费计划额度各有千秋。虽说 Neon 非常慷慨，为免费计划用户提供最多 10 个项目，但是显然，我暂时用不了这么多；相比之下，它 compute hours 的计数方式就精细得多，每月 190h 的额度看上去岌岌可危，不过对于轻量用户，应该也是够用的。
 

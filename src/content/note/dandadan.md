@@ -15,7 +15,7 @@ tags: [TVA-2024]
 
 很多时候并不是没有想法、没有话题，而是这些想法与话题支撑不了我想要的长篇大论、谈天说地，于是便在心里自行消化掉了。
 
-内忧如此，还有“外患”：[「BanG Dream! Ave Mujica」](/note/bang-dream-ave-mujica/)、[「Summer Pockets」](/note/summer-pockets/)等万众期待的作品开始预热，让各位观众本就不集中的注意力更加涣散，畅想着 2025 年的到来，将本季度的作品置于脑后。
+内忧如此，还有“外患”：[「BanG Dream! Ave Mujica」](/note/bang-dream-ave-mujica)、[「Summer Pockets」](/note/summer-pockets)等万众期待的作品开始预热，让各位观众本就不集中的注意力更加涣散，畅想着 2025 年的到来，将本季度的作品置于脑后。
 
 「当哒当」就是这样环境下承担“霸权”重任的动画，从讨论度、影响力的角度看，这位霸权是比较失败的。
 

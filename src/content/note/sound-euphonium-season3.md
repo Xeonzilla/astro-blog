@@ -126,6 +126,6 @@ tags: [TVA-2024]
 
 最后的最后，总结这篇“一腔热血，不知所言”的观后感，其实就是猫屋敷ねる所说的”情感上不能接受”。我无数次在内心尝试反驳其他人的观点，左右互博到最后，其实我只是想要找到一个坚持“情感上不能接受”的理由。现在看来，“不能接受”的主观情绪早已出现，以后来的理由反哺实属没有必要，自圆其说足矣。
 
-[^1]:[12 话改编和 S3 小结 - 哔哩哔哩](https://www.bilibili.com/opus/946810933277098003)，或查看[转载备份](/note/episode12-adaptation-and-s3-summary/)
+[^1]:[12 话改编和 S3 小结 - 哔哩哔哩](https://www.bilibili.com/opus/946810933277098003)，或查看[转载备份](/note/episode12-adaptation-and-s3-summary)
 [^2]:[高橋博行 | Bangumi 番组计划](https://bgm.tv/person/3414)
 [^3]:[木上益治 | Bangumi 番组计划](https://bgm.tv/person/2227)

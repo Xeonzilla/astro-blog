@@ -7,7 +7,7 @@ tags: [Galgame, TVA-2025]
 
 ![](https://blog-static.xeonzilla.top/img/summer-pockets/cover.avif)
 
-为了防止[「ATRI -My Dear Moments-」](/note/atri-my-dear-moments/)那样时间紧迫的情况发生，在「Summer Pockets」的 TV 动画定于 2025 年播出后，我便开始推进游戏。
+为了防止[「ATRI -My Dear Moments-」](/note/atri-my-dear-moments)那样时间紧迫的情况发生，在「Summer Pockets」的 TV 动画定于 2025 年播出后，我便开始推进游戏。
 
 ## 留住过去的口袋
 

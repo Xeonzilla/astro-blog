@@ -6,7 +6,7 @@ tags: [Blog]
 
 ## 无尽迁移之路
 
-继前面[部署 Umami](/note/netlify-supabase-umami/)和[数据库迁移](/note/from-supabase-to-neon/)后，我又在使用 Umami 的过程中发现了新问题：怎么仪表盘的数据全是重复的呢？在 GitHub 一番搜索后，我找到了三个相同的案例[^1][^2][^3]，而且非常遗憾，开发者没有任何有效的答复，这个 Bug 目前悬而未决。
+继前面[部署 Umami](/note/netlify-supabase-umami)和[数据库迁移](/note/from-supabase-to-neon)后，我又在使用 Umami 的过程中发现了新问题：怎么仪表盘的数据全是重复的呢？在 GitHub 一番搜索后，我找到了三个相同的案例[^1][^2][^3]，而且非常遗憾，开发者没有任何有效的答复，这个 Bug 目前悬而未决。
 
 出现了影响使用的问题，那么只能是更换平台了，我把 Umami 迁移到 Vercel 上。由于 `vercel.app` 被屏蔽，为了中国大陆的访问性，我又不得不寻找解决方法。唯一的解决办法，只有绑定自定义域名。
 

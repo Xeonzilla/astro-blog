@@ -12,7 +12,7 @@ toc: true
 
 ## 再见，PaperMod
 
-在[建站小结](/note/blog-summary/)里，我对 PaperMod 的评价还是相当正面的，现在看来，这样的评价或许源于我对博客框架与主题的不了解。
+在[建站小结](/note/blog-summary)里，我对 PaperMod 的评价还是相当正面的，现在看来，这样的评价或许源于我对博客框架与主题的不了解。
 
 PaperMod 是一款简约高效的主题，这种说法是对的；PaperMod 功能简单、代码陈旧，这种说法也是对的。当想要深入拓展博客的功能、完善博客的外观时，我发现 PaperMod 并没有留下太多有用的配置项，如果你想要某功能，可行的道路只有自行动手编写。这也是 PaperMod 教程丰富的另一面：主题本身过于简单，用户需要大量自行修改。
 
@@ -30,7 +30,7 @@ PaperModX 开发者的这段话很大程度上促成了这次主题更换。虽�
 
 ## 迁移至 Blowfish
 
-首先我要为在 [Hugo 中的 AVIF 与累积布局偏移（CLS）](/note/hugo-avif-cls/)中提到的 Zola 正名，因为我大致浏览了一遍 Hugo 的主题列表，发现 Hugo 的主题生态也凋敝不堪，看似主题数量众多，但是相当一部分都已停止更新，成为了历史的一部分。总体而言，Hugo 的社区生态并不比 Zola 好太多，这也是个人博客退潮的一个缩影吧。
+首先我要为在 [Hugo 中的 AVIF 与累积布局偏移（CLS）](/note/hugo-avif-cls)中提到的 Zola 正名，因为我大致浏览了一遍 Hugo 的主题列表，发现 Hugo 的主题生态也凋敝不堪，看似主题数量众多，但是相当一部分都已停止更新，成为了历史的一部分。总体而言，Hugo 的社区生态并不比 Zola 好太多，这也是个人博客退潮的一个缩影吧。
 
 在主题列表的顶部，我注意到了 Blowfish，它有大量的自定义功能，丰富的定制选项。最难能可贵的是，Blowfish 的文档[^4]相当详细，几乎列出了所有的功能与选项。即使我可能在未来再次发现 Blowfish 的各种问题，但是它给我的第一印象相当好。
 
@@ -38,7 +38,7 @@ PaperModX 开发者的这段话很大程度上促成了这次主题更换。虽�
 
 ### 评论区适配
 
-先前在 [Comments Widget 的自动主题和双评论系统](/note/auto-theme-comments-system-with-comments-widget/)展示的代码逻辑无需改变，只需在监听方式上适应 Blowfish 即可。经过我在 web 开发者工具中的一番探索，发现 Blowfish 在变更主题时，`html` 的 `class` 会添加和删除 `dark` 这个类，于是我们便以此判断博客主题的变化。
+先前在 [Comments Widget 的自动主题和双评论系统](/note/auto-theme-comments-system-with-comments-widget)展示的代码逻辑无需改变，只需在监听方式上适应 Blowfish 即可。经过我在 web 开发者工具中的一番探索，发现 Blowfish 在变更主题时，`html` 的 `class` 会添加和删除 `dark` 这个类，于是我们便以此判断博客主题的变化。
 
 关键的监听函数如下：
 
