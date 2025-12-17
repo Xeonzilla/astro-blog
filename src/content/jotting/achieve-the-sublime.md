@@ -38,4 +38,4 @@ tags: [Anime, Creation]
 
 然后，我深感自己开始动画科学这个系列是正确的，虽然我学到的不多、能写出来的更少，至少我正走在积累的过程中。
 
-[^1]:[12 话改编和 S3 小结 - 哔哩哔哩](https://www.bilibili.com/opus/946810933277098003)，或查看[转载备份](/note/episode12-adaptation-and-s3-summary)
+[^1]:[12 话改编和 S3 小结 - 哔哩哔哩](https://www.bilibili.com/opus/946810933277098003)，或查看[转载备份](/note/episode12-adaptation-and-s3-summary)。

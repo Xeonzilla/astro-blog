@@ -45,4 +45,4 @@ tags: [TVA-2025]
 
 [^1]:[X 上的 綾奈ゆにこ：“こちらのpostはアニメAve Mujicaに対する言葉ではありません。アニメは見ておりません” / X](https://x.com/unicococ/status/1885234929971454372)
 [^2]:[X 上的 綾奈ゆにこ：“シリーズ構成の仕事は最終話までまっとういたしました。脚本担当回が少ないのは全体/細部のことを考える仕事がめちゃくちゃ大変だったからです。作品については本当に愛してる。楽しんで下さっている方、気遣って下さった方ありがとうございます” / X](https://x.com/unicococ/status/1885342245177745939)
-[^3]:[12 话改编和 S3 小结 - 哔哩哔哩](https://www.bilibili.com/opus/946810933277098003)，或查看[转载备份](/note/episode12-adaptation-and-s3-summary)
+[^3]:[12 话改编和 S3 小结 - 哔哩哔哩](https://www.bilibili.com/opus/946810933277098003)，或查看[转载备份](/note/episode12-adaptation-and-s3-summary)。
