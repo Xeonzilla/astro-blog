@@ -2,7 +2,7 @@
 title: 群花绽放，彷如修罗
 timestamp: 2025-03-08 14:17:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/hanashura/cover.avif)

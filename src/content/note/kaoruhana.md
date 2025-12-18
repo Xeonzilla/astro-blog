@@ -2,7 +2,7 @@
 title: 薰香花朵凛然绽放
 timestamp: 2025-08-18 08:44:00+08:00
 series: 二次元漫谈
-tags: [Manga, TVA-2025]
+tags: [Manga, TVA-2025, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/kaoruhana/cover.avif)

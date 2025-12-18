@@ -2,7 +2,7 @@
 title: 指尖相触，恋恋不舍
 timestamp: 2024-02-14 23:02:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/yubisaki-to-renren/cover.avif)

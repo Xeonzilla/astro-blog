@@ -2,7 +2,7 @@
 title: 声优广播的台前幕后
 timestamp: 2024-05-02 22:47:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/seiyuradio/cover.avif)

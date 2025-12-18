@@ -2,7 +2,7 @@
 title: 这公司有我喜欢的人
 timestamp: 2025-02-07 22:59:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/kaishani-sukinahito/cover.avif)

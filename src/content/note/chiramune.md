@@ -2,7 +2,7 @@
 title: 弹珠汽水瓶里的千岁同学
 timestamp: 2025-10-16 22:36:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Fall]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/chiramune/cover.avif)

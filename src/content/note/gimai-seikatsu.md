@@ -2,7 +2,7 @@
 title: 义妹生活
 timestamp: 2024-08-31 23:02:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/gimai-seikatsu/cover.avif)

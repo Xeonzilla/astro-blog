@@ -2,7 +2,7 @@
 title: 身为 VTuber 的我因为忘记关台而成了传说
 timestamp: 2024-08-13 14:27:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/vtuber-legend/cover.avif)

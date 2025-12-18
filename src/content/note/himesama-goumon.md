@@ -2,7 +2,7 @@
 title: 公主殿下，“拷问”的时间到了
 timestamp: 2024-01-16 23:35:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/himesama-goumon/cover.avif)

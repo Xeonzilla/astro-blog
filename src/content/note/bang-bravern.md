@@ -2,7 +2,7 @@
 title: 勇气爆发 BANG BRAVERN
 timestamp: 2024-03-22 22:33:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/bang-bravern/cover.avif)

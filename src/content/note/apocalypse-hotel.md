@@ -2,7 +2,7 @@
 title: 末日后酒店
 timestamp: 2025-06-26 16:46:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/apocalypse-hotel/cover.avif)

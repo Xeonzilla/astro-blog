@@ -2,7 +2,7 @@
 title: 葬送的芙莉莲
 timestamp: 2023-12-05 00:52:00+08:00
 series: 二次元漫谈
-tags: [TVA-2023]
+tags: [TVA-2023, Season-Fall]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/sousou-no-frieren/cover.avif)

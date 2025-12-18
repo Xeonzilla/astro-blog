@@ -2,7 +2,7 @@
 title: 神椿市建设中。
 timestamp: 2025-10-30 18:09:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/kamitsubaki/cover.avif)

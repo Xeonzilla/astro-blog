@@ -2,7 +2,7 @@
 title: 忍者与杀手二人组的日常生活
 timestamp: 2025-05-07 20:33:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/ninkoro/cover.avif)

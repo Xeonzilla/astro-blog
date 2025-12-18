@@ -2,7 +2,7 @@
 title: 不时轻声地以俄语遮羞的邻座艾莉同学
 timestamp: 2024-08-17 13:50:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/roshidere/cover.avif)

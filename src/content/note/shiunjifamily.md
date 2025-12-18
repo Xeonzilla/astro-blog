@@ -2,7 +2,7 @@
 title: 紫云寺家的兄弟姐妹
 timestamp: 2025-05-21 22:39:00+08:00
 series: 二次元漫谈
-tags: [Manga, TVA-2025]
+tags: [Manga, TVA-2025, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/shiunjifamily/cover.avif)

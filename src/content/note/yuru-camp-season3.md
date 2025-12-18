@@ -2,7 +2,7 @@
 title: 摇曳露营△ 第 3 期
 timestamp: 2024-05-26 21:58:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/yuru-camp-season3/cover.avif)

@@ -2,7 +2,7 @@
 title: 琉璃的宝石
 timestamp: 2025-09-18 18:11:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/ruri-no-houseki/cover.avif)

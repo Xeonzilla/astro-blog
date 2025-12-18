@@ -2,7 +2,7 @@
 title: 小市民系列
 timestamp: 2024-09-09 21:09:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/shoushimin-series/cover.avif)

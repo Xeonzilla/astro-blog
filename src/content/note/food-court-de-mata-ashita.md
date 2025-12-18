@@ -2,7 +2,7 @@
 title: 明天，美食广场见。
 timestamp: 2025-08-08 18:50:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/food-court-de-mata-ashita/cover.avif)

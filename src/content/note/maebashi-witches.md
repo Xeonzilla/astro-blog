@@ -2,7 +2,7 @@
 title: 前桥魔女
 timestamp: 2025-05-29 22:44:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/maebashi-witches/cover.avif)

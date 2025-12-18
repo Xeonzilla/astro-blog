@@ -2,7 +2,7 @@
 title: 单人房、日照一般、附天使。
 timestamp: 2024-06-13 21:00:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/tenshitsuki/cover.avif)

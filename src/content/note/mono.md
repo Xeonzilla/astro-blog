@@ -2,7 +2,7 @@
 title: mono 女孩
 timestamp: 2025-07-30 23:20:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/mono/cover.avif)

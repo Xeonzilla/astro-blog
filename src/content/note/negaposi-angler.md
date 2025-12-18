@@ -2,7 +2,7 @@
 title: 悲喜渔生
 timestamp: 2025-01-09 21:14:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Fall]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/negaposi-angler/cover.avif)

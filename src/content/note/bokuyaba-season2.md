@@ -2,7 +2,7 @@
 title: 我心里危险的东西 第 2 期
 timestamp: 2024-03-31 20:01:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/bokuyaba-season2/cover.avif)

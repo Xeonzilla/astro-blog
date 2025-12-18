@@ -2,7 +2,7 @@
 title: BanG Dream! Ave Mujica
 timestamp: 2025-02-02 20:38:00+08:00
 series: 二次元漫谈
-tags: [TVA-2025]
+tags: [TVA-2025, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/bang-dream-ave-mujica/cover.avif)

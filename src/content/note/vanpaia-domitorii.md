@@ -2,7 +2,7 @@
 title: 吸血鬼男子宿舍
 timestamp: 2024-06-07 20:06:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/vanpaia-domitorii/cover.avif)

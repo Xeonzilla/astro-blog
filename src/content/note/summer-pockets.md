@@ -2,7 +2,7 @@
 title: Summer Pockets
 timestamp: 2024-10-31 21:14:00+08:00
 series: 二次元漫谈
-tags: [Galgame, TVA-2025]
+tags: [Galgame, TVA-2025, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/summer-pockets/cover.avif)

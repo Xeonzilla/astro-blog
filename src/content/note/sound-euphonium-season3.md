@@ -2,7 +2,7 @@
 title: 吹响！上低音号 3
 timestamp: 2024-06-26 01:06:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/sound-euphonium-season3/cover.avif)

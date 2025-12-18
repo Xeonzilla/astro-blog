@@ -2,7 +2,7 @@
 title: D4DJ First Mix
 timestamp: 2025-03-22 18:44:00+08:00
 series: 二次元漫谈
-tags: [TVA-2020]
+tags: [TVA-2020, Season-Fall]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/d4dj-first-mix/cover.avif)

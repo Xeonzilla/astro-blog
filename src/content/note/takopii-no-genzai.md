@@ -2,7 +2,7 @@
 title: 章鱼哔的原罪
 timestamp: 2025-09-07 10:49:00+08:00
 series: 二次元漫谈
-tags: [Manga, TVA-2025]
+tags: [Manga, TVA-2025, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/takopii-no-genzai/cover.avif)

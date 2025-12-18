@@ -2,7 +2,7 @@
 title: 末班列车去哪里？
 timestamp: 2024-07-28 19:28:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Spring]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/shuumatsu-train/cover.avif)

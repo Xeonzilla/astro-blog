@@ -2,7 +2,7 @@
 title: 鹿乃子乃子虎视眈眈
 timestamp: 2024-03-13 19:58:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/shikanoko/cover.avif)

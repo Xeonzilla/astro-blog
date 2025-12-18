@@ -2,7 +2,7 @@
 title: 可爱史莱姆噗尼露
 timestamp: 2024-12-14 23:28:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Fall]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/puniru-wa-kawaii-suraimu/cover.avif)

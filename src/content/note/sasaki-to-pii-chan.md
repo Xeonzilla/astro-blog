@@ -2,7 +2,7 @@
 title: 佐佐木与文鸟小哔
 timestamp: 2024-04-16 22:24:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/sasaki-to-pii-chan/cover.avif)

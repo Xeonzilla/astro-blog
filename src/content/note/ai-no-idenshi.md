@@ -2,7 +2,7 @@
 title: AI电子基因
 timestamp: 2025-03-16 00:24:00+08:00
 series: 二次元漫谈
-tags: [TVA-2023]
+tags: [TVA-2023, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/ai-no-idenshi/cover.avif)

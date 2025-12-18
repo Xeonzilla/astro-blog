@@ -2,7 +2,7 @@
 title: 深夜重拳
 timestamp: 2024-09-28 14:31:00+08:00
 series: 二次元漫谈
-tags: [TVA-2024]
+tags: [TVA-2024, Season-Summer]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/mayopan/cover.avif)
