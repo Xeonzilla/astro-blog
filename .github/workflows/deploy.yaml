@@ -1,0 +1,49 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6.0.1
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4.2.0
+      with:
+        version: latest
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6.1.0
+      with:
+        node-version: '24.x'
+        cache: 'pnpm'
+
+    - name: Export Environment Variables
+      run: echo '${{ secrets.ENV }}' > .env
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Build project
+      run: pnpm run build
+
+    - name: Run database migrations
+      uses: cloudflare/wrangler-action@v3.14.1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        command: d1 migrations apply DB --remote
+
+    - name: Deploy to Cloudflare Workers
+      uses: cloudflare/wrangler-action@v3.14.1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
