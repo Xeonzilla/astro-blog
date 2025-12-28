@@ -47,6 +47,14 @@
 				"limit": 2,
 				"period": 10
 			}
+		},
+		{
+			"name": "EMAIL_LIMIT",
+			"namespace_id": "0002",
+			"simple": {
+				"limit": 1,
+				"period": 60
+			}
 		}
 	]
 }
