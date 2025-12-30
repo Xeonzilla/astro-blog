@@ -25,19 +25,19 @@ Astro 的图像优化能够避免 CLS（累积布局偏移），直接影响着�
 | 变量名称 | 构建时 | 运行时 |
 | :-: | :-: | :-: |
 | PUBLIC_TIMEZONE | 需要 | 不需要 |
-| PASS_KEY | ^ | 需要 |
-| NOTIFY_PUBLIC_KEY | ^ | 需要 |
-| NOTIFY_PRIVATE_KEY | ^ | 需要 |
-| AUTHOR_ID | ^ | 需要 |
-| PLATFORM_CLIENT_ID | ^ | 需要 |
-| PLATFORM_CLIENT_SECRET | ^ | 需要 |
-| CLOUDFLARE_ACCOUNT_ID | ^ | 不需要 |
-| CLOUDFLARE_DATABASE_ID | ^ | 不需要 |
-| CLOUDFLARE_API_TOKEN | ^ | 不需要 |
-| CLOUDFLARE_TURNSTILE_SITE_KEY | ^ | 需要 |
-| CLOUDFLARE_TURNSTILE_SECRET_KEY | ^ | 需要 |
+| PASS_KEY | 需要 ||
+| NOTIFY_PUBLIC_KEY | 需要 ||
+| NOTIFY_PRIVATE_KEY | 需要 ||
+| AUTHOR_ID | 需要 ||
+| PLATFORM_CLIENT_ID | 需要 ||
+| PLATFORM_CLIENT_SECRET | 需要 ||
+| CLOUDFLARE_ACCOUNT_ID | 不需要 ||
+| CLOUDFLARE_DATABASE_ID | 不需要 ||
+| CLOUDFLARE_API_TOKEN | 不需要 ||
+| CLOUDFLARE_TURNSTILE_SITE_KEY | 需要 ||
+| CLOUDFLARE_TURNSTILE_SECRET_KEY | 需要 ||
 
-手工测试所得结果可能有误，具体的使用情况应该根据代码逻辑判断。
+手工测试所得结果可能有误，具体的使用情况应该根据代码逻辑判断。同时，表格中的配置仅代表当时的主题配置情况，任何更新都可能破坏 Workers Builds 的所需配置，用户应该始终阅读最新的主题文档。
 
 事后反思，许多我原以为仅在运行时使用的变量，例如 `PLATFORM_CLIENT_*` 与 `CLOUDFLARE_TURNSTILE_*_KEY`，实际上在构建阶段就会被用来判断相关功能是否启用。代码逻辑本该如此，如果我当初能先花时间阅读源码，或许就能避免测试花费的时间。
 
