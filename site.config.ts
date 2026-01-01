@@ -13,7 +13,7 @@ const config = siteConfig({
 	description: "Yuri is life.",
 	copyright: {
 		type: "CC BY-NC-SA 4.0",
-		year: "2025"
+		year: "2026"
 	},
 	i18n: {
 		locales: ["zh-cn"],
