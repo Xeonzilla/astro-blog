@@ -62,7 +62,6 @@
 		"remark-footnotes-extra": "^0.3.0",
 		"remark-gemoji": "^8.0.0",
 		"remark-gfm": "^4.0.1",
-		"remark-github-blockquote-alert": "^2.0.1",
 		"remark-ins": "^1.2.2",
 		"remark-math": "^6.0.0",
 		"remark-parse": "^11.0.0",
