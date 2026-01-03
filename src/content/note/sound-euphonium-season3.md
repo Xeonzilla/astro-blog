@@ -111,7 +111,7 @@ tags: [TVA-2024, Season-Spring]
 
 ---
 
-> [!TIP/更新]
+> [!TIP] 更新
 > 于 2025 年 1 月 16 日，「BanG Dream! Ave Mujica」播出，各方激辩，令我回想起本文时。
 
 ## 再读不堪回首之事
