@@ -19,6 +19,10 @@ const config = siteConfig({
 		locales: ["zh-cn"],
 		defaultLocale: "zh-cn"
 	},
+	pagination: {
+		note: 16,
+		jotting: 24
+	},
 	feed: {
 		section: "*",
 		limit: 20
