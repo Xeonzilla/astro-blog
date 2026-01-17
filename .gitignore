@@ -25,4 +25,5 @@ todo*
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
