@@ -139,8 +139,7 @@ export default defineConfig({
 			globalInstance: true,
 			preload: false,
 			smoothScrolling: false,
-			progress: true,
-			reloadScripts: false
+			progress: true
 		})
 	],
 	prefetch: {
