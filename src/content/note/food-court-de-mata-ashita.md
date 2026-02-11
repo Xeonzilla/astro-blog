@@ -1,7 +1,7 @@
 ---
 title: 明天，美食广场见。
 timestamp: 2025-08-08 18:50:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Summer]
 ---
 

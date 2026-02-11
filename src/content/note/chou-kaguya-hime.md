@@ -1,7 +1,7 @@
 ---
 title: 超时空辉夜姬！
 timestamp: 2026-02-06 23:15:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [AM-2020s]
 ---
 

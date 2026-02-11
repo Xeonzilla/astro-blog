@@ -1,7 +1,7 @@
 ---
 title: 剧场版 电锯人 蕾塞篇
 timestamp: 2025-12-24 16:53:14+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [AM-2020s]
 ---
 

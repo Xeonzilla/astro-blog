@@ -1,7 +1,7 @@
 ---
 title: 蓦然回首
 timestamp: 2024-11-14 00:49:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [AM-2020s]
 ---
 

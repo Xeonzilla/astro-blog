@@ -1,7 +1,7 @@
 ---
 title: 薰香花朵凛然绽放
 timestamp: 2025-08-18 08:44:00+08:00
-series: 二次元漫谈
+series: 交叉视角
 tags: [Manga, TVA-2025, Season-Summer]
 ---
 

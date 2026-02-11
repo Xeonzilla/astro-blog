@@ -1,7 +1,7 @@
 ---
 title: D4DJ First Mix
 timestamp: 2025-03-22 18:44:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2020, Season-Fall]
 ---
 

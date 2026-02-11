@@ -1,7 +1,7 @@
 ---
 title: 时光流逝，饭菜依旧美味
 timestamp: 2025-07-03 15:38:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Spring]
 ---
 

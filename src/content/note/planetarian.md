@@ -1,7 +1,7 @@
 ---
 title: 星之梦
 timestamp: 2025-10-23 23:11:00+08:00
-series: 二次元漫谈
+series: 交叉视角
 tags: [Galgame, ONA, AM-2010s, OVA]
 ---
 

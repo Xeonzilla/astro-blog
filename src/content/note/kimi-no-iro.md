@@ -1,7 +1,7 @@
 ---
 title: 你的颜色
 timestamp: 2025-04-09 21:39:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [AM-2020s]
 ---
 

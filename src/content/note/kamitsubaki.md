@@ -1,7 +1,7 @@
 ---
 title: 神椿市建设中。
 timestamp: 2025-10-30 18:09:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Summer]
 ---
 

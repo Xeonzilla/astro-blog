@@ -1,7 +1,7 @@
 ---
 title: mono 女孩
 timestamp: 2025-07-30 23:20:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Spring]
 ---
 

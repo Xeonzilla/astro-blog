@@ -1,7 +1,7 @@
 ---
 title: Summer Pockets
 timestamp: 2024-10-31 21:14:00+08:00
-series: 二次元漫谈
+series: 交叉视角
 tags: [Galgame, TVA-2025, Season-Spring]
 ---
 

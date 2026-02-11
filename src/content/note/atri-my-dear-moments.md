@@ -1,7 +1,7 @@
 ---
 title: ATRI -My Dear Moments-
 timestamp: 2024-10-19 23:30:00+08:00
-series: 二次元漫谈
+series: 交叉视角
 tags: [Galgame, TVA-2024, Season-Summer]
 ---
 

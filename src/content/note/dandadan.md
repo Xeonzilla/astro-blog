@@ -1,7 +1,7 @@
 ---
 title: 当哒当
 timestamp: 2024-12-31 23:39:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Fall]
 ---
 

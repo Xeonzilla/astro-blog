@@ -1,7 +1,7 @@
 ---
 title: 夜晚的水母不会游泳
 timestamp: 2024-05-01 23:45:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Spring]
 ---
 

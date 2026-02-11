@@ -1,7 +1,7 @@
 ---
 title: Overtake!
 timestamp: 2023-12-21 00:24:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2023, Season-Fall]
 ---
 

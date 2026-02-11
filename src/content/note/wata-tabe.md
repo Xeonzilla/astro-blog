@@ -1,7 +1,7 @@
 ---
 title: 想吃掉我的非人少女
 timestamp: 2025-12-28 15:58:59+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Fall]
 ---
 

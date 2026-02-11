@@ -1,7 +1,7 @@
 ---
 title: 章鱼哔的原罪
 timestamp: 2025-09-07 10:49:00+08:00
-series: 二次元漫谈
+series: 交叉视角
 tags: [Manga, TVA-2025, Season-Summer]
 ---
 

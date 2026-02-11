@@ -1,7 +1,7 @@
 ---
 title: 孤独摇滚！
 timestamp: 2024-02-23 22:26:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2022, Season-Fall]
 ---
 

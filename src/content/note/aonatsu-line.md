@@ -1,7 +1,7 @@
 ---
 title: 青夏轨迹
 timestamp: 2025-06-14 17:34:00+08:00
-series: 二次元漫谈
+series: 探求本源
 tags: [Galgame]
 ---
 

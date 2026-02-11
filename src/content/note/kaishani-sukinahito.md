@@ -1,7 +1,7 @@
 ---
 title: 这公司有我喜欢的人
 timestamp: 2025-02-07 22:59:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Winter]
 ---
 

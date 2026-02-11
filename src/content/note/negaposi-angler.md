@@ -1,7 +1,7 @@
 ---
 title: 悲喜渔生
 timestamp: 2025-01-09 21:14:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Fall]
 ---
 

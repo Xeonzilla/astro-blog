@@ -1,7 +1,7 @@
 ---
 title: 迷宫饭
 timestamp: 2024-03-04 21:11:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Winter]
 ---
 

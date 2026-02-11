@@ -1,7 +1,7 @@
 ---
 title: 前桥魔女
 timestamp: 2025-05-29 22:44:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Spring]
 ---
 

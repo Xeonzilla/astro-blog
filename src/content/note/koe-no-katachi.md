@@ -1,7 +1,7 @@
 ---
 title: 声之形
 timestamp: 2023-12-13 01:33:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [AM-2010s]
 ---
 

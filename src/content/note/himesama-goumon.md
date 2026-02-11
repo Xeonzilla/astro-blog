@@ -1,7 +1,7 @@
 ---
 title: 公主殿下，“拷问”的时间到了
 timestamp: 2024-01-16 23:35:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Winter]
 ---
 

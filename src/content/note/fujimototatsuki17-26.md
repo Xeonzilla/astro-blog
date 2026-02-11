@@ -1,7 +1,7 @@
 ---
 title: 藤本树17-26
 timestamp: 2025-11-11 20:01:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [ONA]
 ---
 

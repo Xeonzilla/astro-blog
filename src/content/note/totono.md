@@ -1,7 +1,7 @@
 ---
 title: 你和她和她的恋爱。
 timestamp: 2025-11-21 12:53:00+08:00
-series: 二次元漫谈
+series: 探求本源
 tags: [Galgame]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 更衣人偶坠入爱河
 timestamp: 2023-12-06 00:49:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2022, Season-Winter]
 ---
 

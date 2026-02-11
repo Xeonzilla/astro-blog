@@ -1,7 +1,7 @@
 ---
 title: 恋爱代理
 timestamp: 2024-09-23 20:06:00+08:00
-series: 二次元漫谈
+series: 探求本源
 tags: [Manga]
 ---
 

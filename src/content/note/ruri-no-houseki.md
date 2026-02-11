@@ -1,7 +1,7 @@
 ---
 title: 琉璃的宝石
 timestamp: 2025-09-18 18:11:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Summer]
 ---
 

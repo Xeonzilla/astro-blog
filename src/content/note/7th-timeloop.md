@@ -1,7 +1,7 @@
 ---
 title: 轮回七次的恶役千金，在前敌国享受随心所欲的新婚生活
 timestamp: 2024-03-11 00:00:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Winter]
 ---
 

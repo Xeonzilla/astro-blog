@@ -1,7 +1,7 @@
 ---
 title: 义妹生活
 timestamp: 2024-08-31 23:02:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2024, Season-Summer]
 ---
 

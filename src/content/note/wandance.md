@@ -1,7 +1,7 @@
 ---
 title: 绝妙舞步
 timestamp: 2026-01-02 21:13:12+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Fall]
 ---
 

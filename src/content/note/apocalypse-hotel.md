@@ -1,7 +1,7 @@
 ---
 title: 末日后酒店
 timestamp: 2025-06-26 16:46:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Spring]
 ---
 

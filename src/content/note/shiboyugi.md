@@ -1,7 +1,7 @@
 ---
 title: 靠死亡游戏混饭吃。
 timestamp: 2026-01-31 16:44:08+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2026, Season-Winter]
 ---
 

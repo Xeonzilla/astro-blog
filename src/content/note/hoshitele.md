@@ -1,7 +1,7 @@
 ---
 title: 星灵感应
 timestamp: 2023-11-28 00:34:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2023, Season-Fall]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: BanG Dream! Ave Mujica
 timestamp: 2025-02-02 20:38:00+08:00
-series: 二次元漫谈
+series: 纯粹视听
 tags: [TVA-2025, Season-Winter]
 ---
 
