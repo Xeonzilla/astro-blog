@@ -3,6 +3,7 @@
 	"type": "module",
 	"private": true,
 	"version": "0.0.0-dev",
+	"packageManager": "pnpm@10.29.2",
 	"scripts": {
 		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
 		"dev": "astro dev",
@@ -18,8 +19,7 @@
 		"db:migration": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply DB --local",
 		"db:migrate:remote": "wrangler d1 migrations apply DB --remote",
-		"prepare": "pnpm run types && husky",
-		"preinstall": "npx only-allow pnpm"
+		"prepare": "pnpm run types && husky"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.12",
