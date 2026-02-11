@@ -54,7 +54,8 @@ const localedMainFont = mainFonts[locale];
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");
-			if (theme) document.documentElement.dataset.theme = theme;
+			var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = theme || prefers;
 		</script>
 
 		<script is:inline async src="https://cwa.xeonzilla.top/oauth.js" data-cf-beacon='{"send":{"to": "https://cwa.xeonzilla.top/astro-debug"},"token": "b9c63268ef0347f2a3f9dd68ad60b8cc"}' />
