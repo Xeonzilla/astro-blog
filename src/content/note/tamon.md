@@ -2,7 +2,7 @@
 title: 现在多闻君是哪一面！？
 timestamp: 2026-03-26 18:37:57+08:00
 series: 交叉视角
-tags: [TVA-2026, Season-Winter]
+tags: [Manga, TVA-2026, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/tamon/cover.avif)

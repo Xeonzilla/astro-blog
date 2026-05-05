@@ -2,7 +2,7 @@
 title: 相反的你和我
 timestamp: 2026-03-06 17:41:41+08:00
 series: 交叉视角
-tags: [TVA-2026, Season-Winter]
+tags: [Manga, TVA-2026, Season-Winter]
 ---
 
 ![](https://blog-static.xeonzilla.top/img/seihantai/cover.avif)
