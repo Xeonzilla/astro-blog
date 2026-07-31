@@ -6,4 +6,4 @@
 
 ---
 
-所用主题：[astro-theme-thought-lite](https://github.com/tuyuritio/astro-theme-thought-lite)
+归档的博客源代码，新博客源代码请前往 [Xeonzilla/x7aNote](https://github.com/Xeonzilla/x7aNote)。
